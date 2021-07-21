@@ -73,8 +73,8 @@ function SongCard({
   const [showBuyButton, setShowBuyButton] = useState(false);
 
   useEffect(() => {
-    setShowBuyButton(tokenId && openSeaPort && ownedByJonathan);
-  }, [openSeaPort, ownedByJonathan, tokenId]);
+    setShowBuyButton(finalTokenId && openSeaPort && ownedByJonathan);
+  }, [openSeaPort, ownedByJonathan, finalTokenId]);
 
   const buyAsset = async () => {
     if (openSeaPort && showBuyButton) {
