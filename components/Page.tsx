@@ -15,7 +15,6 @@ import Link from 'next/link';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { FeaturedSongs } from '../components/FeaturedSongs';
-// import { FeaturedSongsTest } from '../components/FeaturedSongsTest';
 import { HomeBanner } from '../components/HomeBanner';
 import { SongDetail } from '../components/SongDetail';
 import { Filters } from '../containers/Filters';
@@ -100,14 +99,6 @@ export function Page({ isHomepage, progressBarData }: PageProps) {
       {isHomepage && !hasFiltered && <HomeBanner progressBarData={progressBarData} />}
 
       <Box py="8" px={{ base: '2', xl: '8' }}>
-        {/* {isHomepage && (
-          <>
-            <Heading as="h2" mb="6" mt="8" fontSize="3xl">
-              TESTNET Featured Songs
-            </Heading>
-            <FeaturedSongsTest />
-          </>
-        )} */}
         {isHomepage && !hasFiltered && (
           <>
             <Heading as="h2" mb="6" mt="8" fontSize="3xl">

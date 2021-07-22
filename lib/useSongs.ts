@@ -1,7 +1,6 @@
 import { flatMap, mapValues, pickBy, toString } from 'lodash-es';
 import { useCallback, useMemo } from 'react';
 import { useSWRInfinite } from 'swr';
-
 import { FilterParams } from '../containers/Filters';
 import fetcher from './fetcher';
 import { SongsResponse } from './types';

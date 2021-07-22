@@ -2,7 +2,6 @@ import { isEmpty, pickBy } from 'lodash-es';
 import { useRouter } from 'next/router';
 import { useCallback, useMemo } from 'react';
 import { createContainer } from 'unstated-next';
-
 import { Beard, Instrument, Location, Mood, Topic } from '../lib/utils/constants';
 
 export type FilterParams = {
@@ -32,6 +31,7 @@ export function useFilters() {
       mood: ((router.query.mood as string) as Mood) ?? null,
       beard: ((router.query.beard as string) as Beard) ?? null,
       instrument: ((router.query.instrument as string) as Instrument) ?? null,
+      tag: ((router.query.tag as string) as string) ?? null,
     }),
     [router],
   );
