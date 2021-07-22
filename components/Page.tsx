@@ -97,7 +97,7 @@ export function Page({ isHomepage, progressBarData }: PageProps) {
     <>
       {id && <SongDetail id={id} />}
 
-      {isHomepage && <HomeBanner progressBarData={progressBarData} />}
+      {isHomepage && !hasFiltered && <HomeBanner progressBarData={progressBarData} />}
 
       <Box py="8" px={{ base: '2', xl: '8' }}>
         {/* {isHomepage && (
@@ -108,16 +108,15 @@ export function Page({ isHomepage, progressBarData }: PageProps) {
             <FeaturedSongsTest />
           </>
         )} */}
-        {isHomepage && (
+        {isHomepage && !hasFiltered && (
           <>
             <Heading as="h2" mb="6" mt="8" fontSize="3xl">
               Featured Songs
             </Heading>
             <FeaturedSongs gridSize={6} />
+            <Divider my="12" />
           </>
         )}
-
-        <Divider my="12" />
 
         <Heading as="h2" fontSize="3xl" mb="10">
           Filter All Songs
