@@ -12,12 +12,8 @@ import {
 import NextLink from 'next/link';
 import React from 'react';
 import { Account } from '../containers/Account';
+import { truncateHash } from '../lib/helpers';
 import { useDidHydrate } from '../lib/useDidHydrate';
-
-// Takes a long hash string and truncates it.
-function truncateHash(hash: string, length = 38): string {
-  return hash.replace(hash.substring(6, length), '...');
-}
 
 function Navbar() {
   const { connect, disconnect, account, loading } = Account.useContainer();
