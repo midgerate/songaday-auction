@@ -84,7 +84,8 @@ export const getStaticProps: GetStaticProps<ComponentPropsWithoutRef<typeof Acco
 
   const songs = results.assets?.map((asset) => getSong(parseSongId(asset))).filter(Boolean);
 
-  return { props: { songs: songs ?? null }, revalidate: ONE_HOUR };
+  return { props: { songs: songs ?? null } };
+  // return { props: { songs: songs ?? null }, revalidate: ONE_HOUR };
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
