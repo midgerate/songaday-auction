@@ -26,7 +26,6 @@ import { Song } from '../lib/types';
 import { useNifty } from '../lib/useNifty';
 import { FilterTag } from './FilterTag';
 import { OwnershipButton } from './OwnershipButton';
-import TextTag from './TextTag';
 import YoutubeEmbed from './YoutubeEmbed';
 
 const SHOULD_AUTOPLAY = process.env.NODE_ENV === 'production';
@@ -54,7 +53,7 @@ function SongCard({
   setIsModalOpen,
   ...delegated
 }: BoxProps & SongCardProps) {
-  const { makeHref } = Filters.useContainer();
+  const { filters, makeHref, appendFilters } = Filters.useContainer();
   const date = useMemo(() => (song ? DateTime.fromISO(song.releasedAt) : DateTime.local()), [song]);
   const subtitleDateString = useMemo(() => date.toLocaleString(DateTime.DATE_FULL), [date]);
   const calendarDateString = useMemo(() => date.toFormat('LLL dd'), [date]);
@@ -263,7 +262,13 @@ function SongCard({
         </Grid>
 
         <SimpleGrid gap="2" minChildWidth="8rem">
-          {song?.tags.map((tag) => <TextTag key={tag}>{tag}</TextTag>) ?? (
+          {song?.tags.map((tag) => (
+            <Link key={tag} href={appendFilters({ ...filters, tag })} passHref shallow>
+              <Button as="a" zIndex="1" size="xs">
+                {tag}
+              </Button>
+            </Link>
+          )) ?? (
             <>
               <Skeleton h="8" w="24" />
               <Skeleton h="8" w="24" />

@@ -1,6 +1,5 @@
 import { Text } from '@chakra-ui/react';
 import React, { ReactNode } from 'react';
-
 import {
   HumanBeard,
   HumanInstrument,
@@ -11,7 +10,7 @@ import {
 } from '../lib/utils/constants';
 
 export default function SongListDescription({
-  filters: { location, topic, mood, beard, instrument },
+  filters: { location, topic, mood, beard, instrument, tag },
 }: {
   filters: MinimannPropertyFilter;
 }) {
@@ -57,6 +56,15 @@ export default function SongListDescription({
     fragments.push(
       <Text as="span" key="with-value" fontWeight="semibold">
         {HumanBeard[beard] ?? `'${beard}'`} beard
+      </Text>,
+    );
+  }
+
+  if (tag) {
+    fragments.push(<React.Fragment key="with-tag"> with the tag </React.Fragment>);
+    fragments.push(
+      <Text as="span" key="tag-value" fontWeight="semibold">
+        {Array.isArray(tag) ? tag.join(' and ') : tag}
       </Text>,
     );
   }

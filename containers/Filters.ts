@@ -11,6 +11,7 @@ export type FilterParams = {
   mood: Mood;
   beard: Beard;
   instrument: Instrument;
+  tag: string | string[];
 };
 
 const filterFalsy = (obj: Record<string, any>) => pickBy(obj);
@@ -31,7 +32,7 @@ export function useFilters() {
       mood: ((router.query.mood as string) as Mood) ?? null,
       beard: ((router.query.beard as string) as Beard) ?? null,
       instrument: ((router.query.instrument as string) as Instrument) ?? null,
-      tag: ((router.query.tag as string) as string) ?? null,
+      tag: router.query.tag ?? null,
     }),
     [router],
   );
@@ -52,7 +53,33 @@ export function useFilters() {
     [makeHref, router],
   );
 
-  return { filters, pushFilter, resetFilters, makeHref };
+  const appendFilters = useCallback(
+    (filterParams: Partial<FilterParams>) => {
+      if (router?.query?.tag) {
+        const originalHref = makeHref(filterParams);
+        console.log('original', originalHref);
+
+        const queryTag = router.query.tag;
+        let newQueryString;
+        if (typeof queryTag === 'string') {
+          newQueryString = `tag=${queryTag}`;
+        } else {
+          const filteredTags = queryTag.filter((tag) => !originalHref.includes(tag));
+          newQueryString = `tag=${filteredTags.join('&tag=')}`;
+        }
+
+        if (originalHref.includes(newQueryString)) {
+          return originalHref;
+        }
+        return `${originalHref}&${newQueryString}`;
+      } else {
+        return makeHref(filterParams);
+      }
+    },
+    [makeHref, router],
+  );
+
+  return { filters, pushFilter, resetFilters, makeHref, appendFilters };
 }
 
 export const Filters = createContainer(useFilters);

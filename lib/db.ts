@@ -5,6 +5,18 @@ import { Beard, Instrument, Location, Mood, Topic } from './utils/constants';
 
 const db = _db as Song[];
 
+// Take the tags and compares them with all the tags on a song.
+function doesSongIncludeTags(song, tag) {
+  const tagsArray = tag.split(',');
+  const tagsToCompare = tagsArray.filter((thisTag) => {
+    return song.tags.includes(thisTag);
+  });
+  if (tagsArray.length === tagsToCompare.length) {
+    return true;
+  }
+  return false;
+}
+
 export function findSongs({
   location,
   topic,
@@ -28,23 +40,13 @@ export function findSongs({
   // then take the valid songs and find all of their available filters
   // TODO: filter in-mem songs db by values
   const songs = db.filter((song) => {
-    let tagsArray;
-    let songContainsTags = false;
-    if (tag) {
-      tagsArray = tag.split(',');
-      tagsArray.forEach((thisTag) => {
-        if (song.tags.includes(thisTag)) {
-          songContainsTags = true;
-        }
-      });
-    }
     return [
       location ? song.location === location : true,
       topic ? song.topic === topic : true,
       mood ? song.mood === mood : true,
       beard ? song.beard === beard : true,
       instrument ? song.instrument === instrument : true,
-      tag ? songContainsTags : true,
+      tag ? doesSongIncludeTags(song, tag) : true,
     ].every(Boolean);
   });
 
