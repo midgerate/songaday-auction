@@ -271,6 +271,7 @@ export interface MinimannPropertyFilter {
   mood?: Mood;
   beard?: Beard;
   instrument?: Instrument;
+  tag?: string | string[];
 }
 
 export const HumanMaps = {
