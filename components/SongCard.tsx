@@ -264,7 +264,14 @@ function SongCard({
         <SimpleGrid gap="2" minChildWidth="8rem">
           {song?.tags.map((tag) => (
             <Link key={tag} href={appendFilters({ ...filters, tag })} passHref shallow>
-              <Button as="a" zIndex="1" size="xs">
+              <Button
+                as="a"
+                zIndex="1"
+                size="xs"
+                onClick={() => {
+                  window.scroll(0, 0);
+                }}
+              >
                 {tag}
               </Button>
             </Link>
