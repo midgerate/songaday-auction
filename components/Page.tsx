@@ -3,10 +3,12 @@ import {
   Box,
   Button,
   Divider,
+  Flex,
   Heading,
   HStack,
   SimpleGrid,
   Skeleton,
+  Stack,
   Text,
   VStack,
 } from '@chakra-ui/react';
@@ -122,7 +124,7 @@ export function Page({ isHomepage, progressBarData }: PageProps) {
           Filter All Songs
         </Heading>
 
-        <Text mb="10">
+        <Text mb="10" lineHeight="tall">
           Click on the images to filter and find the perfect Song a Day song for you. Every song is
           unique and has its very own set of traits and characteristics.
         </Text>
@@ -130,8 +132,8 @@ export function Page({ isHomepage, progressBarData }: PageProps) {
         <VStack align="stretch" spacing={8}>
           {error && <Alert status="error">{error.message}</Alert>}
 
-          <HStack spacing={6} align="stretch">
-            <VStack>
+          <Stack direction={['column', 'column', 'row']} spacing={6} align="stretch">
+            {/* <VStack spacing={4}>
               {tabButton('instrument')}
               {tabButton('topic')}
               {tabButton('mood')}
@@ -145,9 +147,29 @@ export function Page({ isHomepage, progressBarData }: PageProps) {
               >
                 Clear all
               </Button>
-            </VStack>
+            </VStack> */}
+            <Flex
+              display={['grid', 'grid', 'flex']}
+              gridTemplateColumns="repeat(3, minmax(0, 1fr))"
+              gridGap={3}
+              flexDirection="column"
+            >
+              {tabButton('instrument')}
+              {tabButton('topic')}
+              {tabButton('mood')}
+              {tabButton('location')}
+              {tabButton('beard')}
+              <Button
+                width="100%"
+                variant="outline"
+                onClick={discardChanges}
+                disabled={!hasFiltered}
+              >
+                Clear all
+              </Button>
+            </Flex>
 
-            <SimpleGrid width="100%" gap={3} columns={[2, 4, 8]}>
+            <SimpleGrid width="100%" gap={3} columns={[3, 4, 8]}>
               {loading
                 ? times(12, (i) => <Skeleton key={i} h="9rem" w="full" borderRadius="md" />)
                 : availableFilters?.[focusedTab]?.map((key) => (
@@ -173,7 +195,7 @@ export function Page({ isHomepage, progressBarData }: PageProps) {
                     </Link>
                   ))}
             </SimpleGrid>
-          </HStack>
+          </Stack>
 
           <Divider />
 
