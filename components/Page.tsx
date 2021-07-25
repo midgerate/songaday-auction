@@ -70,7 +70,7 @@ export function Page({ isHomepage, progressBarData }: PageProps) {
 
   // ui filter header state
   const [_focusedTab, setFocusedTab] = useState<string>();
-  const focusedTab = _focusedTab ?? 'location';
+  const focusedTab = _focusedTab ?? 'instrument';
 
   const discardChanges = useCallback(() => {
     resetFilters();
@@ -86,6 +86,9 @@ export function Page({ isHomepage, progressBarData }: PageProps) {
         onClick={() => setFocusedTab(focused ? undefined : key)}
         isActive={focused || selected}
         textDecoration={focused && 'underline'}
+        _active={{
+          bg: selected ? 'blue.100' : 'gray.300',
+        }}
       >
         {filters[key] ? HumanMaps[key][filters[key]] : HumanKeys[key]}
       </Button>
@@ -109,19 +112,24 @@ export function Page({ isHomepage, progressBarData }: PageProps) {
           </>
         )}
 
-        <Heading as="h2" fontSize="3xl" mb="10">
+        <Heading as="h2" fontSize="3xl" mb="4">
           Filter All Songs
         </Heading>
+
+        <Text mb="10">
+          Click on the images to filter and find the perfect Song a Day song for you. Every song is
+          unique and has its very own set of traits and characteristics.
+        </Text>
 
         <VStack align="stretch" spacing={8}>
           {error && <Alert status="error">{error.message}</Alert>}
 
           <VStack spacing={4} align="stretch">
             <SimpleGrid gap={3} columns={[3, null, 6]}>
-              {tabButton('location')}
               {tabButton('instrument')}
               {tabButton('topic')}
               {tabButton('mood')}
+              {tabButton('location')}
               {tabButton('beard')}
               <Button variant="outline" onClick={discardChanges} disabled={!hasFiltered}>
                 Clear all
@@ -138,7 +146,11 @@ export function Page({ isHomepage, progressBarData }: PageProps) {
                       passHref
                       shallow
                     >
-                      <a>
+                      <a
+                        onClick={() => {
+                          window.scroll(0, 0);
+                        }}
+                      >
                         <FilterTag
                           prefix={focusedTab}
                           thumbKey={key}
@@ -154,7 +166,7 @@ export function Page({ isHomepage, progressBarData }: PageProps) {
 
           <Divider />
 
-          <Text>
+          <Text fontSize={['md', 'md', 'xl']}>
             {hasFiltered ? (
               <>
                 Found {totalCount} songs <SongListDescription filters={filters} />.
