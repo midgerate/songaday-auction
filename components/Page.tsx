@@ -84,6 +84,7 @@ export function Page({ isHomepage, progressBarData }: PageProps) {
 
     return (
       <Button
+        width="100%"
         onClick={() => setFocusedTab(focused ? undefined : key)}
         isActive={focused || selected}
         textDecoration={focused && 'underline'}
@@ -129,19 +130,24 @@ export function Page({ isHomepage, progressBarData }: PageProps) {
         <VStack align="stretch" spacing={8}>
           {error && <Alert status="error">{error.message}</Alert>}
 
-          <VStack spacing={4} align="stretch">
-            <SimpleGrid gap={3} columns={[3, null, 6]}>
+          <HStack spacing={6} align="stretch">
+            <VStack>
               {tabButton('instrument')}
               {tabButton('topic')}
               {tabButton('mood')}
               {tabButton('location')}
               {tabButton('beard')}
-              <Button variant="outline" onClick={discardChanges} disabled={!hasFiltered}>
+              <Button
+                width="100%"
+                variant="outline"
+                onClick={discardChanges}
+                disabled={!hasFiltered}
+              >
                 Clear all
               </Button>
-            </SimpleGrid>
+            </VStack>
 
-            <SimpleGrid gap={3} columns={[2, 4, 6]}>
+            <SimpleGrid width="100%" gap={3} columns={[2, 4, 8]}>
               {loading
                 ? times(12, (i) => <Skeleton key={i} h="9rem" w="full" borderRadius="md" />)
                 : availableFilters?.[focusedTab]?.map((key) => (
@@ -167,7 +173,7 @@ export function Page({ isHomepage, progressBarData }: PageProps) {
                     </Link>
                   ))}
             </SimpleGrid>
-          </VStack>
+          </HStack>
 
           <Divider />
 
