@@ -1,6 +1,6 @@
 import { findSongs } from '../../lib/db';
 import { guardOnlyGet, handler, yup } from '../../lib/server/handler';
-import { Beard, Instrument, Location, Mood, Topic } from '../../lib/utils/constants';
+import { Beard, Instrument, Location, Mood, Topic, Year } from '../../lib/utils/constants';
 
 export default handler(async (req, res) => {
   guardOnlyGet(req, res);
@@ -12,6 +12,7 @@ export default handler(async (req, res) => {
     beard: req.query.beard as Beard,
     instrument: req.query.instrument as Instrument,
     tag: req.query.tag as string,
+    year: req.query.year as Year,
     page: req.query.page ? parseInt(req.query.page as string) : 0,
     size: req.query.size ? parseInt(req.query.size as string) : 12,
   });

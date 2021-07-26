@@ -10,7 +10,7 @@ import {
 } from '../lib/utils/constants';
 
 export default function SongListDescription({
-  filters: { location, topic, mood, beard, instrument, tag },
+  filters: { location, topic, mood, beard, instrument, tag, year },
 }: {
   filters: MinimannPropertyFilter;
 }) {
@@ -56,6 +56,15 @@ export default function SongListDescription({
     fragments.push(
       <Text as="span" key="with-value" fontWeight="semibold">
         {HumanBeard[beard] ?? `'${beard}'`} beard
+      </Text>,
+    );
+  }
+
+  if (year) {
+    fragments.push(<React.Fragment key="during"> during </React.Fragment>);
+    fragments.push(
+      <Text as="span" key="with-value" fontWeight="semibold">
+        Year {year}
       </Text>,
     );
   }

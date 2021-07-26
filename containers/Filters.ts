@@ -2,7 +2,7 @@ import { isEmpty, pickBy } from 'lodash-es';
 import { useRouter } from 'next/router';
 import { useCallback, useMemo } from 'react';
 import { createContainer } from 'unstated-next';
-import { Beard, Instrument, Location, Mood, Topic } from '../lib/utils/constants';
+import { Beard, Instrument, Location, Mood, Topic, Year } from '../lib/utils/constants';
 
 export type FilterParams = {
   id?: string;
@@ -12,6 +12,7 @@ export type FilterParams = {
   beard: Beard;
   instrument: Instrument;
   tag: string | string[];
+  year: Year;
 };
 
 const filterFalsy = (obj: Record<string, any>) => pickBy(obj);
@@ -33,6 +34,7 @@ export function useFilters() {
       beard: ((router.query.beard as string) as Beard) ?? null,
       instrument: ((router.query.instrument as string) as Instrument) ?? null,
       tag: router.query.tag ?? null,
+      year: ((router.query.year as string) as Year) ?? null,
     }),
     [router],
   );

@@ -2,7 +2,6 @@ import { Img } from '@chakra-ui/image';
 import { AspectRatio, BoxProps, Text, VStack } from '@chakra-ui/layout';
 import { forwardRef } from '@chakra-ui/system';
 import React, { PropsWithChildren } from 'react';
-
 import {
   Instrument,
   MISSING_INSTRUMENTS_FOR_YEAR,
@@ -25,6 +24,10 @@ const uriFromKey = (year: Year, prefix: string, key: string) => {
   // vocals branch
   if (prefix === 'instrument' && key === Instrument.Vocals) {
     return `/assets/missing_thumbnail.png`;
+  }
+
+  if (!year && prefix === 'year') {
+    return `/thumbnails/year_${key}.png`;
   }
 
   return `/thumbnails/${year ?? 'all'}/${prefix}_${key.toLowerCase()}.png`;

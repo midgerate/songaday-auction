@@ -133,21 +133,6 @@ export function Page({ isHomepage, progressBarData }: PageProps) {
           {error && <Alert status="error">{error.message}</Alert>}
 
           <Stack direction={['column', 'column', 'row']} spacing={6} align="stretch">
-            {/* <VStack spacing={4}>
-              {tabButton('instrument')}
-              {tabButton('topic')}
-              {tabButton('mood')}
-              {tabButton('location')}
-              {tabButton('beard')}
-              <Button
-                width="100%"
-                variant="outline"
-                onClick={discardChanges}
-                disabled={!hasFiltered}
-              >
-                Clear all
-              </Button>
-            </VStack> */}
             <Flex
               display={['grid', 'grid', 'flex']}
               gridTemplateColumns="repeat(3, minmax(0, 1fr))"
@@ -159,6 +144,7 @@ export function Page({ isHomepage, progressBarData }: PageProps) {
               {tabButton('mood')}
               {tabButton('location')}
               {tabButton('beard')}
+              {tabButton('year')}
               <Button
                 width="100%"
                 variant="outline"

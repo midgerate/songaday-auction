@@ -1,7 +1,7 @@
 import { mapValues, uniq } from 'lodash-es';
 import _db from '../generated/db';
 import { Song, SongsResponse } from './types';
-import { Beard, Instrument, Location, Mood, Topic } from './utils/constants';
+import { Beard, Instrument, Location, Mood, Topic, Year } from './utils/constants';
 
 const db = _db as Song[];
 
@@ -24,6 +24,7 @@ export function findSongs({
   beard,
   instrument,
   tag,
+  year,
   page,
   size,
 }: {
@@ -33,6 +34,7 @@ export function findSongs({
   beard: Beard;
   instrument: Instrument;
   tag: string;
+  year: Year;
   page: number;
   size: number;
 }): SongsResponse {
@@ -47,6 +49,7 @@ export function findSongs({
       beard ? song.beard === beard : true,
       instrument ? song.instrument === instrument : true,
       tag ? doesSongIncludeTags(song, tag) : true,
+      year ? song.year === year : true,
     ].every(Boolean);
   });
 
@@ -59,6 +62,7 @@ export function findSongs({
         memo.beard.push(song.beard);
         memo.instrument.push(song.instrument);
         memo.tags.push(song.tags);
+        memo.year.push(song.year);
         return memo;
       },
       {
@@ -68,6 +72,7 @@ export function findSongs({
         beard: [],
         instrument: [],
         tags: [],
+        year: [],
       },
     ),
     (values) => uniq(values),

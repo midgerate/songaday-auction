@@ -256,6 +256,11 @@ export const HumanInstrument: Record<Instrument, string> = {
   [Instrument.Claps]: 'Claps',
 };
 
+export const HumanYear: Record<Year, string> = {
+  [Year.One]: 'Year 1',
+  [Year.Two]: 'Year 2',
+};
+
 export type MinimannProperty =
   | typeof Location
   | typeof Topic
@@ -272,6 +277,7 @@ export interface MinimannPropertyFilter {
   beard?: Beard;
   instrument?: Instrument;
   tag?: string | string[];
+  year?: Year;
 }
 
 export const HumanMaps = {
@@ -280,6 +286,7 @@ export const HumanMaps = {
   mood: HumanMood,
   beard: HumanBeard,
   instrument: HumanInstrument,
+  year: HumanYear,
 };
 
 export const HumanKeys: Record<string, string> = {
@@ -288,6 +295,7 @@ export const HumanKeys: Record<string, string> = {
   mood: 'Mood',
   beard: 'Beard',
   instrument: 'Instrument',
+  year: 'Year',
 };
 
 export const MISSING_MOODS_FOR_YEAR = {
