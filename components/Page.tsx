@@ -120,7 +120,7 @@ export function Page({ isHomepage, progressBarData }: PageProps) {
           </>
         )}
 
-        <Heading as="h2" fontSize="3xl" mb="4">
+        <Heading id="filterSongs" as="h2" fontSize="3xl" mb="4">
           Filter All Songs
         </Heading>
 
@@ -159,18 +159,14 @@ export function Page({ isHomepage, progressBarData }: PageProps) {
               {loading
                 ? times(12, (i) => <Skeleton key={i} h="9rem" w="full" borderRadius="md" />)
                 : availableFilters?.[focusedTab]?.map((key) => {
+                    const href = makeHref({
+                      ...filters,
+                      // If the filters already includes the key, clicking again will
+                      // set it to null to remove it from the filters
+                      [focusedTab]: filters[focusedTab] === key ? null : key,
+                    });
                     return (
-                      <Link
-                        key={key}
-                        href={makeHref({
-                          ...filters,
-                          // If the filters already includes the key, clicking again will
-                          // set it to null to remove it from the filters
-                          [focusedTab]: filters[focusedTab] === key ? null : key,
-                        })}
-                        passHref
-                        shallow
-                      >
+                      <Link key={key} href={href === '/' ? '/#filterSongs' : href} passHref shallow>
                         <a
                           onClick={() => {
                             window.scroll(0, 0);
