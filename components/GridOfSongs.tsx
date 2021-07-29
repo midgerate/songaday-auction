@@ -10,13 +10,11 @@ export function GridOfSongs({
   children,
   columns = [1, 1, 2],
   showSimpleSongCard,
-  hideSimpleSongCardTitle,
   ...delegated
 }: BoxProps & {
   songs: Song[];
   columns?: number[];
   showSimpleSongCard?: boolean;
-  hideSimpleSongCardTitle?: boolean;
 }) {
   const { makeHref } = Filters.useContainer();
   return (
@@ -24,12 +22,7 @@ export function GridOfSongs({
       {songs?.map((song) => (
         <Box key={song.id} position="relative">
           {showSimpleSongCard ? (
-            <SongCardSimple
-              cursor="pointer"
-              h="full"
-              song={song}
-              hideSimpleSongCardTitle={hideSimpleSongCardTitle}
-            />
+            <SongCardSimple cursor="pointer" h="full" song={song} />
           ) : (
             <SongCard cursor="pointer" h="full" song={song} card />
           )}

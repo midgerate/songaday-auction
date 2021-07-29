@@ -5,14 +5,9 @@ import { Song } from '../lib/types';
 
 interface SongCardSimpleProps {
   song: Song;
-  hideSimpleSongCardTitle?: boolean;
 }
 
-function SongCardSimple({
-  song,
-  hideSimpleSongCardTitle,
-  ...delegated
-}: BoxProps & SongCardSimpleProps) {
+function SongCardSimple({ song, ...delegated }: BoxProps & SongCardSimpleProps) {
   return (
     <VStack
       {...{
@@ -27,14 +22,13 @@ function SongCardSimple({
       bg="white"
       {...delegated}
     >
-      {!hideSimpleSongCardTitle &&
-        (song ? (
-          <Heading as="h3" px="2" pt="3" pb="1" fontSize="sm" fontWeight="semibold" isTruncated>
-            {song.title}
-          </Heading>
-        ) : (
-          <Skeleton h="6" w="full" />
-        ))}
+      {song ? (
+        <Heading as="h3" px="2" pt="3" pb="1" fontSize="sm" fontWeight="semibold" isTruncated>
+          {song.title}
+        </Heading>
+      ) : (
+        <Skeleton h="6" w="full" />
+      )}
 
       {song ? (
         // <Image src={`/generated/${song.id}.png`} width={1792} height={768} />

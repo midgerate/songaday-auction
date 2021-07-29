@@ -10,14 +10,9 @@ import SongCard from './SongCard';
 interface AllSongsPageProps {
   songGridColumns?: number[];
   showSimpleSongCard?: boolean;
-  hideSimpleSongCardTitle?: boolean;
 }
 
-export function AllSongsPage({
-  songGridColumns,
-  showSimpleSongCard,
-  hideSimpleSongCardTitle,
-}: AllSongsPageProps) {
+export function AllSongsPage({ songGridColumns, showSimpleSongCard }: AllSongsPageProps) {
   const { filters } = Filters.useContainer();
   const { songs, loading, error, hasMore, loadMore, isHydrating } = useSongs(filters);
   const includeSkeletons = isHydrating || loading;
@@ -44,7 +39,6 @@ export function AllSongsPage({
             songs={songs}
             columns={songGridColumns}
             showSimpleSongCard={showSimpleSongCard}
-            hideSimpleSongCardTitle={hideSimpleSongCardTitle}
           >
             {includeSkeletons && times(12, (i) => <SongCard key={i} song={undefined} card />)}
             <div ref={sentinel} />
