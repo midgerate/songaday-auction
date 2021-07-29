@@ -16,10 +16,8 @@ import { times } from 'lodash-es';
 import Link from 'next/link';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { FeaturedSongs } from '../components/FeaturedSongs';
 import { HomeBanner } from '../components/HomeBanner';
 import { SongDetail } from '../components/SongDetail';
-// import { TestFeaturedSongs } from '../components/TestFeaturedSongs';
 import { Filters } from '../containers/Filters';
 import { SongsProgress } from '../lib/types';
 import { useSongs } from '../lib/useSongs';
@@ -106,19 +104,15 @@ export function Page({ isHomepage, progressBarData }: PageProps) {
       {isHomepage && !hasFiltered && <HomeBanner progressBarData={progressBarData} />}
 
       <Box py="8" px={{ base: '2', xl: '8' }}>
-        {isHomepage && !hasFiltered && (
+        {/* {isHomepage && !hasFiltered && (
           <>
-            {/* <Heading as="h2" mb="6" mt="8" fontSize="3xl">
-              TESTNET Featured Songs
-            </Heading>
-            <TestFeaturedSongs gridSize={6} /> */}
             <Heading as="h2" mb="6" mt="8" fontSize="3xl">
               Featured Songs
             </Heading>
             <FeaturedSongs gridSize={6} />
             <Divider my="12" />
           </>
-        )}
+        )} */}
 
         <Heading id="filterSongs" as="h2" fontSize="3xl" mb="4">
           Filter All Songs
