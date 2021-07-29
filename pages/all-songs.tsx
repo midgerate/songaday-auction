@@ -3,23 +3,29 @@ import { useState } from 'react';
 import { AllSongsPage } from '../components/AllSongsPage';
 
 const GRID_SIZE = {
-  small: 12,
-  medium: 6,
-  large: 4,
+  small: [4, 4, 12],
+  medium: [3, 3, 6],
+  large: [2, 2, 4],
 };
 
 function AllSongsIndex() {
-  const [gridSize, setGridSize] = useState(6);
+  const [gridSize, setGridSize] = useState(GRID_SIZE.medium);
 
-  const onGridSizeChange = (columns: number) => {
+  const onGridSizeChange = (columns: number[]) => {
     setGridSize(columns);
   };
   return (
     <>
       <Box py={10} px={6}>
-        <Flex alignItems="center" justifyContent="space-between">
-          <Heading as="h1">All Songs</Heading>
-          <ButtonGroup size="sm" variant="outline" spacing="6" isAttached>
+        <Flex
+          flexDirection={['column', 'column', 'row']}
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <Heading as="h1" mb={[4, 4, 0]}>
+            All Songs
+          </Heading>
+          <ButtonGroup size="sm" variant="outline" isAttached>
             <Button
               isActive={gridSize === GRID_SIZE.small}
               onClick={() => {
@@ -48,8 +54,7 @@ function AllSongsIndex() {
         </Flex>
       </Box>
       <AllSongsPage
-        songGridColumns={[2, 2, gridSize]}
-        hideFilters
+        songGridColumns={gridSize}
         showSimpleSongCard
         hideSimpleSongCardTitle={gridSize === GRID_SIZE.small}
       />

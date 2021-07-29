@@ -29,7 +29,7 @@ function SongCardSimple({
     >
       {!hideSimpleSongCardTitle &&
         (song ? (
-          <Heading as="h3" px="2" py="3" fontSize="sm" fontWeight="semibold" isTruncated>
+          <Heading as="h3" px="2" pt="3" pb="1" fontSize="sm" fontWeight="semibold" isTruncated>
             {song.title}
           </Heading>
         ) : (
