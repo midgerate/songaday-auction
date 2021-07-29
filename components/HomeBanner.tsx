@@ -9,7 +9,7 @@ import {
   Text,
 } from '@chakra-ui/react';
 import NextLink from 'next/link';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { SongsProgress } from '../lib/types';
 
 // Song a day started on `1/1/2009` so we calculate the number of
@@ -47,6 +47,11 @@ interface HomeBannerProps {
 export function HomeBanner({ progressBarData }: HomeBannerProps): JSX.Element {
   const { totalDays, totalYears, daysRemainder } = getNumberOfDays();
   const { totalSupply, totalSales, progressPercent } = progressBarData;
+  const [randomSongNumber, setRandomSongNumber] = useState(1);
+
+  useEffect(() => {
+    setRandomSongNumber(Math.floor(Math.random() * 730) + 1);
+  }, []);
 
   return (
     <Box py="12" px="6" bg="gray.50" borderBottom="1px" borderColor="gray.200" textAlign="center">
@@ -143,6 +148,18 @@ export function HomeBanner({ progressBarData }: HomeBannerProps): JSX.Element {
             <Text mt="4" color="gray.600">
               {totalSales} Songs Sold / {totalSupply} Total Songs
             </Text>
+            <SimpleGrid mt="16" mx="auto" columns={[1, 1, 2]} maxWidth="lg">
+              <NextLink href={`/song/${randomSongNumber}`} passHref>
+                <Button as="a" size="lg" colorScheme="blue" variant="outline" mx="4">
+                  Hear a Random Song
+                </Button>
+              </NextLink>
+              <NextLink href="/all-songs" passHref>
+                <Button as="a" mt={[4, 4, 0]} size="lg" colorScheme="blue" variant="outline" mx="4">
+                  View All Songs
+                </Button>
+              </NextLink>
+            </SimpleGrid>
           </Container>
         </>
       }
