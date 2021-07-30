@@ -1,7 +1,6 @@
 import { Box, Button, ButtonGroup, Flex, Heading } from '@chakra-ui/react';
 import { useState } from 'react';
 import { AllSongsImages } from '../components/AllSongsImages';
-import { AllSongsPage } from '../components/AllSongsPage';
 
 const GRID_SIZE = {
   small: [4, 4, 12],
@@ -54,11 +53,7 @@ function AllSongsIndex() {
           </ButtonGroup>
         </Flex>
       </Box>
-      {gridSize === GRID_SIZE.small ? (
-        <AllSongsImages songGridColumns={gridSize} />
-      ) : (
-        <AllSongsPage songGridColumns={gridSize} showSimpleSongCard />
-      )}
+      <AllSongsImages songGridColumns={gridSize} hideTitle={gridSize === GRID_SIZE.small} />
     </>
   );
 }
