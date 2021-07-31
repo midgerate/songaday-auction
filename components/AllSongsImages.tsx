@@ -23,7 +23,7 @@ export function AllSongsImages({
                   </Text>
                 )}
                 <AspectRatio ratio={4 / 3}>
-                  <Image src={`/generated/${song.id}.png`} layout="fill" objectFit="cover" />
+                  <Image src={`/generated-small/${song.id}.png`} layout="fill" objectFit="cover" />
                 </AspectRatio>
               </a>
             </Link>
