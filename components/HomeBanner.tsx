@@ -129,7 +129,7 @@ export function HomeBanner({ progressBarData }: HomeBannerProps): JSX.Element {
           <Text mt="4" mb="12" fontSize={['lg', null, '2xl']}>
             Currently,{' '}
             <Text as="strong" fontWeight="semibold">
-              {totalSupply}
+              {totalSupply - totalSales}
             </Text>{' '}
             of them are available as NFTs.
           </Text>
