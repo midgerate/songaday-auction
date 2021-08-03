@@ -18,10 +18,9 @@ export function SongDetail({ id }: { id: string }) {
 
   const { data, error } = useSWR(`/api/song/${id}`, fetcher);
 
-  const { data: youtubeData } = useSWR(
-    `https://www.googleapis.com/youtube/v3/videos?part=statistics&id=${data?.youtubeId}&key=AIzaSyCa6wBoE_a9knIds8-c46q5Z1saqelC8lA`,
-    fetcher,
-  );
+  const youtubeUrl = `https://www.googleapis.com/youtube/v3/videos?part=statistics&id=${data?.youtubeId}&key=AIzaSyCa6wBoE_a9knIds8-c46q5Z1saqelC8lA`;
+
+  const { data: youtubeData } = useSWR(data?.youtubeId ? youtubeUrl : null, fetcher);
 
   let videoViews = '';
   if (youtubeData?.items && youtubeData.items.length > 0) {
