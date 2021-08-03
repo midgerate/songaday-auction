@@ -22,6 +22,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Account } from '../containers/Account';
 import { Filters } from '../containers/Filters';
 import tokenIds from '../generated/tokenIds';
+import { formatNumber } from '../lib/helpers';
 import { Song } from '../lib/types';
 import { useNifty } from '../lib/useNifty';
 import { FilterTag } from './FilterTag';
@@ -41,6 +42,7 @@ interface SongCardProps {
   card?: boolean;
   tokenId?: string;
   openSeaPort?: OpenSeaPort;
+  videoViews?: string;
   setIsModalOpen?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -50,6 +52,7 @@ function SongCard({
   card = false,
   tokenId,
   openSeaPort,
+  videoViews,
   setIsModalOpen,
   ...delegated
 }: BoxProps & SongCardProps) {
@@ -185,17 +188,29 @@ function SongCard({
               )}
               {!niftyLoading && showBuyButton && (
                 <>
-                  <Text color="gray.600">Current Price:</Text>
-                  <Text
-                    display="flex"
-                    alignItems="center"
-                    mt="2"
-                    fontSize="3xl"
-                    fontWeight="semibold"
-                  >
-                    <Image src="/assets/icon-eth.svg" display="inline" width="20px" mr="2" />
-                    0.12
-                  </Text>
+                  <SimpleGrid gap={4} columns={2}>
+                    <Box>
+                      <Text color="gray.600">Current Price:</Text>
+                      <Text
+                        display="flex"
+                        alignItems="center"
+                        mt="2"
+                        fontSize="3xl"
+                        fontWeight="semibold"
+                      >
+                        <Image src="/assets/icon-eth.svg" display="inline" width="16px" mr="2" />
+                        0.12
+                      </Text>
+                    </Box>
+                    {videoViews && (
+                      <Box>
+                        <Text color="gray.600">Video Views:</Text>
+                        <Text mt="2" fontSize="3xl" color="gray.600">
+                          {formatNumber(parseInt(videoViews))}
+                        </Text>
+                      </Box>
+                    )}
+                  </SimpleGrid>
                   <Button
                     mt="6"
                     px={[12, 12, 16]}

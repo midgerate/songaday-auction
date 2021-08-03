@@ -18,6 +18,16 @@ export function SongDetail({ id }: { id: string }) {
 
   const { data, error } = useSWR(`/api/song/${id}`, fetcher);
 
+  const { data: youtubeData } = useSWR(
+    `https://www.googleapis.com/youtube/v3/videos?part=statistics&id=${data?.youtubeId}&key=AIzaSyCa6wBoE_a9knIds8-c46q5Z1saqelC8lA`,
+    fetcher,
+  );
+
+  let videoViews = '';
+  if (youtubeData?.items && youtubeData.items.length > 0) {
+    videoViews = youtubeData.items[0].statistics.viewCount;
+  }
+
   // Gets the `tokenId` from the url. This only works if they navigate here from
   // the `SongBuyCard` component, otherwise we don't know what the `tokenId` is.
   const { query } = useRouter();
@@ -42,6 +52,7 @@ export function SongDetail({ id }: { id: string }) {
         song={data}
         tokenId={tokenId}
         openSeaPort={openSeaPort}
+        videoViews={videoViews}
         setIsModalOpen={setIsModalOpen}
         w="full"
         maxWidth={{ base: 'full', lg: 'md', xl: 'lg', '2xl': 'xl' }}
