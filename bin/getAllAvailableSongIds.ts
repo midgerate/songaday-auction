@@ -4,9 +4,10 @@ import { config } from 'dotenv';
 import { writeFileSync } from 'fs';
 import fetch from 'node-fetch';
 import path from 'path';
+import allSongs from '../generated/db';
 config();
 
-function getSongId(data) {
+function getSongId(data): string[] {
   return data.map((song) => {
     if (song.name && song.name.includes('#')) {
       const splitSong = song.name.split('Song A Day #');
@@ -19,7 +20,7 @@ function getSongId(data) {
 }
 
 const main = async () => {
-  const allSongs = [];
+  const availableSongs = [];
 
   let loop = true;
   let offset = 0;
@@ -44,19 +45,21 @@ const main = async () => {
 
   while (loop === true) {
     const assets = await fetchAllSongs();
-    allSongs.push(assets);
+    availableSongs.push(assets);
     if (assets.length === 50) {
       offset += 50;
     } else {
       loop = false;
     }
   }
-  const allSongsFlat = allSongs.flat();
-  const songIds = getSongId(allSongsFlat);
+  const availableSongsFlat = availableSongs.flat();
+  const availableSongIds = getSongId(availableSongsFlat).filter((id) => id !== null);
+
+  const availableSongsData = allSongs.filter((song) => availableSongIds.includes(song.id));
 
   writeFileSync(
-    path.join(__dirname, '../generated/availableSongIds.js'),
-    `export default ${JSON.stringify(songIds.filter((id) => id !== null))}`,
+    path.join(__dirname, '../generated/availableSongs.js'),
+    `export default ${JSON.stringify(availableSongsData)}`,
     {
       flag: 'w',
     },
