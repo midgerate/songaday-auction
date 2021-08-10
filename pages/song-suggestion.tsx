@@ -133,7 +133,7 @@ function SongSuggestionIndex(): JSX.Element {
 
   return (
     <Container py="8">
-      <Heading as="h1" mb="12" textAlign="center">
+      <Heading as="h1" mt="4" mb="12" textAlign="center">
         Pick Three Random Traits
       </Heading>
 
