@@ -9,7 +9,7 @@ export interface SongsResponse {
 export interface Song {
   id: string;
   number: number; // which ordinal number is this song?
-  year: Year;
+  year: Year | string;
   youtubeId: string;
   title: string;
   description: string;
