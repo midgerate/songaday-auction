@@ -104,16 +104,6 @@ export function Page({ isHomepage, progressBarData }: PageProps) {
       {isHomepage && !hasFiltered && <HomeBanner progressBarData={progressBarData} />}
 
       <Box py="8" px={{ base: '2', xl: '8' }}>
-        {/* {isHomepage && !hasFiltered && (
-          <>
-            <Heading as="h2" mb="6" mt="8" fontSize="3xl">
-              Featured Songs
-            </Heading>
-            <FeaturedSongs gridSize={6} />
-            <Divider my="12" />
-          </>
-        )} */}
-
         <Heading id="filterSongs" as="h2" fontSize="3xl" mb="4">
           Filter All Songs
         </Heading>

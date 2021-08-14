@@ -9,6 +9,7 @@
     "images": "yarn script bin/images.ts",
     "thumbnails": "yarn script bin/thumbnails.ts",
     "tokens": "yarn script bin/tokens.ts",
+    "availablesongs": "yarn script bin/getAllAvailableSongIds.ts",
     "lint": "eslint --ext .ts,.tsx .",
     "start": "next start",
     "script": "ts-node -P tsconfig.bin.json"

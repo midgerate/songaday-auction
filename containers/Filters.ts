@@ -44,6 +44,12 @@ export function useFilters() {
     [],
   );
 
+  const makeSuggestionHref = useCallback(
+    ({ id, ...search }: Partial<FilterParams>) =>
+      `/${id ? `song/${id}` : 'song-suggestion'}${makeSearch(search)}`,
+    [],
+  );
+
   const pushFilter = useCallback(
     (filter: Partial<FilterParams>) =>
       router.push(makeHref({ ...filters, ...filter }), undefined, { shallow: true }),
@@ -59,7 +65,6 @@ export function useFilters() {
     (filterParams: Partial<FilterParams>) => {
       if (router?.query?.tag) {
         const originalHref = makeHref(filterParams);
-        console.log('original', originalHref);
 
         const queryTag = router.query.tag;
         let newQueryString;
@@ -81,7 +86,7 @@ export function useFilters() {
     [makeHref, router],
   );
 
-  return { filters, pushFilter, resetFilters, makeHref, appendFilters };
+  return { filters, pushFilter, resetFilters, makeHref, makeSuggestionHref, appendFilters };
 }
 
 export const Filters = createContainer(useFilters);
