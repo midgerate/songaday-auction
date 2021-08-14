@@ -148,10 +148,15 @@ export function HomeBanner({ progressBarData }: HomeBannerProps): JSX.Element {
             <Text mt="4" color="gray.600">
               {totalSales} Songs Sold / {totalSupply} Total Songs
             </Text>
-            <SimpleGrid mt="16" mx="auto" columns={[1, 1, 2]} maxWidth="lg">
+            <SimpleGrid mt="16" mx="auto" columns={[1, 1, 3]}>
               <NextLink href={`/song/${randomSongNumber}`} passHref>
                 <Button as="a" size="lg" colorScheme="blue" variant="outline" mx="4">
                   Hear a Random Song
+                </Button>
+              </NextLink>
+              <NextLink href={`/song-suggestion`} passHref>
+                <Button as="a" size="lg" colorScheme="blue" variant="outline" mx="4">
+                  Suggest a Song
                 </Button>
               </NextLink>
               <NextLink href="/all-songs" passHref>
