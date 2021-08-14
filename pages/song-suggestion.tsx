@@ -1,8 +1,10 @@
 import { Box, Button, Container, Flex, Heading, SimpleGrid } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
+import { BuySongModal } from '../components/BuySongModal';
 import SongCard from '../components/SongCard';
 import allAvailableSongs from '../generated/availableSongs';
 import { Song } from '../lib/types';
+import { useOpenSeaPort } from '../lib/useOpenSeaPort';
 import {
   HumanBeard,
   HumanInstrument,
@@ -131,6 +133,14 @@ function SongSuggestionIndex(): JSX.Element {
 
   const hideSelection = selectedTraits.length === 3 || randomTraits.length === 0;
 
+  const {
+    openSeaPort,
+    transactionStarted,
+    isModalOpen,
+    setIsModalOpen,
+    onModalClose,
+  } = useOpenSeaPort();
+
   return (
     <Container py="8">
       <Heading as="h1" mt="4" mb="12" textAlign="center">
@@ -186,10 +196,25 @@ function SongSuggestionIndex(): JSX.Element {
       {hideSelection && (
         <>
           {availableSongs.map((song: Song) => {
-            return <SongCard key={song.id} mb="8" cursor="pointer" h="full" song={song} card />;
+            return (
+              <Box key={song.id} p="4" border="1px" borderRadius="md" borderColor="gray.300">
+                <SongCard
+                  mb="8"
+                  song={song}
+                  openSeaPort={openSeaPort}
+                  setIsModalOpen={setIsModalOpen}
+                  embed
+                />
+              </Box>
+            );
           })}
         </>
       )}
+      <BuySongModal
+        isOpen={isModalOpen}
+        onClose={onModalClose}
+        transactionStarted={transactionStarted}
+      />
     </Container>
   );
 }
