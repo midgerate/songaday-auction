@@ -155,7 +155,7 @@ export function HomeBanner({ progressBarData }: HomeBannerProps): JSX.Element {
                 </Button>
               </NextLink>
               <NextLink href={`/song-suggestion`} passHref>
-                <Button as="a" size="lg" colorScheme="blue" variant="outline" mx="4">
+                <Button as="a" mt={[4, 4, 0]} size="lg" colorScheme="blue" variant="outline" mx="4">
                   Suggest a Song
                 </Button>
               </NextLink>
