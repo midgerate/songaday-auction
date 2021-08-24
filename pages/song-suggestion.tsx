@@ -1,8 +1,10 @@
 import { Box, Button, Container, Flex, Heading, SimpleGrid } from '@chakra-ui/react';
+import { GetStaticProps } from 'next';
 import { useEffect, useState } from 'react';
 import { BuySongModal } from '../components/BuySongModal';
 import SongCard from '../components/SongCard';
-import allAvailableSongs from '../generated/availableSongs';
+// import allAvailableSongs from '../generated/availableSongs';
+import allSongs from '../generated/db';
 import { Song } from '../lib/types';
 import { useOpenSeaPort } from '../lib/useOpenSeaPort';
 import {
@@ -17,6 +19,18 @@ interface Trait {
   trait: string;
   traitType: string;
   traitHuman: string;
+}
+
+function getSongId(data): string[] {
+  return data.map((song) => {
+    if (song.name && song.name.includes('#')) {
+      const splitSong = song.name.split('Song A Day #');
+      const number = splitSong[1];
+      return number;
+    } else {
+      return null;
+    }
+  });
 }
 
 function getAvailableTraits(songs: Song[], selectedTraits?: Trait[]): string[] {
@@ -96,13 +110,17 @@ function getRandomTraits(traits: string[]) {
   return [traitOne, traitTwo];
 }
 
-function SongSuggestionIndex(): JSX.Element {
+interface SongSuggestionIndexProps {
+  allAvailableSongs: Song[];
+}
+
+function SongSuggestionIndex({ allAvailableSongs }: SongSuggestionIndexProps): JSX.Element {
   const [traits, setTraits] = useState<string[]>([]);
   const [selectedTraits, setSelectedTraits] = useState<Trait[]>([]);
   const [availableSongs, setAvailableSongs] = useState(allAvailableSongs);
 
   useEffect(() => {
-    setTraits(getAvailableTraits(allAvailableSongs as Song[], null));
+    setTraits(getAvailableTraits(allAvailableSongs, null));
   }, []);
 
   const randomTraits = getRandomTraits(traits);
@@ -120,13 +138,13 @@ function SongSuggestionIndex(): JSX.Element {
     setAvailableSongs(newAvailableSongs);
     setSelectedTraits((prev) => {
       const newSelectedTraits = [trait, ...prev];
-      setTraits(getAvailableTraits(newAvailableSongs as Song[], newSelectedTraits));
+      setTraits(getAvailableTraits(newAvailableSongs, newSelectedTraits));
       return newSelectedTraits;
     });
   };
 
   const onReset = () => {
-    setTraits(getAvailableTraits(allAvailableSongs as Song[], null));
+    setTraits(getAvailableTraits(allAvailableSongs, null));
     setSelectedTraits([]);
     setAvailableSongs(allAvailableSongs);
   };
@@ -218,5 +236,52 @@ function SongSuggestionIndex(): JSX.Element {
     </Container>
   );
 }
+
+const ONE_DAY = 60 * 60 * 24;
+
+export const getStaticProps: GetStaticProps = async () => {
+  async function getAllAvailableSongs() {
+    const availableSongs = [];
+
+    let loop = true;
+    let offset = 0;
+
+    async function fetchAllSongs() {
+      try {
+        const response = await fetch(
+          `https://api.opensea.io/api/v1/assets?${new URLSearchParams({
+            collection: 'song-a-day',
+            limit: '50', // API is capped to 50
+            order_by: 'visitor_count',
+            owner: '0x3d9456ad6463a77bd77123cb4836e463030bfab4', // Jonathan's address
+            offset: offset.toString(),
+          })}`,
+        );
+        const data = await response.json();
+        return data.assets;
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    while (loop === true) {
+      const assets = await fetchAllSongs();
+      availableSongs.push(assets);
+      if (assets.length === 50) {
+        offset += 50;
+      } else {
+        loop = false;
+      }
+    }
+    const availableSongsFlat = availableSongs.flat();
+    const availableSongIds = getSongId(availableSongsFlat).filter((id) => id !== null);
+
+    return allSongs.filter((song) => availableSongIds.includes(song.id));
+  }
+
+  const availableSongsData = await getAllAvailableSongs();
+
+  return { props: { allAvailableSongs: availableSongsData }, revalidate: ONE_DAY };
+};
 
 export default SongSuggestionIndex;
