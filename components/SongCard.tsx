@@ -43,6 +43,7 @@ interface SongCardProps {
   tokenId?: string;
   openSeaPort?: OpenSeaPort;
   videoViews?: string;
+  publishedTime?: Date;
   setIsModalOpen?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -53,6 +54,7 @@ function SongCard({
   tokenId,
   openSeaPort,
   videoViews,
+  publishedTime,
   setIsModalOpen,
   ...delegated
 }: BoxProps & SongCardProps) {
@@ -179,52 +181,50 @@ function SongCard({
             <>{song ? <Text>{song.description}</Text> : <SkeletonText skeletonHeight="4" />}</>
           )}
           {!card && (
-            <Box mt="4" p="4" bg="gray.50" border="1px" borderColor="gray.300" borderRadius="md">
-              {niftyLoading && <Skeleton h="140px" />}
-              {!niftyLoading && !showBuyButton && (
-                <Button px={[12, 12, 16]} size="lg" colorScheme="blue" isDisabled={true}>
-                  {provider ? 'Sold Out' : 'Connect Wallet'}
-                </Button>
+            <>
+              {videoViews && (
+                <Box mt="1" mb="6">
+                  <Text color="gray.600" fontSize="sm">
+                    {formatNumber(parseInt(videoViews))} views &bull; Premiered{' '}
+                    {publishedTime && publishedTime.toLocaleDateString()}
+                  </Text>
+                </Box>
               )}
-              {!niftyLoading && showBuyButton && (
-                <>
-                  <SimpleGrid gap={4} columns={2}>
-                    <Box>
-                      <Text color="gray.600">Current Price:</Text>
-                      <Text
-                        display="flex"
-                        alignItems="center"
-                        mt="2"
-                        fontSize="3xl"
-                        fontWeight="semibold"
-                      >
-                        <Image src="/assets/icon-eth.svg" display="inline" width="16px" mr="2" />
-                        0.12
-                      </Text>
-                    </Box>
-                    {videoViews && (
-                      <Box>
-                        <Text color="gray.600">Video Views:</Text>
-                        <Text mt="2" fontSize="3xl" color="gray.600">
-                          {formatNumber(parseInt(videoViews))}
-                        </Text>
-                      </Box>
-                    )}
-                  </SimpleGrid>
-                  <Button
-                    mt="6"
-                    px={[12, 12, 16]}
-                    size="lg"
-                    colorScheme="blue"
-                    isLoading={isBuyLoading}
-                    isDisabled={!provider}
-                    onClick={buyAsset}
-                  >
-                    {provider ? 'Buy Song' : 'Connect Wallet'}
+              <Box mt="4" p="4" bg="gray.50" border="1px" borderColor="gray.300" borderRadius="md">
+                {niftyLoading && <Skeleton h="140px" />}
+                {!niftyLoading && !showBuyButton && (
+                  <Button px={[12, 12, 16]} size="lg" colorScheme="blue" isDisabled={true}>
+                    {provider ? 'Sold Out' : 'Connect Wallet'}
                   </Button>
-                </>
-              )}
-            </Box>
+                )}
+                {!niftyLoading && showBuyButton && (
+                  <>
+                    <Text color="gray.600">Current Price:</Text>
+                    <Text
+                      display="flex"
+                      alignItems="center"
+                      mt="2"
+                      fontSize="3xl"
+                      fontWeight="semibold"
+                    >
+                      <Image src="/assets/icon-eth.svg" display="inline" width="16px" mr="2" />
+                      0.12
+                    </Text>
+                    <Button
+                      mt="6"
+                      px={[12, 12, 16]}
+                      size="lg"
+                      colorScheme="blue"
+                      isLoading={isBuyLoading}
+                      isDisabled={!provider}
+                      onClick={buyAsset}
+                    >
+                      {provider ? 'Buy Song' : 'Connect Wallet'}
+                    </Button>
+                  </>
+                )}
+              </Box>
+            </>
           )}
         </Box>
         <Grid gap={4} gridTemplateColumns="repeat(auto-fit, 3rem)">

@@ -7,6 +7,7 @@ import SongCard from '../components/SongCard';
 import allSongs from '../generated/db';
 import { Song } from '../lib/types';
 import { useOpenSeaPort } from '../lib/useOpenSeaPort';
+import { useYoutubeData } from '../lib/useYoutubeData';
 import {
   HumanBeard,
   HumanInstrument,
@@ -121,7 +122,7 @@ function SongSuggestionIndex({ allAvailableSongs }: SongSuggestionIndexProps): J
 
   useEffect(() => {
     setTraits(getAvailableTraits(allAvailableSongs, null));
-  }, []);
+  }, [allAvailableSongs]);
 
   const randomTraits = getRandomTraits(traits);
 
@@ -150,6 +151,13 @@ function SongSuggestionIndex({ allAvailableSongs }: SongSuggestionIndexProps): J
   };
 
   const hideSelection = selectedTraits.length === 3 || randomTraits.length === 0;
+
+  let youtubeId;
+  if (availableSongs.length === 1 && hideSelection) {
+    youtubeId = availableSongs[0].youtubeId;
+  }
+
+  const { videoViews, publishedTime } = useYoutubeData(youtubeId);
 
   const {
     openSeaPort,
@@ -215,11 +223,13 @@ function SongSuggestionIndex({ allAvailableSongs }: SongSuggestionIndexProps): J
         <>
           {availableSongs.map((song: Song) => {
             return (
-              <Box key={song.id} p="4" border="1px" borderRadius="md" borderColor="gray.300">
+              <Box key={song.id} p="4" mb="8" border="1px" borderRadius="md" borderColor="gray.300">
                 <SongCard
                   mb="8"
                   song={song}
                   openSeaPort={openSeaPort}
+                  videoViews={videoViews}
+                  publishedTime={publishedTime}
                   setIsModalOpen={setIsModalOpen}
                   embed
                 />

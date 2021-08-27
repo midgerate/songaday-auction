@@ -4,6 +4,7 @@ import React from 'react';
 import useSWR from 'swr';
 import fetcher from '../lib/fetcher';
 import { useOpenSeaPort } from '../lib/useOpenSeaPort';
+import { useYoutubeData } from '../lib/useYoutubeData';
 import { BuySongModal } from './BuySongModal';
 import SongCard from './SongCard';
 
@@ -18,14 +19,7 @@ export function SongDetail({ id }: { id: string }) {
 
   const { data, error } = useSWR(`/api/song/${id}`, fetcher);
 
-  const youtubeUrl = `https://www.googleapis.com/youtube/v3/videos?part=statistics&id=${data?.youtubeId}&key=AIzaSyCa6wBoE_a9knIds8-c46q5Z1saqelC8lA`;
-
-  const { data: youtubeData } = useSWR(data?.youtubeId ? youtubeUrl : null, fetcher);
-
-  let videoViews = '';
-  if (youtubeData?.items && youtubeData.items.length > 0) {
-    videoViews = youtubeData.items[0].statistics.viewCount;
-  }
+  const { videoViews, publishedTime } = useYoutubeData(data?.youtubeId);
 
   // Gets the `tokenId` from the url. This only works if they navigate here from
   // the `SongBuyCard` component, otherwise we don't know what the `tokenId` is.
@@ -52,6 +46,7 @@ export function SongDetail({ id }: { id: string }) {
         tokenId={tokenId}
         openSeaPort={openSeaPort}
         videoViews={videoViews}
+        publishedTime={publishedTime}
         setIsModalOpen={setIsModalOpen}
         w="full"
         maxWidth={{ base: 'full', lg: 'md', xl: 'lg', '2xl': 'xl' }}
