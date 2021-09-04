@@ -51,7 +51,7 @@ function getApiKey(showAllSongs: boolean, page: number): string {
   return `https://api.opensea.io/api/v1/assets?${new URLSearchParams({
     collection: 'song-a-day',
     limit: showAllSongs ? '50' : '12', // API is capped to 50
-    order_by: 'visitor_count',
+    // order_by: 'visitor_count',
     owner: '0x3d9456ad6463a77bd77123cb4836e463030bfab4', // Jonathan's address
     offset: offset.toString(),
   })}`;
