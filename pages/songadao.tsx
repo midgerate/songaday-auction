@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react';
 import NextImage from 'next/image';
 
-function RoadmapIndex() {
+function SongADAOIndex() {
   return (
     <Container maxWidth="container.lg">
       <Box py={10} mb="12" color="gray.800" lineHeight="tall">
@@ -62,7 +62,9 @@ function RoadmapIndex() {
           </Box>
           <Box mt="6">
             <NextImage src="/assets/songadao-dog.gif" width={498} height={278} />
-            <Text color="gray.500">jake the dog, coolest dude.</Text>
+            <Text color="gray.500" textAlign="center">
+              jake the dog, coolest dude.
+            </Text>
           </Box>
         </SimpleGrid>
 
@@ -223,4 +225,4 @@ function RoadmapIndex() {
   );
 }
 
-export default RoadmapIndex;
+export default SongADAOIndex;
