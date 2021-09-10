@@ -139,8 +139,8 @@ function SongADAOIndex() {
           3
         </Text>
         <Text mt="1">
-          Song A Day NFT achieves digital scarcity through time. I will only ever write one song a
-          day. I wrote 2000 songs before Ethereum was invented. I wrote another 1500 before I
+          Song A Day NFT achieves digital scarcity through <em>time</em>. I will only ever write one
+          song a day. I wrote 2000 songs before Ethereum was invented. I wrote another 1500 before I
           learned about digital scarcity. All of these songs will soon be NFTs, and starting in late
           fall/early winter of 2022, as I enter my 14th year of Song A Day, I will be releasing each
           new song as an NFT, every single day.
