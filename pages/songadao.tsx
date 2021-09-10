@@ -139,9 +139,11 @@ function SongADAOIndex() {
           3
         </Text>
         <Text mt="1">
-          I often think about how, someday, I'll spend my last Hanukkah with my parents. How many
-          more do we have left? How many more nights will I put my kids to bed? How many more times
-          can I tuck them in and give them hugs and kisses and sing to them?
+          Song A Day NFT achieves digital scarcity through time. I will only ever write one song a
+          day. I wrote 2000 songs before Ethereum was invented. I wrote another 1500 before I
+          learned about digital scarcity. All of these songs will soon be NFTs, and starting in late
+          fall/early winter of 2022, as I enter my 14th year of Song A Day, I will be releasing each
+          new song as an NFT, every single day.
         </Text>
 
         <Text mt="6" fontSize="x-large" fontWeight="semibold">
