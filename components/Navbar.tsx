@@ -21,9 +21,9 @@ function Navbar() {
 
   const links = (
     <>
-      <Link href="https://www.jonathanmann.net/" fontSize={['sm', 'sm', 'md']} isExternal>
-        About
-      </Link>
+      <NextLink href="/about" passHref>
+        <Link fontSize={['sm', 'sm', 'md']}>About</Link>
+      </NextLink>
       <NextLink href="/songadao" passHref>
         <Link fontSize={['sm', 'sm', 'md']}>SongADAO</Link>
       </NextLink>
