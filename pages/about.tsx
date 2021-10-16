@@ -2,6 +2,28 @@ import { Box, Container } from '@chakra-ui/layout';
 import { Heading, Center, UnorderedList, ListItem, Link } from '@chakra-ui/react';
 import { LinkIcon } from '@chakra-ui/icons';
 
+function QuickLinks() {
+  const quickLinks = [
+    { title: 'What is Song A Day?', link: '#song-a-dao' },
+    { title: 'Who is Jonathan Mann?', link: '#who-is-mann' },
+    { title: 'Who does the art?', link: '#who-does-art' },
+  ];
+
+  return (
+    <UnorderedList marginInlineStart="0px" my="24px">
+      {quickLinks.map((item, idx) => {
+        return (
+          <ListItem listStyleType="none" my="16px" key={idx}>
+            <Link color="teal.500" href={item.link}>
+              <LinkIcon mr="4px" /> {item.title}
+            </Link>
+          </ListItem>
+        );
+      })}
+    </UnorderedList>
+  );
+}
+
 export default function About() {
   return (
     <>
@@ -17,24 +39,9 @@ export default function About() {
           </Heading>
         </Center>
       </Box>
+
       <Container maxW="container.sm" pt="16px">
-        <UnorderedList marginInlineStart="0px">
-          <ListItem listStyleType="none" my="16px">
-            <Link color="teal.500" href="#">
-              <LinkIcon mr="4px" /> What is Song A Day?
-            </Link>
-          </ListItem>
-          <ListItem listStyleType="none" my="16px">
-            <Link color="teal.500" href="#">
-              <LinkIcon mr="4px" /> Who is Jonathan Mann?
-            </Link>
-          </ListItem>
-          <ListItem listStyleType="none" my="16px">
-            <Link color="teal.500" href="#">
-              <LinkIcon mr="4px" /> Who does the art?
-            </Link>
-          </ListItem>
-        </UnorderedList>
+        <QuickLinks />
       </Container>
     </>
   );
