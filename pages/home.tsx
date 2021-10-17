@@ -149,52 +149,90 @@ const Feature = ({ title, button, image }: FeatureProps) => {
 };
 const Timeline = ({ title, day, month, description, last }: TimelineProps) => {
   return (
-    <Stack pos="relative" flexDirection="row" px={{ base: 8, md: 12 }} py="8" rounded="lg">
-      <Box
-        pos="relative"
-        _after={
-          !last && {
-            content: '""',
-            w: 8,
-            h: '300px',
-            bg: 'teal.50',
-            right: '66px',
-            pos: 'absolute',
-            zIndex: '-1',
-            top: '20px',
-          }
+    <Stack
+      pos="relative"
+      flexDirection="row"
+      px={{ base: 4, sm: 12 }}
+      py="8"
+      rounded="lg"
+      _after={
+        !last && {
+          content: '""',
+          w: { base: 4, md: 6, sm: 8 },
+          h: 'full',
+          bg: 'teal.50',
+          left: { base: '54px', md: '120px', sm: '66px' },
+          pos: 'absolute',
+          zIndex: '-1',
+          top: '40px',
         }
-      >
+      }
+    >
+      <Box pos="relative">
         <Box
           justifyContent="center"
           alignItems="center"
           display="flex"
           flexDirection="column"
-          w={40}
-          h={40}
+          w={{ base: 24, sm: 40 }}
+          h={{ base: 24, sm: 40 }}
           rounded="full"
-          borderWidth={12}
+          borderWidth={{ base: 8, sm: 12 }}
           borderColor="teal.50"
           bg="white"
           pos="relative"
           zIndex={9}
         >
-          <Text lineHeight="none" fontSize="2xl" fontWeight="medium" align="center">
+          <Text
+            lineHeight="none"
+            fontSize={{ base: 'xl', sm: '2xl' }}
+            fontWeight="medium"
+            align="center"
+          >
             {month}
           </Text>
-          <Text lineHeight="none" fontSize="6xl" color="teal.600" fontWeight="bold" align="center">
+          <Text
+            lineHeight="none"
+            fontSize={{ base: '3xl', sm: '6xl' }}
+            color="teal.600"
+            fontWeight="bold"
+            align="center"
+          >
             {day}
           </Text>
         </Box>
       </Box>
-      <Box pos="relative" zIndex={-10} top={-2} left={-20} justifyContent="flex-start" flex="1">
-        <Box pos="relative" zIndex={6} px={32} py={8} bg="teal.100" rounded="lg">
-          <Text fontWeight="semibold" fontSize="2xl">
+      <Box
+        pos="relative"
+        zIndex={-10}
+        top={-2}
+        left={{ base: -10, sm: -20 }}
+        justifyContent="flex-start"
+        flex="1"
+      >
+        <Box
+          pos="relative"
+          zIndex={6}
+          px={{ base: 14, md: 24, sm: 32 }}
+          py={{ base: 4, sm: 8 }}
+          bg="teal.100"
+          rounded="lg"
+        >
+          <Text fontWeight="semibold" fontSize={{ base: 'lg', sm: '2xl' }}>
             {title}
           </Text>
         </Box>
-        <Box w="90%" pos="relative" zIndex={5} top={-1} px={32} py={4} bg="teal.300" rounded="lg">
-          <Text fontWeight="semibold" fontSize="2xl">
+        <Box
+          w={{ base: 'full', sm: '90%' }}
+          pos="relative"
+          zIndex={5}
+          top={-1}
+          px={{ base: 14, md: 24, sm: 32 }}
+          py={4}
+          bg="teal.300"
+          rounded="lg"
+        >
+          <Text fontWeight="semibold" fontSize={{ base: 'lg', sm: '2xl' }}>
             {description}
           </Text>
         </Box>
@@ -263,7 +301,7 @@ const Footer = () => {
             JonathanMann
           </Link>
         </Stack>
-        <Text fontWeight="semibold">
+        <Text fontWeight="semibold" align="center">
           Song A Day World, Song A Day, and SongADAO ©Copyright 2021 Jonathan Mann & SongADAO LLC
         </Text>
       </Container>
@@ -285,7 +323,7 @@ export default function Home() {
           >
             SongADAO is a group of humans who support one song a day, forever.
           </Text>
-          <SimpleGrid gap={{ base: 12, sm: 20 }} columns={{ base: 1, md: 3 }} spacing={10}>
+          <SimpleGrid gap={{ base: 12, sm: 20 }} columns={{ base: 1, lg: 3 }} spacing={10}>
             <Feature
               title="SongADAO owns the rights and revenue to all Song A Day songs."
               image={<Image w="20" h="20" src="/assets/contract.png" alt="Segun Adebayo" />}
@@ -304,7 +342,13 @@ export default function Home() {
           </SimpleGrid>
         </Box>
         <Box>
-          <Text align="center" pt="32" pb="6" fontSize="4xl" fontWeight="bold">
+          <Text
+            align="center"
+            pt={{ base: 10, sm: 32 }}
+            pb={{ base: 2, sm: 6 }}
+            fontSize="4xl"
+            fontWeight="bold"
+          >
             SongADAO Timeline:
           </Text>
           <Flex flexDirection="column">
@@ -339,8 +383,8 @@ export default function Home() {
           <Text
             lineHeight="tall"
             align="center"
-            pt="32"
-            pb="6"
+            pt={{ base: 10, sm: 32 }}
+            pb={{ base: 2, sm: 6 }}
             fontSize={{ base: '2xl', sm: '4xl' }}
             fontWeight="bold"
           >
