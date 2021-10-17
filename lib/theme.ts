@@ -19,10 +19,16 @@ const override: ThemeOverride = {
     global: {
       body: {
         fontFamily: 'body',
-        color: 'black',
+        color: 'teal.900',
         bg: 'white',
         overflowX: 'hidden',
-        lineHeight: 'normal',
+        lineHeight: '180%',
+      },
+      a: {
+        color: 'teal.500',
+        _hover: {
+          textDecoration: 'underline',
+        },
       },
     },
   },
