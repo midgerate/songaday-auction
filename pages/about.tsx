@@ -1,388 +1,191 @@
-import { ReactElement } from 'react';
+import { Box, Container } from '@chakra-ui/layout';
 import {
-  Stack,
-  Box,
-  Flex,
-  Button,
-  Text,
-  Image,
+  Heading,
   Center,
-  SimpleGrid,
-  Stat,
-  StatLabel,
-  StatNumber,
-  Container,
+  UnorderedList,
+  ListItem,
   Link,
+  Text,
+  Stack,
+  VStack,
+  AspectRatio,
 } from '@chakra-ui/react';
+import { LinkIcon } from '@chakra-ui/icons';
 
-interface CountdownProps {
-  title: string;
-  stat: string;
+function QuickLinks() {
+  const quickLinks = [
+    { title: 'What is Song A Day?', link: '#songadao' },
+    { title: 'Who is Jonathan Mann?', link: '#who-is-mann' },
+    { title: 'Who does the art?', link: '#who-does-art' },
+  ];
+
+  return (
+    <Container maxW="container.sm">
+      <UnorderedList marginInlineStart="0px" my="32px">
+        {quickLinks.map((item, idx) => {
+          return (
+            <ListItem listStyleType="none" my="16px" key={idx}>
+              <Link color="teal.500" href={item.link}>
+                <LinkIcon mr="4px" /> {item.title}
+              </Link>
+            </ListItem>
+          );
+        })}
+      </UnorderedList>
+    </Container>
+  );
 }
-interface FeatureProps {
-  title: string;
-  button: string;
-  image: ReactElement;
-}
-interface TimelineProps {
-  title: string;
-  description: string;
-  month: string;
-  day: number;
-  last?: boolean;
-}
-const Hero = () => {
-  return (
-    <Flex
-      w="full"
-      h={{ base: 'auto', sm: '530px' }}
-      backgroundImage="/assets/transparent.banner.png"
-      backgroundSize="cover"
-      backgroundPosition="center center"
-    >
-      <Center w="sm" display={{ base: 'none', xl: 'block' }} pos="relative">
-        <Image
-          maxW="56"
-          pos="absolute"
-          top="20"
-          left="16"
-          src="/assets/eyeOpen-face.png"
-          alt="Segun Adebayo"
-        />
-      </Center>
-      <Box
-        flex="1"
-        display={{ base: 'block', sm: 'flex' }}
-        alignItems="flex-start"
-        justifyContent="center"
-      >
-        <Box
-          mt={{ base: 0, sm: 16 }}
-          p={{ base: 4, sm: 8 }}
-          bg="white"
-          maxW="xl"
-          boxShadow={{ base: 'none', sm: 'xl' }}
-          rounded={{ base: 'none', sm: 'lg' }}
-          textAlign="center"
-        >
-          <Center mt={{ base: 0, sm: -20 }}>
-            <Image w={{ base: 72, sm: 56 }} src="/assets/songADAOLogo.png" alt="Segun Adebayo" />
-          </Center>
-          <Box px={{ base: 0, sm: 16 }}>
-            <Text
-              align="left"
-              fontSize="xl"
-              fontWeight="medium"
-              pt={{ base: 10, sm: 2 }}
-              pb={{ base: 6, sm: 1 }}
-            >
-              Presale Ends In:
-            </Text>
-            <SimpleGrid gap={{ base: 4, sm: 6 }} columns={3} spacing={{ base: 6, sm: 12 }}>
-              <CountDownCard title="Days" stat="99" />
-              <CountDownCard title="Hours" stat="23" />
-              <CountDownCard title="Minutes" stat="59" />
-            </SimpleGrid>
-            <Box>
-              <Text fontSize="xl" fontWeight="medium" pt="6" pb="3">
-                -42 NFTs Remain-
-              </Text>
-              <Button bg="teal.300" fontSize="lg" variant="outline" mx="4" size="lg">
-                Claim Your Spot
-              </Button>
-            </Box>
-          </Box>
-        </Box>
-      </Box>
-      <Center display={{ base: 'none', xl: 'block' }} pos="relative" w="sm">
-        <Image
-          maxW="40"
-          pos="absolute"
-          top="10"
-          left="14"
-          src="/assets/eyeClose-face.png"
-          alt="Segun Adebayo"
-        />
-      </Center>
-    </Flex>
-  );
-};
-const CountDownCard = ({ title, stat }: CountdownProps) => {
-  return (
-    <Stat px={{ base: 4, md: 3 }} py="2" bg="teal.50" shadow="md" rounded="lg">
-      <StatNumber fontSize="5xl" color="teal.600" fontWeight="bold">
-        {stat}
-      </StatNumber>
-      <StatLabel fontSize="md" color="teal.400" fontWeight="medium" isTruncated>
-        {title}
-      </StatLabel>
-    </Stat>
-  );
-};
-const Feature = ({ title, button, image }: FeatureProps) => {
-  return (
-    <Stack
-      alignItems="center"
-      px={{ base: 8, md: 12 }}
-      py="8"
-      bg="teal.50"
-      rounded={{ base: 'none', sm: 'lg' }}
-    >
-      <Text fontWeight="medium" align="center" fontSize="2xl">
-        {title}
-      </Text>
-      <Box py="4">{image}</Box>
-      <Button
-        bg="none"
-        border="1px"
-        borderColor="teal.600"
-        color="teal.600"
-        variant="outline"
-        mx="4"
-        size="md"
-        fontSize="xl"
-      >
-        {button}
-      </Button>
-    </Stack>
-  );
-};
-const Timeline = ({ title, day, month, description, last }: TimelineProps) => {
-  return (
-    <Stack pos="relative" flexDirection="row" px={{ base: 8, md: 12 }} py="8" rounded="lg">
-      <Box
-        pos="relative"
-        _after={
-          !last && {
-            content: '""',
-            w: 8,
-            h: '300px',
-            bg: 'teal.50',
-            right: '66px',
-            pos: 'absolute',
-            zIndex: '-1',
-            top: '20px',
-          }
-        }
-      >
-        <Box
-          justifyContent="center"
-          alignItems="center"
-          display="flex"
-          flexDirection="column"
-          w={40}
-          h={40}
-          rounded="full"
-          borderWidth={12}
-          borderColor="teal.50"
-          bg="white"
-          pos="relative"
-          zIndex={9}
-        >
-          <Text lineHeight="none" fontSize="2xl" fontWeight="medium" align="center">
-            {month}
-          </Text>
-          <Text lineHeight="none" fontSize="6xl" color="teal.600" fontWeight="bold" align="center">
-            {day}
-          </Text>
-        </Box>
-      </Box>
-      <Box pos="relative" zIndex={-10} top={-2} left={-20} justifyContent="flex-start" flex="1">
-        <Box pos="relative" zIndex={6} px={32} py={8} bg="teal.100" rounded="lg">
-          <Text fontWeight="semibold" fontSize="2xl">
-            {title}
-          </Text>
-        </Box>
-        <Box w="90%" pos="relative" zIndex={5} top={-1} px={32} py={4} bg="teal.300" rounded="lg">
-          <Text fontWeight="semibold" fontSize="2xl">
-            {description}
-          </Text>
-        </Box>
-      </Box>
-    </Stack>
-  );
-};
-const Footer = () => {
-  return (
-    <Box bg="teal.50" color="gray.700">
-      <Container
-        as={Stack}
-        spacing={6}
-        py={8}
-        direction="column"
-        align={{ base: 'flex-start', sm: 'center' }}
-      >
-        <Stack
-          align={{ base: 'flex-start', sm: 'center' }}
-          direction={{ base: 'column', sm: 'row' }}
-          spacing={6}
-        >
-          <Link
-            borderBottom="2px"
-            _hover={{
-              borderColor: 'teal.50',
-            }}
-            href="#"
-          >
-            Discord
-          </Link>
-          <Link
-            borderBottom="2px"
-            _hover={{
-              borderColor: 'teal.50',
-            }}
-            href="#"
-          >
-            Twitter
-          </Link>
-          <Link
-            borderBottom="2px"
-            _hover={{
-              borderColor: 'teal.50',
-            }}
-            href="#"
-          >
-            Youtube
-          </Link>
-          <Link
-            borderBottom="2px"
-            _hover={{
-              borderColor: 'teal.50',
-            }}
-            href="#"
-          >
-            Soundcloud
-          </Link>
-          <Link
-            borderBottom="2px"
-            _hover={{
-              borderColor: 'teal.50',
-            }}
-            href="#"
-          >
-            JonathanMann
-          </Link>
-        </Stack>
-        <Text fontWeight="semibold">
-          Song A Day World, Song A Day, and SongADAO ©Copyright 2021 Jonathan Mann & SongADAO LLC
-        </Text>
-      </Container>
-    </Box>
-  );
-};
+
 export default function About() {
   return (
     <>
-      <Hero />
-      <Box py="16" px={{ base: '0', xl: '8', sm: '12' }}>
-        <Box>
-          <Text
-            display={{ base: 'none', sm: 'block' }}
-            align="center"
-            py="12"
-            fontSize="4xl"
-            fontWeight="bold"
-          >
-            SongADAO is a group of humans who support one song a day, forever.
-          </Text>
-          <SimpleGrid gap={{ base: 12, sm: 20 }} columns={{ base: 1, md: 3 }} spacing={10}>
-            <Feature
-              title="SongADAO owns the rights and revenue to all Song A Day songs."
-              image={<Image w="20" h="20" src="/assets/contract.png" alt="Segun Adebayo" />}
-              button="Explore the Songs"
-            />
-            <Feature
-              title="Members vote to govern the DAO’s use of resources"
-              image={<Image w="20" h="20" src="/assets/judge.png" alt="Segun Adebayo" />}
-              button="Find Out More"
-            />
-            <Feature
-              title="Each Song A Day NFT gets you 1 vote in SongADAO."
-              image={<Image w="20" h="20" src="/assets/voting.png" alt="Segun Adebayo" />}
-              button="Grab an NFT"
-            />
-          </SimpleGrid>
-        </Box>
-        <Box>
-          <Text align="center" pt="32" pb="6" fontSize="4xl" fontWeight="bold">
-            SongADAO Timeline:
-          </Text>
-          <Flex flexDirection="column">
-            <Timeline
-              month="OCT"
-              day={30}
-              title="NFT PRESALE ENDS"
-              description="The proto-DAO launches as soon as the presale ends. Pre-sale NFTs are Ξ0.12, the cheapest you’ll find them pre-auction!"
-            />
-            <Timeline
-              month="NOV"
-              day={1}
-              title="DAILY RINKEBY TEST AUCTIONS BEGIN"
-              description="Winners get a special mainnet NFT for the Testnet Album, a collection of community-suggested songs. Max 47 winners!"
-            />
-            <Timeline
-              month="DEC"
-              day={5}
-              title="THE BIG S.A.D. DROP!"
-              description="Years 4-13 will be sold for Ξ0.2 each. Proceeds go to me. Some of my best songs are in this batch, so each NFT will be minted with a unique, randomized song."
-            />
-            <Timeline
-              month="DEC"
-              day={6}
-              title="DAILY SONG AUCTIONS BEGIN!"
-              description="After the Big S.A.D Drop, I’ll be up-to-date on NFTs! Each new song I make will be minted and auctioned THAT VERY SAME DAY! And all the proceeds from the sale will go to SongADAO."
-              last
-            />
-          </Flex>
-        </Box>
-        <Container display="flex" flexDirection="column" alignItems="center">
-          <Text
-            lineHeight="tall"
-            align="center"
-            pt="32"
-            pb="6"
-            fontSize={{ base: '2xl', sm: '4xl' }}
-            fontWeight="bold"
-          >
-            There’s no better time to join this
-            <Link
-              mx={2}
-              py={2}
-              borderBottom="2px"
-              _hover={{
-                borderColor: 'teal.100',
-                bg: 'teal.100',
-              }}
-              href="#"
-            >
-              grand experiment
-            </Link>
-            .
-          </Text>
-          <Text
-            lineHeight="taller"
-            align="center"
-            pt="4"
-            pb="6"
-            fontSize={{ base: '2xl', sm: '4xl' }}
-            fontWeight="bold"
-          >
-            And you can pick it up for a song!
-          </Text>
-          <Button
-            bg="teal.300"
-            border="0"
-            color="teal.600"
-            variant="outline"
-            mx="4"
-            size="md"
-            fontSize="xl"
-          >
-            Get your NFT
-          </Button>
-        </Container>
+      <Box
+        bgImage="url('assets/forest-tower.jpg')"
+        bgPosition="center"
+        bgRepeat="no-repeat"
+        bgSize="cover"
+      >
+        <Center h="265px">
+          <Heading as="h1" maxW="container.md" fontSize="4xl">
+            About
+          </Heading>
+        </Center>
       </Box>
-      <Footer />
+
+      <QuickLinks />
+
+      <Center bgColor="hsla(176, 36%, 92%, 1)" h="148px" id="songadao">
+        <Stack>
+          <Heading as="h3" fontSize="2xl">
+            What is Song A Day?
+          </Heading>
+          <Text fontSize="lg">A new song, every day. Forever.</Text>
+        </Stack>
+      </Center>
+
+      <Container maxW="sm" p="16px">
+        <VStack spacing="16px" px="16px">
+          <Text lineHeight="1.8" fontSize="md" pt="8px">
+            Song A Day is different from other NFT projects. It did not grow directly out of the
+            blockchain. I had written 2000 songs before Ethereum was even invented. I wrote another
+            1500 before I learned about digital scarcity. But from the moment I saw CryptoPunks, I
+            knew that Song A Day was a perfect fit.
+          </Text>
+          <Text lineHeight="1.8" fontSize="md">
+            Song A Day is many things. It's about *time.* I measure the days by songs.
+          </Text>
+          <Text lineHeight="1.8" fontSize="md">
+            Song A Day is a journal. It is quite literally a record of my creative life.
+          </Text>
+          <Text lineHeight="1.8" fontSize="md">
+            Song A Day can be a burden, a joy, a challenge, a bore - all at the same time.{' '}
+          </Text>
+          <Text lineHeight="1.8" fontSize="md">
+            Above all, Song A Day is an invitation to make stuff. Sometimes it's good stuff,
+            sometimes it's bad stuff, but the making is the most important part.
+          </Text>
+        </VStack>
+
+        <Box p="16px">
+          <Heading as="h3" fontSize="xl" py="8px">
+            History
+          </Heading>
+          <VStack spacing="16px">
+            <Text lineHeight="1.8" fontSize="md">
+              At the height of the 2008 financial crash. I was unemployed. I decided to try to write
+              a song every day in January. By the end of the month, I was having so much fun (and I
+              was still unemployed), I aimed for a year. At the end of 2009, I made the project
+              indefinite. As of now, on the cusp of Year 14, I hold the Guinness World Record for
+              “Most Consecutive Days Writing a Song.”
+            </Text>
+            <Text lineHeight="1.8" fontSize="md">
+              For the first few years of the project, I made my living entering online video
+              contests. I'd enter 12 contests in 12 days, win one or two of them, and that would be
+              my income for the month. As time went on, I started cobbling together a living from
+              many different sources: Patreon, YouTube ads, streaming revenue, commissions, playing
+              at conferences, writing themes songs and much more.
+            </Text>
+            <Text lineHeight="1.8" fontSize="md">
+              It's always been my dream to make Song A Day itself my sole source of income. Now,
+              thanks to you, and this DAO, that's finally a possibility.
+            </Text>
+          </VStack>
+        </Box>
+      </Container>
+
+      <Center bgColor="hsla(176, 36%, 92%, 1)" h="148px" id="who-is-mann">
+        <Stack>
+          <Heading as="h3" fontSize="2xl">
+            Who is Jonathan Mann?
+          </Heading>
+          <Text fontSize="lg">I write a song a day.</Text>
+        </Stack>
+      </Center>
+
+      <Container maxW="sm" p="16px">
+        <VStack spacing="16px" px="16px">
+          <Text lineHeight="1.8" fontSize="md" pt="8px">
+            I started writing songs when I was 12. I wrote my first song on the back of a pizza box.
+            It wasn't a very good song.
+          </Text>
+          <Text lineHeight="1.8" fontSize="md">
+            I feel really lucky though, because from that age onwards, I had a singular focus in my
+            life: I wanted to write songs. I couldn't really sing, and I barely played guitar. It
+            took me a long time before I made anything good. But none of that mattered: Writings
+            songs is the only thing I have ever wanted to do.
+          </Text>
+          <Text lineHeight="1.8" fontSize="md">
+            I went to college at Bennington where I started learning how to record myself. My friend
+            Will and I stayed up all night and wrote and recorded 40 songs, each forty seconds long.
+            My friend Thomas and I staged a giant rock opera called The Last Nympho Leprechaun. From
+            2003-6 I wrote a song almost every week for the online songwriting competition,
+            SongFight.org.
+          </Text>
+          <Text lineHeight="1.8" fontSize="md">
+            In grad school at CalArts I made the world's first rock opera based on Super Mario. It
+            was featured on G4, the premiere gaming channel of the aughts (iykyk).
+          </Text>
+          <Text lineHeight="1.8" fontSize="md">
+            Subsequently, I got an internship at G4, and ended up writing a bunch of songs for
+            different shows on the channel, culminating in the musical episode of their flagship
+            review show, X-Play.
+          </Text>
+        </VStack>
+
+        <Box my="24px">
+          <AspectRatio maxW="560px" ratio={4 / 3} px="16px">
+            <iframe
+              width="560"
+              height="315"
+              src="https://www.youtube-nocookie.com/embed/4m-JvGyxo0A"
+              title="YouTube video player"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          </AspectRatio>
+          <Text fontSize="sm" color="gray.600" mt="8px">
+            The Mario Opera on G4
+          </Text>
+        </Box>
+
+        <Box my="24px">
+          <AspectRatio maxW="560px" ratio={4 / 3} px="16px">
+            <iframe
+              width="560"
+              height="315"
+              src="https://www.youtube-nocookie.com/embed/J59Ck0xgDyw"
+              title="YouTube video player"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          </AspectRatio>
+          <Text fontSize="sm" color="gray.600" mt="8px">
+            X-Play (The Musical) on G4
+          </Text>
+        </Box>
+      </Container>
     </>
   );
 }
