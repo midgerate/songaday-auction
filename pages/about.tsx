@@ -111,6 +111,46 @@ export default function About() {
           </VStack>
         </Box>
       </Container>
+
+      <Center bgColor="hsla(176, 36%, 92%, 1)" h="148px" id="who-is-mann">
+        <Stack>
+          <Heading as="h3" fontSize="2xl">
+            Who is Jonathan Mann?
+          </Heading>
+          <Text fontSize="lg">I write a song a day.</Text>
+        </Stack>
+      </Center>
+
+      <Container maxW="sm" p="16px">
+        <VStack spacing="16px" px="16px">
+          <Text lineHeight="1.8" fontSize="md" pt="8px">
+            I started writing songs when I was 12. I wrote my first song on the back of a pizza box.
+            It wasn't a very good song.
+          </Text>
+          <Text lineHeight="1.8" fontSize="md">
+            I feel really lucky though, because from that age onwards, I had a singular focus in my
+            life: I wanted to write songs. I couldn't really sing, and I barely played guitar. It
+            took me a long time before I made anything good. But none of that mattered: Writings
+            songs is the only thing I have ever wanted to do.
+          </Text>
+          <Text lineHeight="1.8" fontSize="md">
+            I went to college at Bennington where I started learning how to record myself. My friend
+            Will and I stayed up all night and wrote and recorded 40 songs, each forty seconds long.
+            My friend Thomas and I staged a giant rock opera called The Last Nympho Leprechaun. From
+            2003-6 I wrote a song almost every week for the online songwriting competition,
+            SongFight.org.
+          </Text>
+          <Text lineHeight="1.8" fontSize="md">
+            In grad school at CalArts I made the world's first rock opera based on Super Mario. It
+            was featured on G4, the premiere gaming channel of the aughts (iykyk).
+          </Text>
+          <Text lineHeight="1.8" fontSize="md">
+            Subsequently, I got an internship at G4, and ended up writing a bunch of songs for
+            different shows on the channel, culminating in the musical episode of their flagship
+            review show, X-Play.
+          </Text>
+        </VStack>
+      </Container>
     </>
   );
 }
