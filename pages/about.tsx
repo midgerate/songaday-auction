@@ -1,4 +1,4 @@
-import { Box, Container } from '@chakra-ui/layout';
+import { Box } from '@chakra-ui/layout';
 import {
   Heading,
   Center,
@@ -7,7 +7,6 @@ import {
   Link,
   Text,
   Stack,
-  VStack,
   AspectRatio,
 } from '@chakra-ui/react';
 import { LinkIcon } from '@chakra-ui/icons';
@@ -20,18 +19,29 @@ function QuickLinks() {
   ];
 
   return (
-    <Box mx={8}>
+    <Box>
       <UnorderedList marginInlineStart="unset" my={8}>
         {quickLinks.map((item, idx) => {
           return (
             <ListItem listStyleType="none" my={5} key={idx}>
-              <Link href={item.link}>
+              <Link href={item.link} color="teal.500">
                 <LinkIcon mr={1} /> {item.title}
               </Link>
             </ListItem>
           );
         })}
       </UnorderedList>
+    </Box>
+  );
+}
+
+function FullWidthHeading(props: { heading: string; subHeading: string; anchorId: string }) {
+  return (
+    <Box bgColor="hsla(176, 36%, 92%, 1)" h={32} p={8} id={props.anchorId} mx={-8} mt={8}>
+      <Heading as="h2" fontSize="2xl">
+        {props.heading}
+      </Heading>
+      <Text fontSize="lg">{props.subHeading}</Text>
     </Box>
   );
 }
@@ -51,20 +61,17 @@ export default function About() {
         </Heading>
       </Box>
 
-      <QuickLinks />
+      <Box mx={6}>
+        <QuickLinks />
 
-      <Box bgColor="hsla(176, 36%, 92%, 1)" h={32} p={8} id="songadao">
-        <Stack>
-          <Heading as="h3" fontSize="2xl">
-            What is Song A Day?
-          </Heading>
-          <Text fontSize="lg">A new song, every day. Forever.</Text>
-        </Stack>
-      </Box>
+        <FullWidthHeading
+          heading="What is Song A Day?"
+          subHeading="A new song, every day. Forever."
+          anchorId="songadao"
+        />
 
-      <Box mx={8}>
-        <VStack spacing={4}>
-          <Text fontSize="md" pt={2}>
+        <Stack spacing={4}>
+          <Text pt={2}>
             Song A Day is different from other NFT projects. It did not grow directly out of the
             blockchain. I had written 2000 songs before Ethereum was even invented. I wrote another
             1500 before I learned about digital scarcity. But from the moment I saw CryptoPunks, I
@@ -73,18 +80,18 @@ export default function About() {
           <Text>Song A Day is many things. It's about *time.* I measure the days by songs.</Text>
           <Text>Song A Day is a journal. It is quite literally a record of my creative life.</Text>
           <Text>
-            Song A Day can be a burden, a joy, a challenge, a bore - all at the same time.{' '}
+            Song A Day can be a burden, a joy, a challenge, a bore - all at the same time.
           </Text>
           <Text>
             Above all, Song A Day is an invitation to make stuff. Sometimes it's good stuff,
             sometimes it's bad stuff, but the making is the most important part.
           </Text>
-        </VStack>
+        </Stack>
 
-        <Heading as="h3" fontSize="xl" mt={8} mb={3}>
+        <Heading as="h3" fontSize="2xl" mt={8} mb={3}>
           History
         </Heading>
-        <VStack spacing={4}>
+        <Stack spacing={4}>
           <Text>
             At the height of the 2008 financial crash. I was unemployed. I decided to try to write a
             song every day in January. By the end of the month, I was having so much fun (and I was
@@ -103,18 +110,15 @@ export default function About() {
             It's always been my dream to make Song A Day itself my sole source of income. Now,
             thanks to you, and this DAO, that's finally a possibility.
           </Text>
-        </VStack>
+        </Stack>
 
-        <Center bgColor="hsla(176, 36%, 92%, 1)" h={32} id="who-is-mann" mx={-8} mt={12}>
-          <Stack>
-            <Heading as="h3" fontSize="2xl">
-              Who is Jonathan Mann?
-            </Heading>
-            <Text fontSize="lg">I write a song a day.</Text>
-          </Stack>
-        </Center>
+        <FullWidthHeading
+          heading="Who is Jonathan Mann?"
+          subHeading="I write a song a day."
+          anchorId="who-is-mann"
+        />
 
-        <VStack spacing={4}>
+        <Stack spacing={4}>
           <Text pt={2}>
             I started writing songs when I was 12. I wrote my first song on the back of a pizza box.
             It wasn't a very good song.
@@ -145,7 +149,7 @@ export default function About() {
             different shows on the channel, culminating in the musical episode of their flagship
             review show, X-Play.
           </Text>
-        </VStack>
+        </Stack>
         <Box my={8} mx={-4}>
           <AspectRatio maxW="lg" ratio={16 / 9}>
             <iframe
