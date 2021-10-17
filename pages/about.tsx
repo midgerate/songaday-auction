@@ -8,6 +8,7 @@ import {
   Text,
   Stack,
   VStack,
+  AspectRatio,
 } from '@chakra-ui/react';
 import { LinkIcon } from '@chakra-ui/icons';
 
@@ -86,7 +87,7 @@ export default function About() {
         </VStack>
 
         <Box p="16px">
-          <Heading as="h3" fontSize="2xl" py="8px">
+          <Heading as="h3" fontSize="xl" py="8px">
             History
           </Heading>
           <VStack spacing="16px">
@@ -150,6 +151,40 @@ export default function About() {
             review show, X-Play.
           </Text>
         </VStack>
+
+        <Box my="24px">
+          <AspectRatio maxW="560px" ratio={4 / 3} px="16px">
+            <iframe
+              width="560"
+              height="315"
+              src="https://www.youtube-nocookie.com/embed/4m-JvGyxo0A"
+              title="YouTube video player"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          </AspectRatio>
+          <Text fontSize="sm" color="gray.600" mt="8px">
+            The Mario Opera on G4
+          </Text>
+        </Box>
+
+        <Box my="24px">
+          <AspectRatio maxW="560px" ratio={4 / 3} px="16px">
+            <iframe
+              width="560"
+              height="315"
+              src="https://www.youtube-nocookie.com/embed/J59Ck0xgDyw"
+              title="YouTube video player"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          </AspectRatio>
+          <Text fontSize="sm" color="gray.600" mt="8px">
+            X-Play (The Musical) on G4
+          </Text>
+        </Box>
       </Container>
     </>
   );
