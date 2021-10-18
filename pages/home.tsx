@@ -147,10 +147,10 @@ const Hero = () => {
 const CountDownCard = ({ title, stat }: CountdownProps) => {
   return (
     <Stat px={{ base: 4, md: 3 }} py="2" bg="teal.50" shadow="md" rounded="lg">
-      <StatNumber fontSize="5xl" color="teal.600" fontWeight="bold">
+      <StatNumber fontSize="5xl" color="brand.darkTeal" fontWeight="bold">
         {stat}
       </StatNumber>
-      <StatLabel fontSize="md" color="teal.400" fontWeight="medium" isTruncated>
+      <StatLabel fontSize="md" color="brand.darkTeal" fontWeight="medium" isTruncated>
         {title}
       </StatLabel>
     </Stat>
@@ -163,7 +163,7 @@ const Feature = ({ title, button, image, isPrimaryButton }: FeatureProps) => {
       justify="space-between"
       px={{ base: 8, md: 6, lg: 10 }}
       py="8"
-      bg="teal.50"
+      bg="brand.lightTeal"
       rounded={{ base: 'none', sm: 'lg' }}
     >
       <Text fontWeight="medium" align="center" fontSize="2xl">
@@ -207,7 +207,7 @@ const Timeline = ({ title, day, month, description, last }: TimelineProps) => {
           h={{ base: 24, sm: 40 }}
           rounded="full"
           borderWidth={{ base: 8, sm: 12 }}
-          borderColor="teal.50"
+          borderColor="brand.lightTeal"
           bg="white"
           pos="relative"
           zIndex={9}
@@ -223,7 +223,7 @@ const Timeline = ({ title, day, month, description, last }: TimelineProps) => {
           <Text
             lineHeight="none"
             fontSize={{ base: '3xl', sm: '6xl' }}
-            color="teal.600"
+            color="brand.teal"
             fontWeight="bold"
             align="center"
           >
@@ -244,7 +244,7 @@ const Timeline = ({ title, day, month, description, last }: TimelineProps) => {
           zIndex={6}
           px={{ base: 14, md: 24, sm: 32 }}
           py={{ base: 4, sm: 8 }}
-          bg="teal.100"
+          bg="brand.lightTeal"
           rounded="lg"
         >
           <Text fontWeight="semibold" fontSize={{ base: 'lg', sm: '2xl' }}>
@@ -258,7 +258,7 @@ const Timeline = ({ title, day, month, description, last }: TimelineProps) => {
           top={-1}
           px={{ base: 14, md: 24, sm: 32 }}
           py={4}
-          bg="teal.300"
+          bg="brand.teal"
           rounded="lg"
         >
           <Text fontWeight="semibold" fontSize={{ base: 'lg', sm: '2xl' }}>
@@ -270,6 +270,28 @@ const Timeline = ({ title, day, month, description, last }: TimelineProps) => {
   );
 };
 const Footer = () => {
+  const footerNav = [
+    {
+      to: 'https://discord.com/',
+      name: 'Discord',
+    },
+    {
+      to: 'https://twitter.com/?lang=en',
+      name: 'Twitter',
+    },
+    {
+      to: 'https://www.youtube.com/',
+      name: 'Youtube',
+    },
+    {
+      to: 'https://soundcloud.com/',
+      name: 'Soundcloud',
+    },
+    {
+      to: 'https://twitter.com/songadaymann?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor',
+      name: 'JonathanMann',
+    },
+  ];
   return (
     <Box bg="teal.50" color="gray.700">
       <Container
@@ -284,21 +306,12 @@ const Footer = () => {
           direction={{ base: 'column', sm: 'row' }}
           spacing={6}
         >
-          <Link textDecoration="underline" textUnderlineOffset="2px" href="#">
-            Discord
-          </Link>
-          <Link textDecoration="underline" textUnderlineOffset="2px" href="#">
-            Twitter
-          </Link>
-          <Link textDecoration="underline" textUnderlineOffset="2px" href="#">
-            Youtube
-          </Link>
-          <Link textDecoration="underline" textUnderlineOffset="2px" href="#">
-            Soundcloud
-          </Link>
-          <Link textDecoration="underline" textUnderlineOffset="2px" href="#">
-            JonathanMann
-          </Link>
+          {footerNav.map((link) => (
+            // eslint-disable-next-line react/jsx-key
+            <Link textDecoration="underline" textUnderlineOffset="2px" to={link.to}>
+              {link.name}
+            </Link>
+          ))}
         </Stack>
         <Text fontWeight="semibold" align="center">
           Song A Day World, Song A Day, and SongADAO ©Copyright 2021 Jonathan Mann & SongADAO LLC
