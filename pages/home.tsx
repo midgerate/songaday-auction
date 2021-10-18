@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 import {
   Stack,
   Box,
@@ -33,6 +33,44 @@ interface TimelineProps {
   last?: boolean;
 }
 const Hero = () => {
+  const COUNTDOWN_TO = 1635739199000;
+
+  const [duration, setDuration] = useState<{ days?: string; hours?: string; minutes?: string }>({});
+  function convertSecondsToDay(seconds: number) {
+    const days = parseInt((seconds / (24 * 3600)).toString()).toString();
+
+    seconds = seconds % (24 * 3600);
+    const hours = parseInt((seconds / 3600).toString()).toString();
+
+    seconds %= 3600;
+    const minutes = parseInt((seconds / 60).toString()).toString();
+
+    return {
+      days,
+      hours,
+      minutes,
+    };
+  }
+
+  useEffect(() => {
+    const calculateDuration = () => {
+      const now = new Date().getTime();
+      const diffMilis = COUNTDOWN_TO - now;
+      const duration = convertSecondsToDay(diffMilis / 1000);
+      setDuration(duration);
+    };
+
+    // Calculate first time
+    calculateDuration();
+
+    const interval = setInterval(() => {
+      calculateDuration();
+    }, 1000 * 60);
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
   return (
     <Flex
       w="full"
@@ -80,9 +118,9 @@ const Hero = () => {
               Presale Ends In:
             </Text>
             <SimpleGrid gap={{ base: 4, sm: 6 }} columns={3} spacing={{ base: 6, sm: 12 }}>
-              <CountDownCard title="Days" stat="99" />
-              <CountDownCard title="Hours" stat="23" />
-              <CountDownCard title="Minutes" stat="59" />
+              <CountDownCard title="Days" stat={duration?.days} />
+              <CountDownCard title="Hours" stat={duration?.hours} />
+              <CountDownCard title="Minutes" stat={duration?.minutes} />
             </SimpleGrid>
             <Box>
               <Text fontSize="xl" fontWeight="medium" pt="6" pb="3">
