@@ -27,6 +27,26 @@ const override: ThemeOverride = {
     },
   },
   components: {
+    Button: {
+      variants: {
+        solid: {
+          bg: 'teal.300',
+          _hover: {
+            bg: 'teal.400',
+          },
+        },
+        outline: {
+          borderColor: 'teal.500',
+          color: 'teal.500',
+          borderWidth: '2px',
+          _hover: {
+            borderColor: 'teal.700',
+            color: 'teal.700',
+            bg: 'transparent',
+          },
+        },
+      },
+    },
     Container: {
       baseStyle: {
         maxWidth: '4xl',

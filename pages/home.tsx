@@ -23,6 +23,7 @@ interface FeatureProps {
   title: string;
   button: string;
   image: ReactElement;
+  isPrimaryButton?: boolean;
 }
 interface TimelineProps {
   title: string;
@@ -87,9 +88,7 @@ const Hero = () => {
               <Text fontSize="xl" fontWeight="medium" pt="6" pb="3">
                 -42 NFTs Remain-
               </Text>
-              <Button bg="teal.300" fontSize="lg" variant="outline" mx="4" size="lg">
-                Claim Your Spot
-              </Button>
+              <Button size="lg">Claim Your Spot</Button>
             </Box>
           </Box>
         </Box>
@@ -119,11 +118,12 @@ const CountDownCard = ({ title, stat }: CountdownProps) => {
     </Stat>
   );
 };
-const Feature = ({ title, button, image }: FeatureProps) => {
+const Feature = ({ title, button, image, isPrimaryButton }: FeatureProps) => {
   return (
     <Stack
       alignItems="center"
-      px={{ base: 8, md: 12 }}
+      justify="space-between"
+      px={{ base: 8, md: 6, lg: 10 }}
       py="8"
       bg="teal.50"
       rounded={{ base: 'none', sm: 'lg' }}
@@ -132,16 +132,7 @@ const Feature = ({ title, button, image }: FeatureProps) => {
         {title}
       </Text>
       <Box py="4">{image}</Box>
-      <Button
-        bg="none"
-        border="1px"
-        borderColor="teal.600"
-        color="teal.600"
-        variant="outline"
-        mx="4"
-        size="md"
-        fontSize="xl"
-      >
+      <Button variant={isPrimaryButton ? 'solid' : 'outline'} size="lg">
         {button}
       </Button>
     </Stack>
@@ -255,49 +246,19 @@ const Footer = () => {
           direction={{ base: 'column', sm: 'row' }}
           spacing={6}
         >
-          <Link
-            borderBottom="2px"
-            _hover={{
-              borderColor: 'teal.50',
-            }}
-            href="#"
-          >
+          <Link textDecoration="underline" textUnderlineOffset="2px" href="#">
             Discord
           </Link>
-          <Link
-            borderBottom="2px"
-            _hover={{
-              borderColor: 'teal.50',
-            }}
-            href="#"
-          >
+          <Link textDecoration="underline" textUnderlineOffset="2px" href="#">
             Twitter
           </Link>
-          <Link
-            borderBottom="2px"
-            _hover={{
-              borderColor: 'teal.50',
-            }}
-            href="#"
-          >
+          <Link textDecoration="underline" textUnderlineOffset="2px" href="#">
             Youtube
           </Link>
-          <Link
-            borderBottom="2px"
-            _hover={{
-              borderColor: 'teal.50',
-            }}
-            href="#"
-          >
+          <Link textDecoration="underline" textUnderlineOffset="2px" href="#">
             Soundcloud
           </Link>
-          <Link
-            borderBottom="2px"
-            _hover={{
-              borderColor: 'teal.50',
-            }}
-            href="#"
-          >
+          <Link textDecoration="underline" textUnderlineOffset="2px" href="#">
             JonathanMann
           </Link>
         </Stack>
@@ -323,7 +284,7 @@ export default function Home() {
           >
             SongADAO is a group of humans who support one song a day, forever.
           </Text>
-          <SimpleGrid gap={{ base: 12, sm: 20 }} columns={{ base: 1, lg: 3 }} spacing={10}>
+          <SimpleGrid gap={[10, 10, 14, 12]} columns={[1, 1, 1, 3]}>
             <Feature
               title="SongADAO owns the rights and revenue to all Song A Day songs."
               image={<Image w="20" h="20" src="/assets/contract.png" alt="Segun Adebayo" />}
@@ -338,6 +299,7 @@ export default function Home() {
               title="Each Song A Day NFT gets you 1 vote in SongADAO."
               image={<Image w="20" h="20" src="/assets/voting.png" alt="Segun Adebayo" />}
               button="Grab an NFT"
+              isPrimaryButton
             />
           </SimpleGrid>
         </Box>
@@ -388,19 +350,10 @@ export default function Home() {
             fontSize={{ base: '2xl', sm: '4xl' }}
             fontWeight="bold"
           >
-            There’s no better time to join this
-            <Link
-              mx={2}
-              py={2}
-              borderBottom="2px"
-              _hover={{
-                borderColor: 'teal.100',
-                bg: 'teal.100',
-              }}
-              href="#"
-            >
+            There’s no better time to join this{' '}
+            <span style={{ textDecoration: 'underline', textUnderlineOffset: '7px' }}>
               grand experiment
-            </Link>
+            </span>
             .
           </Text>
           <Text
@@ -413,17 +366,7 @@ export default function Home() {
           >
             And you can pick it up for a song!
           </Text>
-          <Button
-            bg="teal.300"
-            border="0"
-            color="teal.600"
-            variant="outline"
-            mx="4"
-            size="md"
-            fontSize="xl"
-          >
-            Get your NFT
-          </Button>
+          <Button size="lg">Get your NFT</Button>
         </Container>
       </Box>
       <Footer />
