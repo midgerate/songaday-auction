@@ -36,7 +36,8 @@ const QuickLinks = () => {
         return (
           <ListItem listStyleType="none" my={5} key={idx}>
             <Link href={item.link} color="teal.500">
-              <LinkIcon mr={1} /> {item.title}
+              <LinkIcon mr={2} />
+              {item.title}
             </Link>
           </ListItem>
         );
@@ -138,14 +139,23 @@ const IllustratorCardList = () => {
 const IllustratorCard = ({ name, handle, year, imgURL }: Illustrator) => {
   return (
     <Box size="sm" rounded="lg" borderWidth="1px" overflow="hidden">
-      <Badge colorScheme="blackAlpha" px={2} ml={2} mt={2} variant="subtle">
+      {/* <Badge colorScheme="blackAlpha" px={2} ml={2} mt={2} variant="subtle">
         Year {year}
-      </Badge>
+      </Badge> */}
       <AspectRatio ratio={16 / 9}>
         <Image src={imgURL || 'assets/forest-tower.jpg'} alt={name} objectFit="cover" />
       </AspectRatio>
-      <Box bg="grey.50" p={3} border={1}>
-        <Text fontSize="lg" fontWeight="semibold" lineHeight={1} mt={2}>
+      <Box bg="white" p={3}>
+        <Box
+          color="gray.500"
+          fontWeight="semibold"
+          letterSpacing="wider"
+          fontSize="xs"
+          textTransform="uppercase"
+        >
+          Year {year}
+        </Box>
+        <Text fontSize="lg" fontWeight="semibold" lineHeight="tight">
           {name}
         </Text>
         <Link
@@ -165,7 +175,7 @@ const IllustratorCard = ({ name, handle, year, imgURL }: Illustrator) => {
 function FullWidthHeading(props: { heading: string; subHeading: string; anchorId: string }) {
   return (
     <Box
-      bgColor="hsla(176, 36%, 92%, 1)"
+      bgColor="brand.lightTeal"
       p={8}
       id={props.anchorId}
       mx={pageSpacing.negative}
@@ -270,9 +280,8 @@ export default function About() {
             I went to college at Bennington where I started learning how to record myself. My friend
             Will and I stayed up all night and wrote and recorded 40 songs, each forty seconds long.
             My friend Thomas and I staged a giant rock opera called The Last Nympho Leprechaun. From
-            2003-6 I wrote a song almost every week for the online songwriting competition,
+            2003-6 I wrote a song almost every week for the online songwriting competition,{' '}
             <Link to="http://songfight.org/" color="teal.500">
-              {' '}
               SongFight.org
             </Link>
             .
