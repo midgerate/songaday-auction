@@ -146,8 +146,8 @@ const Hero = () => {
 };
 const CountDownCard = ({ title, stat }: CountdownProps) => {
   return (
-    <Stat px={{ base: 4, md: 3 }} py="2" bg="teal.50" shadow="md" rounded="lg">
-      <StatNumber fontSize="5xl" color="brand.darkTeal" fontWeight="bold">
+    <Stat px="4" py="2" bg="teal.50" shadow="md" rounded="lg">
+      <StatNumber fontSize="5xl" lineHeight="normal" color="brand.darkTeal" fontWeight="bold">
         {stat}
       </StatNumber>
       <StatLabel fontSize="md" color="brand.darkTeal" fontWeight="medium" isTruncated>
