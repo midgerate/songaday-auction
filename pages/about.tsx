@@ -18,6 +18,11 @@ interface Illustrator {
   imgURL: string;
 }
 
+const pageSpacing = {
+  positive: [6, 8, 24, 32, 64, 80],
+  negative: [-6, -8, -24, -32, -64, -80],
+};
+
 const QuickLinks = () => {
   const quickLinks = [
     { title: 'What is Song A Day?', link: '#songadao' },
@@ -122,7 +127,7 @@ const IllustratorCardList = () => {
     },
   ];
   return (
-    <SimpleGrid columns={[1, 2, 3]} spacing={8}>
+    <SimpleGrid columns={[1, 2, 3, 4]} spacing={6} mb={2}>
       {illustrators.map(({ name, handle, year, imgURL }, idx) => {
         return <IllustratorCard key={idx} {...{ name, handle, year, imgURL }} />;
       })}
@@ -133,21 +138,21 @@ const IllustratorCardList = () => {
 const IllustratorCard = ({ name, handle, year, imgURL }: Illustrator) => {
   return (
     <Box size="sm" rounded="lg" borderWidth="1px" overflow="hidden">
-      <Badge colorScheme="teal" px={2}>
+      <Badge colorScheme="blackAlpha" px={2} ml={2} mt={2} variant="subtle">
         Year {year}
       </Badge>
       <AspectRatio ratio={16 / 9}>
         <Image src={imgURL || 'assets/forest-tower.jpg'} alt={name} objectFit="cover" />
       </AspectRatio>
-      <Box bg="gray.50" p={4} border={1}>
-        <Heading as="h4" fontSize="xl" mt={2}>
+      <Box bg="grey.50" p={3} border={1}>
+        <Text fontSize="lg" fontWeight="semibold" lineHeight={1} mt={2}>
           {name}
-        </Heading>
+        </Text>
         <Link
           display="block"
           fontSize="sm"
           href={`https://twitter.com/${handle}`}
-          color="teal.600"
+          color="teal.500"
           isExternal
         >
           @{handle} <ExternalLinkIcon />
@@ -159,11 +164,20 @@ const IllustratorCard = ({ name, handle, year, imgURL }: Illustrator) => {
 
 function FullWidthHeading(props: { heading: string; subHeading: string; anchorId: string }) {
   return (
-    <Box bgColor="hsla(176, 36%, 92%, 1)" p={8} id={props.anchorId} mx={-8} mt={8}>
-      <Heading as="h2" fontSize="2xl">
-        {props.heading}
-      </Heading>
-      <Text fontSize="lg">{props.subHeading}</Text>
+    <Box
+      bgColor="hsla(176, 36%, 92%, 1)"
+      p={8}
+      id={props.anchorId}
+      mx={pageSpacing.negative}
+      px={pageSpacing.positive}
+      mt={8}
+    >
+      <Stack spacing={2}>
+        <Heading as="h2" fontSize="3xl">
+          {props.heading}
+        </Heading>
+        <Text fontSize="lg">{props.subHeading}</Text>
+      </Stack>
     </Box>
   );
 }
@@ -176,14 +190,15 @@ export default function About() {
         bgPosition="center"
         bgRepeat="no-repeat"
         bgSize="cover"
-        h={64}
       >
-        <Heading as="h1" maxW="container.md" fontSize="5xl" ml={8} pt={32}>
-          About
-        </Heading>
+        <Center h={64}>
+          <Heading as="h1" maxW="container.md" fontSize="5xl">
+            About
+          </Heading>
+        </Center>
       </Box>
 
-      <Box mx={6}>
+      <Box mx={pageSpacing.positive}>
         <QuickLinks />
 
         <FullWidthHeading
@@ -273,39 +288,41 @@ export default function About() {
           </Text>
         </Stack>
 
-        <Box my={8} mx={-4}>
-          <AspectRatio maxW="lg" ratio={16 / 9}>
-            <iframe
-              width="560"
-              height="315"
-              src="https://www.youtube-nocookie.com/embed/4m-JvGyxo0A"
-              title="YouTube video player"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></iframe>
-          </AspectRatio>
-          <Text fontSize="sm" color="gray.500" mt={1}>
-            The Mario Opera on G4
-          </Text>
-        </Box>
+        <Stack direction={['column', 'row']} spacing={10} mt={8}>
+          <Box w={[80, 96]}>
+            <AspectRatio ratio={16 / 9}>
+              <iframe
+                width="560"
+                height="315"
+                src="https://www.youtube-nocookie.com/embed/4m-JvGyxo0A"
+                title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            </AspectRatio>
+            <Text fontSize="sm" color="gray.500" mt={1}>
+              The Mario Opera on G4
+            </Text>
+          </Box>
 
-        <Box my={8} mx={-4}>
-          <AspectRatio maxW="lg" ratio={16 / 9}>
-            <iframe
-              width="560"
-              height="315"
-              src="https://www.youtube-nocookie.com/embed/J59Ck0xgDyw"
-              title="YouTube video player"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></iframe>
-          </AspectRatio>
-          <Text fontSize="sm" color="gray.500" mt={1}>
-            X-Play (The Musical) on G4
-          </Text>
-        </Box>
+          <Box w={[80, 96]}>
+            <AspectRatio ratio={16 / 9}>
+              <iframe
+                width="560"
+                height="315"
+                src="https://www.youtube-nocookie.com/embed/J59Ck0xgDyw"
+                title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            </AspectRatio>
+            <Text fontSize="sm" color="gray.500" mt={1}>
+              X-Play (The Musical) on G4
+            </Text>
+          </Box>
+        </Stack>
 
         <FullWidthHeading
           heading="Who Draws The Art?"
@@ -316,8 +333,8 @@ export default function About() {
         <Stack spacing={4}>
           <Text pt={2}>Each Song A Day NFT is a 1/1.</Text>
           <Text>Each Song A Day has an accompanying illustration.</Text>
-          <Text>Each illustration's attributes are derived from the song itself:</Text>
 
+          <Text>Each illustration's attributes are derived from the song itself:</Text>
           <UnorderedList marginInlineStart="unset" my={8} px={4} py={2}>
             <ListItem>
               <strong>Topic</strong> – what the song is about.
@@ -348,8 +365,8 @@ export default function About() {
           <Text>These attributes become layers in the illustrations that represent each song.</Text>
         </Stack>
 
-        <Heading as="h3" fontSize="2xl" mt={8} mb={3}>
-          Meet the illustrators
+        <Heading as="h3" fontSize="2xl" mt={8} mb={4}>
+          The illustrators
         </Heading>
 
         <IllustratorCardList />
