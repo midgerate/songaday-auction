@@ -74,7 +74,7 @@ const Hero = () => {
   return (
     <Flex
       w="full"
-      h={{ base: 'auto', sm: '530px' }}
+      h={{ base: 'auto', md: '530px' }}
       backgroundImage="/assets/transparent.banner.png"
       backgroundSize="cover"
       backgroundPosition="center center"
@@ -96,18 +96,18 @@ const Hero = () => {
         justifyContent="center"
       >
         <Box
-          mt={{ base: 0, sm: 16 }}
-          p={{ base: 4, sm: 8 }}
+          mt={{ base: 0, md: 16 }}
+          p={{ base: 4, md: 8, sm: '20' }}
           bg="white"
-          maxW="xl"
-          boxShadow={{ base: 'none', sm: 'xl' }}
-          rounded={{ base: 'none', sm: 'lg' }}
+          w={{ base: 'full', md: 'auto' }}
+          boxShadow={{ base: 'none', md: 'xl' }}
+          rounded={{ base: 'none', md: 'lg' }}
           textAlign="center"
         >
-          <Center mt={{ base: 0, sm: -20 }}>
-            <Image w={{ base: 72, sm: 56 }} src="/assets/songADAOLogo.png" alt="Segun Adebayo" />
+          <Center mt={{ base: 0, md: -20 }}>
+            <Image w={{ base: 72, md: 56 }} src="/assets/songADAOLogo.png" alt="Segun Adebayo" />
           </Center>
-          <Box px={{ base: 0, sm: 16 }}>
+          <Box px={{ base: 0, md: 16 }}>
             <Text
               align="left"
               fontSize="xl"
@@ -147,10 +147,10 @@ const Hero = () => {
 const CountDownCard = ({ title, stat }: CountdownProps) => {
   return (
     <Stat px={{ base: 4, md: 3 }} py="2" bg="teal.50" shadow="md" rounded="lg">
-      <StatNumber fontSize="5xl" color="teal.600" fontWeight="bold">
+      <StatNumber fontSize="5xl" color="brand.darkTeal" fontWeight="bold">
         {stat}
       </StatNumber>
-      <StatLabel fontSize="md" color="teal.400" fontWeight="medium" isTruncated>
+      <StatLabel fontSize="md" color="brand.darkTeal" fontWeight="medium" isTruncated>
         {title}
       </StatLabel>
     </Stat>
@@ -163,7 +163,7 @@ const Feature = ({ title, button, image, isPrimaryButton }: FeatureProps) => {
       justify="space-between"
       px={{ base: 8, md: 6, lg: 10 }}
       py="8"
-      bg="teal.50"
+      bg="brand.lightTeal"
       rounded={{ base: 'none', sm: 'lg' }}
     >
       <Text fontWeight="medium" align="center" fontSize="2xl">
@@ -181,16 +181,16 @@ const Timeline = ({ title, day, month, description, last }: TimelineProps) => {
     <Stack
       pos="relative"
       flexDirection="row"
-      px={{ base: 4, sm: 12 }}
+      px={{ base: 4, sm: 0 }}
       py="8"
       rounded="lg"
       _after={
         !last && {
           content: '""',
-          w: { base: 4, md: 6, sm: 8 },
+          w: { base: 5, lg: 10 },
           h: 'full',
-          bg: 'teal.50',
-          left: { base: '54px', md: '120px', sm: '66px' },
+          bg: 'brand.lightTeal',
+          left: { base: '44px', lg: '60px' },
           pos: 'absolute',
           zIndex: '-1',
           top: '40px',
@@ -203,18 +203,19 @@ const Timeline = ({ title, day, month, description, last }: TimelineProps) => {
           alignItems="center"
           display="flex"
           flexDirection="column"
-          w={{ base: 24, sm: 40 }}
-          h={{ base: 24, sm: 40 }}
+          w={{ base: 32, lg: 44 }}
+          h={{ base: 32, lg: 44 }}
           rounded="full"
-          borderWidth={{ base: 8, sm: 12 }}
-          borderColor="teal.50"
+          borderWidth={{ base: 16 }}
+          borderColor="brand.lightTeal"
           bg="white"
           pos="relative"
+          left={{ base: -2 }}
           zIndex={9}
         >
           <Text
             lineHeight="none"
-            fontSize={{ base: 'xl', sm: '2xl' }}
+            fontSize={{ base: 'lg', lg: '3xl' }}
             fontWeight="medium"
             align="center"
           >
@@ -222,8 +223,8 @@ const Timeline = ({ title, day, month, description, last }: TimelineProps) => {
           </Text>
           <Text
             lineHeight="none"
-            fontSize={{ base: '3xl', sm: '6xl' }}
-            color="teal.600"
+            fontSize={{ base: '4xl', lg: '6xl' }}
+            color="brand.teal"
             fontWeight="bold"
             align="center"
           >
@@ -236,15 +237,17 @@ const Timeline = ({ title, day, month, description, last }: TimelineProps) => {
         zIndex={-10}
         top={-2}
         left={{ base: -10, sm: -20 }}
+        w="full"
         justifyContent="flex-start"
         flex="1"
       >
         <Box
           pos="relative"
           zIndex={6}
-          px={{ base: 14, md: 24, sm: 32 }}
-          py={{ base: 4, sm: 8 }}
-          bg="teal.100"
+          pl={{ base: 20 }}
+          pr={{ base: 10 }}
+          py={{ base: 4 }}
+          bg="brand.lightTeal"
           rounded="lg"
         >
           <Text fontWeight="semibold" fontSize={{ base: 'lg', sm: '2xl' }}>
@@ -252,13 +255,14 @@ const Timeline = ({ title, day, month, description, last }: TimelineProps) => {
           </Text>
         </Box>
         <Box
-          w={{ base: 'full', sm: '90%' }}
+          w={{ base: 'full' }}
           pos="relative"
           zIndex={5}
           top={-1}
-          px={{ base: 14, md: 24, sm: 32 }}
+          pl={{ base: 20 }}
+          pr={{ base: 10 }}
           py={4}
-          bg="teal.300"
+          bg="brand.teal"
           rounded="lg"
         >
           <Text fontWeight="semibold" fontSize={{ base: 'lg', sm: '2xl' }}>
@@ -270,6 +274,28 @@ const Timeline = ({ title, day, month, description, last }: TimelineProps) => {
   );
 };
 const Footer = () => {
+  const footerNav = [
+    {
+      to: 'https://discord.com/',
+      name: 'Discord',
+    },
+    {
+      to: 'https://twitter.com/?lang=en',
+      name: 'Twitter',
+    },
+    {
+      to: 'https://www.youtube.com/',
+      name: 'Youtube',
+    },
+    {
+      to: 'https://soundcloud.com/',
+      name: 'Soundcloud',
+    },
+    {
+      to: 'https://twitter.com/songadaymann?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor',
+      name: 'JonathanMann',
+    },
+  ];
   return (
     <Box bg="teal.50" color="gray.700">
       <Container
@@ -284,21 +310,12 @@ const Footer = () => {
           direction={{ base: 'column', sm: 'row' }}
           spacing={6}
         >
-          <Link textDecoration="underline" textUnderlineOffset="2px" href="#">
-            Discord
-          </Link>
-          <Link textDecoration="underline" textUnderlineOffset="2px" href="#">
-            Twitter
-          </Link>
-          <Link textDecoration="underline" textUnderlineOffset="2px" href="#">
-            Youtube
-          </Link>
-          <Link textDecoration="underline" textUnderlineOffset="2px" href="#">
-            Soundcloud
-          </Link>
-          <Link textDecoration="underline" textUnderlineOffset="2px" href="#">
-            JonathanMann
-          </Link>
+          {footerNav.map((link) => (
+            // eslint-disable-next-line react/jsx-key
+            <Link textDecoration="underline" textUnderlineOffset="2px" to={link.to}>
+              {link.name}
+            </Link>
+          ))}
         </Stack>
         <Text fontWeight="semibold" align="center">
           Song A Day World, Song A Day, and SongADAO ©Copyright 2021 Jonathan Mann & SongADAO LLC
@@ -311,7 +328,7 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <Box py="16" px={{ base: '0', xl: '8', sm: '12' }}>
+      <Box py="16" px={{ base: '0', xl: '8', lg: '8', md: '16', sm: '8' }}>
         <Box>
           <Text
             display={{ base: 'none', sm: 'block' }}
