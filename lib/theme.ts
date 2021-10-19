@@ -22,7 +22,7 @@ const override: ThemeOverride = {
         color: 'teal.900',
         bg: 'white',
         overflowX: 'hidden',
-        lineHeight: '180%',
+        lineHeight: '160%',
         textAlign: 'left',
       },
       a: {

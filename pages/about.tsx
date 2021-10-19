@@ -1,4 +1,4 @@
-import { Box } from '@chakra-ui/layout';
+import { Badge, Box, SimpleGrid } from '@chakra-ui/layout';
 import {
   Heading,
   Center,
@@ -8,10 +8,17 @@ import {
   Text,
   Stack,
   AspectRatio,
+  Image,
 } from '@chakra-ui/react';
-import { LinkIcon } from '@chakra-ui/icons';
+import { LinkIcon, ExternalLinkIcon } from '@chakra-ui/icons';
+interface Illustrator {
+  name: string;
+  handle: string;
+  year: string;
+  imgURL: string;
+}
 
-function QuickLinks() {
+const QuickLinks = () => {
   const quickLinks = [
     { title: 'What is Song A Day?', link: '#songadao' },
     { title: 'Who is Jonathan Mann?', link: '#who-is-mann' },
@@ -19,25 +26,140 @@ function QuickLinks() {
   ];
 
   return (
-    <Box>
-      <UnorderedList marginInlineStart="unset" my={8}>
-        {quickLinks.map((item, idx) => {
-          return (
-            <ListItem listStyleType="none" my={5} key={idx}>
-              <Link href={item.link} color="teal.500">
-                <LinkIcon mr={1} /> {item.title}
-              </Link>
-            </ListItem>
-          );
-        })}
-      </UnorderedList>
+    <UnorderedList marginInlineStart="unset" my={8}>
+      {quickLinks.map((item, idx) => {
+        return (
+          <ListItem listStyleType="none" my={5} key={idx}>
+            <Link href={item.link} color="teal.500">
+              <LinkIcon mr={1} /> {item.title}
+            </Link>
+          </ListItem>
+        );
+      })}
+    </UnorderedList>
+  );
+};
+
+const IllustratorCardList = () => {
+  const illustrators: Illustrator[] = [
+    {
+      name: 'Defaced Studio',
+      handle: 'Defacedstudio',
+      year: 'one',
+      imgURL: '',
+    },
+    {
+      name: 'Eclectic Method',
+      handle: 'EclecticMethod',
+      year: 'two',
+      imgURL: '',
+    },
+    {
+      name: 'Crypto Geisha',
+      handle: 'CryptoGeisha',
+      year: 'three',
+      imgURL: '',
+    },
+    {
+      name: 'Lucas Olivari',
+      handle: 'luk.olivari',
+      year: 'four',
+      imgURL: '',
+    },
+    {
+      name: 'Arzena Ersidyandhi',
+      handle: 'Libraryfunction',
+      year: 'five',
+      imgURL: '',
+    },
+    {
+      name: 'Lhean Storm',
+      handle: 'StormNft',
+      year: 'six',
+      imgURL: '',
+    },
+    {
+      name: 'Sam Jones',
+      handle: 'SamuelArtson',
+      year: 'seven',
+      imgURL: '',
+    },
+    {
+      name: 'Habiba Green',
+      handle: 'Habibagreen',
+      year: 'eight',
+      imgURL: '',
+    },
+    {
+      name: 'Clifford Elivert',
+      handle: 'cliffBallin',
+      year: 'nine',
+      imgURL: '',
+    },
+    {
+      name: 'Audrey Pina',
+      handle: '_puppuppup_',
+      year: 'ten',
+      imgURL: '',
+    },
+    {
+      name: 'PXZMARSO',
+      handle: 'pxzmarso',
+      year: 'eleven',
+      imgURL: '',
+    },
+    {
+      name: 'Nolan Pelletier',
+      handle: 'NolanPPelletier',
+      year: 'twelve',
+      imgURL: '',
+    },
+    {
+      name: 'Kirk Wallace',
+      handle: 'bonehausinc',
+      year: 'thirteen',
+      imgURL: '',
+    },
+  ];
+  return (
+    <SimpleGrid columns={[1, 2, 3]} spacing={8}>
+      {illustrators.map(({ name, handle, year, imgURL }, idx) => {
+        return <IllustratorCard key={idx} {...{ name, handle, year, imgURL }} />;
+      })}
+    </SimpleGrid>
+  );
+};
+
+const IllustratorCard = ({ name, handle, year, imgURL }: Illustrator) => {
+  return (
+    <Box size="sm" rounded="lg" borderWidth="1px" overflow="hidden">
+      <Badge colorScheme="teal" px={2}>
+        Year {year}
+      </Badge>
+      <AspectRatio ratio={16 / 9}>
+        <Image src={imgURL || 'assets/forest-tower.jpg'} alt={name} objectFit="cover" />
+      </AspectRatio>
+      <Box bg="gray.50" p={4} border={1}>
+        <Heading as="h4" fontSize="xl" mt={2}>
+          {name}
+        </Heading>
+        <Link
+          display="block"
+          fontSize="sm"
+          href={`https://twitter.com/${handle}`}
+          color="teal.600"
+          isExternal
+        >
+          @{handle} <ExternalLinkIcon />
+        </Link>
+      </Box>
     </Box>
   );
-}
+};
 
 function FullWidthHeading(props: { heading: string; subHeading: string; anchorId: string }) {
   return (
-    <Box bgColor="hsla(176, 36%, 92%, 1)" h={32} p={8} id={props.anchorId} mx={-8} mt={8}>
+    <Box bgColor="hsla(176, 36%, 92%, 1)" p={8} id={props.anchorId} mx={-8} mt={8}>
       <Heading as="h2" fontSize="2xl">
         {props.heading}
       </Heading>
@@ -150,6 +272,7 @@ export default function About() {
             review show, X-Play.
           </Text>
         </Stack>
+
         <Box my={8} mx={-4}>
           <AspectRatio maxW="lg" ratio={16 / 9}>
             <iframe
@@ -183,6 +306,53 @@ export default function About() {
             X-Play (The Musical) on G4
           </Text>
         </Box>
+
+        <FullWidthHeading
+          heading="Who Draws The Art?"
+          subHeading="Each year is illustrated by someone different!"
+          anchorId="who-does-art"
+        />
+
+        <Stack spacing={4}>
+          <Text pt={2}>Each Song A Day NFT is a 1/1.</Text>
+          <Text>Each Song A Day has an accompanying illustration.</Text>
+          <Text>Each illustration's attributes are derived from the song itself:</Text>
+
+          <UnorderedList marginInlineStart="unset" my={8} px={4} py={2}>
+            <ListItem>
+              <strong>Topic</strong> – what the song is about.
+            </ListItem>
+            <ListItem>
+              <strong>Mood</strong> – the feeling I had when making it.
+            </ListItem>
+            <ListItem>
+              <strong>Instrument</strong> – the main instrument that's played.
+            </ListItem>
+            <ListItem>
+              <strong>Location</strong> – where the song was recorded.
+            </ListItem>
+            <ListItem>
+              <strong>Genre</strong> – the genre.
+            </ListItem>
+            <ListItem>
+              <strong>Style</strong> – what the song sounds like.
+            </ListItem>
+            <ListItem>
+              <strong>Noun/Proper noun</strong> – whether there's a specific person, place, thing or
+              idea in the song.
+            </ListItem>
+            <ListItem>
+              <strong>Beard</strong> – the state of my beard in the video for the song.
+            </ListItem>
+          </UnorderedList>
+          <Text>These attributes become layers in the illustrations that represent each song.</Text>
+        </Stack>
+
+        <Heading as="h3" fontSize="2xl" mt={8} mb={3}>
+          Meet the illustrators
+        </Heading>
+
+        <IllustratorCardList />
       </Box>
     </>
   );
