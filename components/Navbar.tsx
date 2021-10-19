@@ -8,16 +8,22 @@ import {
   MenuItem,
   MenuList,
   VStack,
+  IconButton,
+  Box,
+  Stack,
+  useDisclosure,
 } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import React from 'react';
 import { Account } from '../containers/Account';
 import { truncateHash } from '../lib/helpers';
 import { useDidHydrate } from '../lib/useDidHydrate';
+import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 
 function Navbar() {
   const { connect, disconnect, account, loading } = Account.useContainer();
   const didHydrate = useDidHydrate();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const links = (
     <>
@@ -34,11 +40,11 @@ function Navbar() {
   );
 
   return (
-    <VStack align="stretch" as="header" px="4" py="4" borderBottom="1px" borderColor="gray.200">
+    <VStack align="stretch" as="header" px="4" py="2">
       <HStack justifyContent="space-between">
         <NextLink href="/" passHref>
-          <Link h={[12, 16, 20]}>
-            <Img h="full" cursor="pointer" src="/assets/logo.svg" alt="the Song a Day World logo" />
+          <Link h={[20, 20, 24]}>
+            <Img h="full" cursor="pointer" src="/assets/logo.png" alt="the Song a Day World logo" />
           </Link>
         </NextLink>
         <HStack spacing="4">
@@ -73,10 +79,22 @@ function Navbar() {
             </Button>
           )}
         </HStack>
+        <IconButton
+          size="md"
+          icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
+          aria-label="Open Menu"
+          display={{ md: 'none' }}
+          onClick={isOpen ? onClose : onOpen}
+        />
       </HStack>
-      <HStack display={{ md: 'none' }} spacing="4" justifyContent="space-between">
-        {links}
-      </HStack>
+
+      {isOpen ? (
+        <Box pb={4} display={{ md: 'none' }}>
+          <Stack as="nav" spacing={4}>
+            {links}
+          </Stack>
+        </Box>
+      ) : null}
     </VStack>
   );
 }
