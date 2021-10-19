@@ -303,11 +303,11 @@ const Footer = () => {
         spacing={6}
         py={8}
         direction="column"
-        align={{ base: 'flex-start', sm: 'center' }}
+        align={{ base: 'flex-start', md: 'center' }}
       >
         <Stack
-          align={{ base: 'flex-start', sm: 'center' }}
-          direction={{ base: 'column', sm: 'row' }}
+          align={{ base: 'flex-start', md: 'center' }}
+          direction={{ base: 'column', md: 'row' }}
           spacing={6}
         >
           {footerNav.map((link) => (
