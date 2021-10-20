@@ -1,24 +1,28 @@
 import {
   Button,
   HStack,
+  Image,
   Img,
   Link,
+  Box,
   Menu,
   MenuButton,
   MenuItem,
   MenuList,
   VStack,
-  IconButton,
-  Box,
   Stack,
   useDisclosure,
+  Drawer,
+  DrawerHeader,
+  DrawerBody,
+  DrawerOverlay,
+  DrawerContent,
 } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import React from 'react';
 import { Account } from '../containers/Account';
 import { truncateHash } from '../lib/helpers';
 import { useDidHydrate } from '../lib/useDidHydrate';
-import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 
 function Navbar() {
   const { connect, disconnect, account, loading } = Account.useContainer();
@@ -26,17 +30,24 @@ function Navbar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const links = (
-    <>
+    <Stack
+      spacing="4"
+      align={{ base: 'flex-start', md: 'center' }}
+      justify="center"
+      direction={{ base: 'column', md: 'row' }}
+    >
       <NextLink href="/about" passHref>
-        <Link fontSize={['sm', 'sm', 'md']}>About</Link>
+        <Link pt={{ base: 8, md: 0 }} fontSize={{ base: 'xl', md: 'lg' }}>
+          About
+        </Link>
       </NextLink>
       <NextLink href="/songadao" passHref>
-        <Link fontSize={['sm', 'sm', 'md']}>SongADAO</Link>
+        <Link fontSize={{ base: 'xl', md: 'lg' }}>SongADAO</Link>
       </NextLink>
-      <Link href="https://twitter.com/songadaymann" fontSize={['sm', 'sm', 'md']} isExternal>
+      <Link href="https://twitter.com/songadaymann" fontSize={{ base: 'xl', md: 'lg' }} isExternal>
         @songadaymann
       </Link>
-    </>
+    </Stack>
   );
 
   return (
@@ -51,50 +62,94 @@ function Navbar() {
           <HStack spacing="4" display={{ base: 'none', md: 'inherit' }} justifyContent="end">
             {links}
           </HStack>
-          {didHydrate && account ? (
-            <Menu>
-              <MenuButton as={Button}>{truncateHash(account)}</MenuButton>
-              <MenuList>
-                <MenuItem as="div" p="0">
-                  <NextLink href={`/a/${account}`} passHref>
-                    <Link
-                      px="3"
-                      py="2"
-                      display="block"
-                      width="100%"
-                      _hover={{ textDecoration: 'none' }}
-                    >
-                      My Songs
-                    </Link>
-                  </NextLink>
-                </MenuItem>
-                <MenuItem px="3" py="2" onClick={disconnect}>
-                  Disconnect
-                </MenuItem>
-              </MenuList>
-            </Menu>
-          ) : (
-            <Button onClick={connect} isLoading={loading}>
-              Connect Wallet
-            </Button>
-          )}
+          <Box display={{ base: 'none', md: 'block' }}>
+            {didHydrate && account ? (
+              <Menu>
+                <MenuButton as={Button}>{truncateHash(account)}</MenuButton>
+                <MenuList>
+                  <MenuItem as="div" p="0">
+                    <NextLink href={`/a/${account}`} passHref>
+                      <Link
+                        px="3"
+                        py="2"
+                        display="block"
+                        width="100%"
+                        _hover={{ textDecoration: 'none' }}
+                      >
+                        My Songs
+                      </Link>
+                    </NextLink>
+                  </MenuItem>
+                  <MenuItem px="3" py="2" onClick={disconnect}>
+                    Disconnect
+                  </MenuItem>
+                </MenuList>
+              </Menu>
+            ) : (
+              <Button onClick={connect} isLoading={loading}>
+                Connect Wallet
+              </Button>
+            )}
+          </Box>
         </HStack>
-        <IconButton
-          size="md"
-          icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
+        <Image
+          w="12"
+          h="10"
+          src="/assets/menuOpen.png"
+          alt="Open Menu"
+          onClick={onOpen}
           aria-label="Open Menu"
           display={{ md: 'none' }}
-          onClick={isOpen ? onClose : onOpen}
         />
       </HStack>
 
-      {isOpen ? (
-        <Box pb={4} display={{ md: 'none' }}>
-          <Stack as="nav" spacing={4}>
+      <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerHeader>
+            <Image
+              w="10"
+              h="10"
+              src="/assets/menuClose.png"
+              alt="Close Menu"
+              onClick={onClose}
+              display={{ md: 'none' }}
+            />
+          </DrawerHeader>
+          <DrawerBody>
+            <Box display={{ md: 'none' }}>
+              {didHydrate && account ? (
+                <Menu>
+                  <MenuButton as={Button}>{truncateHash(account)}</MenuButton>
+                  <MenuList>
+                    <MenuItem as="div" p="0">
+                      <NextLink href={`/a/${account}`} passHref>
+                        <Link
+                          px="3"
+                          py="2"
+                          display="block"
+                          width="100%"
+                          _hover={{ textDecoration: 'none' }}
+                        >
+                          My Songs
+                        </Link>
+                      </NextLink>
+                    </MenuItem>
+                    <MenuItem px="3" py="2" onClick={disconnect}>
+                      Disconnect
+                    </MenuItem>
+                  </MenuList>
+                </Menu>
+              ) : (
+                <Button onClick={connect} isLoading={loading}>
+                  Connect Wallet
+                </Button>
+              )}
+            </Box>
             {links}
-          </Stack>
-        </Box>
-      ) : null}
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
     </VStack>
   );
 }
