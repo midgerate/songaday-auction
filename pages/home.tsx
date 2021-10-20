@@ -75,11 +75,11 @@ const Hero = () => {
     <Flex
       w="full"
       h={{ base: 'auto', md: '530px' }}
-      backgroundImage="/assets/transparent.banner.png"
+      backgroundImage="/assets/mirrored-bg.png"
       backgroundSize="cover"
       backgroundPosition="center center"
     >
-      <Center w="sm" display={{ base: 'none', xl: 'block' }} pos="relative">
+      {/* <Center w="sm" display={{ base: 'none', xl: 'block' }} pos="relative">
         <Image
           maxW="56"
           pos="absolute"
@@ -88,7 +88,7 @@ const Hero = () => {
           src="/assets/eyeOpen-face.png"
           alt="Segun Adebayo"
         />
-      </Center>
+      </Center> */}
       <Box
         flex="1"
         display={{ base: 'block', sm: 'flex' }}
@@ -131,7 +131,7 @@ const Hero = () => {
           </Box>
         </Box>
       </Box>
-      <Center display={{ base: 'none', xl: 'block' }} pos="relative" w="sm">
+      {/* <Center display={{ base: 'none', xl: 'block' }} pos="relative" w="sm">
         <Image
           maxW="40"
           pos="absolute"
@@ -140,14 +140,14 @@ const Hero = () => {
           src="/assets/eyeClose-face.png"
           alt="Segun Adebayo"
         />
-      </Center>
+      </Center> */}
     </Flex>
   );
 };
 const CountDownCard = ({ title, stat }: CountdownProps) => {
   return (
-    <Stat px={{ base: 4, md: 3 }} py="2" bg="teal.50" shadow="md" rounded="lg">
-      <StatNumber fontSize="5xl" color="brand.darkTeal" fontWeight="bold">
+    <Stat px="4" py="2" bg="teal.50" shadow="md" rounded="lg">
+      <StatNumber fontSize="5xl" lineHeight="normal" color="brand.darkTeal" fontWeight="bold">
         {stat}
       </StatNumber>
       <StatLabel fontSize="md" color="brand.darkTeal" fontWeight="medium" isTruncated>
@@ -303,11 +303,11 @@ const Footer = () => {
         spacing={6}
         py={8}
         direction="column"
-        align={{ base: 'flex-start', sm: 'center' }}
+        align={{ base: 'flex-start', md: 'center' }}
       >
         <Stack
-          align={{ base: 'flex-start', sm: 'center' }}
-          direction={{ base: 'column', sm: 'row' }}
+          align={{ base: 'flex-start', md: 'center' }}
+          direction={{ base: 'column', md: 'row' }}
           spacing={6}
         >
           {footerNav.map((link) => (
@@ -342,17 +342,17 @@ export default function Home() {
           <SimpleGrid gap={[10, 10, 14, 12]} columns={[1, 1, 1, 3]}>
             <Feature
               title="SongADAO owns the rights and revenue to all Song A Day songs."
-              image={<Image w="20" h="20" src="/assets/contract.png" alt="Segun Adebayo" />}
+              image={<Image h="28" src="/assets/contract.png" alt="Segun Adebayo" />}
               button="Explore the Songs"
             />
             <Feature
               title="Members vote to govern the DAO’s use of resources"
-              image={<Image w="20" h="20" src="/assets/judge.png" alt="Segun Adebayo" />}
+              image={<Image h="28" src="/assets/judge.png" alt="Segun Adebayo" />}
               button="Find Out More"
             />
             <Feature
               title="Each Song A Day NFT gets you 1 vote in SongADAO."
-              image={<Image w="20" h="20" src="/assets/voting.png" alt="Segun Adebayo" />}
+              image={<Image h="28" src="/assets/voting.png" alt="Segun Adebayo" />}
               button="Grab an NFT"
               isPrimaryButton
             />
