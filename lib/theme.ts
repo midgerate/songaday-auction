@@ -29,7 +29,6 @@ const override: ThemeOverride = {
         overflowX: 'hidden',
         lineHeight: '180%',
         textAlign: 'left',
-        letterSpacing: '.03px',
       },
       a: {
         color: 'teal.500',

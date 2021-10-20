@@ -9,6 +9,7 @@ import {
   Stack,
   AspectRatio,
   Image,
+  Button,
 } from '@chakra-ui/react';
 import { LinkIcon, ExternalLinkIcon } from '@chakra-ui/icons';
 interface Illustrator {
@@ -31,18 +32,19 @@ const QuickLinks = () => {
   ];
 
   return (
-    <UnorderedList marginInlineStart="unset" my={8}>
-      {quickLinks.map((item, idx) => {
-        return (
-          <ListItem listStyleType="none" my={5} key={idx}>
-            <Link href={item.link} color="teal.500">
-              <LinkIcon mr={2} />
-              {item.title}
+    <Center>
+      <Stack direction={['column', 'row']} my={8}>
+        {quickLinks.map((item, idx) => {
+          return (
+            <Link href={item.link} textDecoration="none" key={idx}>
+              <Button variant="outline" size="lg" w={64}>
+                {item.title}
+              </Button>
             </Link>
-          </ListItem>
-        );
-      })}
-    </UnorderedList>
+          );
+        })}
+      </Stack>
+    </Center>
   );
 };
 
@@ -180,7 +182,7 @@ function FullWidthHeading(props: { heading: string; subHeading: string; anchorId
       id={props.anchorId}
       mx={pageSpacing.negative}
       px={pageSpacing.positive}
-      mt={8}
+      my={3}
     >
       <Stack spacing={2}>
         <Heading as="h2" fontSize="3xl">
