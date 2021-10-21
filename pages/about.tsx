@@ -54,43 +54,43 @@ const IllustratorCardList = () => {
       name: 'Defaced Studio',
       handle: 'Defacedstudio',
       year: 'one',
-      imgURL: '',
+      imgURL: 'defacedstudio.png',
     },
     {
       name: 'Eclectic Method',
       handle: 'EclecticMethod',
       year: 'two',
-      imgURL: '',
+      imgURL: 'eclecticmethod.png',
     },
     {
       name: 'Crypto Geisha',
       handle: 'CryptoGeisha',
       year: 'three',
-      imgURL: '',
+      imgURL: 'cryptogeisha.png',
     },
     {
       name: 'Lucas Olivari',
       handle: 'luk.olivari',
       year: 'four',
-      imgURL: '',
+      imgURL: 'lucasolivari.png',
     },
     {
       name: 'Arzena Ersidyandhi',
       handle: 'Libraryfunction',
       year: 'five',
-      imgURL: '',
+      imgURL: 'arzena.png',
     },
     {
       name: 'Lhean Storm',
       handle: 'StormNft',
       year: 'six',
-      imgURL: '',
+      imgURL: 'lheanstorm.png',
     },
     {
       name: 'Sam Jones',
       handle: 'SamuelArtson',
       year: 'seven',
-      imgURL: '',
+      imgURL: 'samjones.png',
     },
     {
       name: 'Habiba Green',
@@ -102,31 +102,31 @@ const IllustratorCardList = () => {
       name: 'Clifford Elivert',
       handle: 'cliffBallin',
       year: 'nine',
-      imgURL: '',
+      imgURL: 'cliffordelivert.png',
     },
     {
       name: 'Audrey Pina',
       handle: '_puppuppup_',
       year: 'ten',
-      imgURL: '',
+      imgURL: 'audreypina.png',
     },
     {
       name: 'PXZMARSO',
       handle: 'pxzmarso',
       year: 'eleven',
-      imgURL: '',
+      imgURL: 'pxzmarzo.png',
     },
     {
       name: 'Nolan Pelletier',
       handle: 'NolanPPelletier',
       year: 'twelve',
-      imgURL: '',
+      imgURL: 'nolanp.png',
     },
     {
       name: 'Kirk Wallace',
       handle: 'bonehausinc',
       year: 'thirteen',
-      imgURL: '',
+      imgURL: 'kirkwallace.png',
     },
   ];
   return (
@@ -139,13 +139,18 @@ const IllustratorCardList = () => {
 };
 
 const IllustratorCard = ({ name, handle, year, imgURL }: Illustrator) => {
+  const illustratorImagePath = '/assets/illustrators/';
   return (
     <Box size="sm" rounded="lg" borderWidth="1px" overflow="hidden">
       {/* <Badge colorScheme="blackAlpha" px={2} ml={2} mt={2} variant="subtle">
         Year {year}
       </Badge> */}
       <AspectRatio ratio={16 / 9}>
-        <Image src={imgURL || 'assets/forest-tower.jpg'} alt={name} objectFit="cover" />
+        <Image
+          src={imgURL ? illustratorImagePath + imgURL : 'assets/forest-tower.jpg'}
+          alt={name}
+          objectFit="cover"
+        />
       </AspectRatio>
       <Box bg="white" p={3}>
         <Box
