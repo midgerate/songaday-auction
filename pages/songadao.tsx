@@ -218,7 +218,7 @@ export default function SongADAO() {
               What do members do?
             </Heading>
             <SimpleGrid columns={[1, null, 3]} spacing={[4, 8]}>
-              <Box bgColor="white" p={4} rounded="md" bg="brand.lightTeal">
+              <Box p={4} rounded="md" bg="brand.lightTeal">
                 <Stack spacing={2} textAlign="center">
                   <Heading as="h2" fontSize="lg">
                     Community
@@ -230,7 +230,7 @@ export default function SongADAO() {
                   </Text>
                 </Stack>
               </Box>
-              <Box bgColor="white" p={4} rounded="md" bg="brand.lightTeal">
+              <Box p={4} rounded="md" bg="brand.lightTeal">
                 <Stack spacing={2} textAlign="center">
                   <Heading as="h2" fontSize="lg">
                     Patronage Activity
@@ -242,7 +242,7 @@ export default function SongADAO() {
                   </Text>
                 </Stack>
               </Box>
-              <Box bg="white" p={4} rounded="md" bg="brand.lightTeal">
+              <Box p={4} rounded="md" bg="brand.lightTeal">
                 <Stack spacing={2}>
                   <Heading as="h2" fontSize="lg">
                     Scalability
