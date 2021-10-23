@@ -15,7 +15,7 @@ import {
   Link,
 } from '@chakra-ui/react';
 import Footer from '../components/Footer';
-
+import NextLink from 'next/link';
 interface CountdownProps {
   title: string;
   stat: string;
@@ -25,7 +25,7 @@ interface FeatureProps {
   button: string;
   image: ReactElement;
   isPrimaryButton?: boolean;
-  isUrl?: boolean;
+  link: string;
 }
 interface TimelineProps {
   title: string;
@@ -160,7 +160,7 @@ const CountDownCard = ({ title, stat }: CountdownProps) => {
     </Stat>
   );
 };
-const Feature = ({ title, button, image, isPrimaryButton, isUrl }: FeatureProps) => {
+const Feature = ({ title, button, image, isPrimaryButton, link }: FeatureProps) => {
   return (
     <Stack
       alignItems="center"
@@ -174,17 +174,11 @@ const Feature = ({ title, button, image, isPrimaryButton, isUrl }: FeatureProps)
         {title}
       </Text>
       <Box py="4">{image}</Box>
-      {isUrl ? (
-        <Link href="https://songaday.world/available-songs" isExternal>
-          <Button variant={isPrimaryButton ? 'solid' : 'outline'} size="lg">
-            {button}
-          </Button>
-        </Link>
-      ) : (
+      <NextLink passHref href={link}>
         <Button variant={isPrimaryButton ? 'solid' : 'outline'} size="lg">
           {button}
         </Button>
-      )}
+      </NextLink>
     </Stack>
   );
 };
@@ -305,18 +299,20 @@ export default function Home() {
               title="SongADAO owns the rights and revenue to all Song A Day songs."
               image={<Image h="28" src="/assets/contract.png" alt="Segun Adebayo" />}
               button="Explore the Songs"
+              link="/"
             />
             <Feature
               title="Members vote to govern the DAO’s use of resources"
               image={<Image h="28" src="/assets/judge.png" alt="Segun Adebayo" />}
               button="Find Out More"
+              link="/"
             />
             <Feature
               title="Each Song A Day NFT gets you 1 vote in SongADAO."
               image={<Image h="28" src="/assets/voting.png" alt="Segun Adebayo" />}
               button="Grab an NFT"
+              link="/songadao"
               isPrimaryButton
-              isUrl
             />
           </SimpleGrid>
         </Box>
@@ -368,10 +364,19 @@ export default function Home() {
             fontWeight="bold"
           >
             There’s no better time to join this
-            <Link href="https://songaday.world/songadao" isExternal color="teal.500">
-              grand experiment
-            </Link>
-            .
+            <NextLink href="/songadao" passHref>
+              <Link
+                _hover={{
+                  textDecoration: 'none',
+                  borderColor: 'brand.teal',
+                  borderBottom: '4px',
+                }}
+                mx="2"
+                color="brand.teal"
+              >
+                grand experiment.
+              </Link>
+            </NextLink>
           </Text>
           <Text
             lineHeight="taller"
@@ -383,9 +388,9 @@ export default function Home() {
           >
             And you can pick it up for a song!
           </Text>
-          <Link href="https://songaday.world/available-songs" isExternal>
+          <NextLink href="/" passHref>
             <Button size="lg">Get your NFT</Button>
-          </Link>
+          </NextLink>
         </Container>
       </Box>
       <Footer />

@@ -155,8 +155,8 @@ export default function SongADAO() {
           </Box>
         </SimpleGrid>
 
-        <Stack alignItems="center" textAlign="center">
-          <Heading as="h2" mb={3} fontSize="3xl">
+        <Stack alignItems="center" textAlign="left">
+          <Heading textAlign="center" as="h2" mb={3} fontSize="3xl">
             Why a DAO?
           </Heading>
           <Text>
@@ -172,11 +172,9 @@ export default function SongADAO() {
             runs like a collective, so that everyone who supports Song A Day benefits from its
             success. The goal is equity; everyone gets their fair share.
           </Text>
-          <Link href="#" textDecoration="none">
-            <Button variant="outline" size="lg" w={['full', 52]} mt={4}>
-              The Future of Music
-            </Button>
-          </Link>
+          <Button variant="outline" size="lg" w={['full', 52]} mt={4}>
+            The Future of Music
+          </Button>
         </Stack>
 
         <Box
@@ -193,9 +191,11 @@ export default function SongADAO() {
             </Heading>
             <Text>Joining is as easy as owning a Song A Day NFT.</Text>
             <Text>As long as you own at least one, you’re eligible to be a member.</Text>
-            <Button size="lg" w={['full', 52]} mt={4} alignSelf="center">
-              Get your NFT
-            </Button>
+            <Link href="https://songaday.world/available-songs" isExternal color="teal.500">
+              <Button size="lg" w={['full', 52]} mt={4} alignSelf="center">
+                Get your NFT
+              </Button>
+            </Link>
           </Stack>
         </Box>
 
@@ -242,8 +242,11 @@ export default function SongADAO() {
                     Scalability
                   </Heading>
                   <Text>
-                    This is an experiment that’s meant to be replicated. If this model works, other
-                    creators will be able to adopt it too, and they’ll need our help to do it.
+                    <Link href="https://songaday.world/songadao" isExternal color="brand.teal">
+                      This is an experiment that’s meant to be replicated.
+                    </Link>
+                    If this model works, other creators will be able to adopt it too, and they’ll
+                    need our help to do it.
                   </Text>
                 </Stack>
               </Box>
