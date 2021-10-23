@@ -1,18 +1,5 @@
-import { Badge, Box, SimpleGrid, Container } from '@chakra-ui/layout';
-import {
-  Button,
-  Center,
-  Heading,
-  UnorderedList,
-  ListItem,
-  Link,
-  Text,
-  Stack,
-  AspectRatio,
-  Image,
-} from '@chakra-ui/react';
-
-import { HomeBanner } from '../components/HomeBanner';
+import { Box, Container, SimpleGrid } from '@chakra-ui/layout';
+import { Button, Center, Heading, Image, Link, Stack, Text } from '@chakra-ui/react';
 
 function FullWidthHeading(props: { heading: string; subHeading: string; anchorId: string }) {
   return (

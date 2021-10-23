@@ -276,23 +276,28 @@ const Timeline = ({ title, day, month, description, last }: TimelineProps) => {
 const Footer = () => {
   const footerNav = [
     {
-      to: 'https://discord.com/',
+      key: '1',
+      href: 'https://discord.gg/p3aW7F7J5h',
       name: 'Discord',
     },
     {
-      to: 'https://twitter.com/?lang=en',
+      key: '2',
+      href: 'https://twitter.com/songadaymann',
       name: 'Twitter',
     },
     {
-      to: 'https://www.youtube.com/',
+      key: '3',
+      href: 'https://www.youtube.com/c/JonathanMann',
       name: 'Youtube',
     },
     {
-      to: 'https://soundcloud.com/',
+      key: '4',
+      href: 'https://soundcloud.com/jonathanmann',
       name: 'Soundcloud',
     },
     {
-      to: 'https://twitter.com/songadaymann?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor',
+      key: '5',
+      href: 'https://www.jonathanmann.net/',
       name: 'JonathanMann',
     },
   ];
@@ -312,7 +317,8 @@ const Footer = () => {
         >
           {footerNav.map((link) => (
             // eslint-disable-next-line react/jsx-key
-            <Link textDecoration="underline" textUnderlineOffset="2px" to={link.to}>
+
+            <Link key={link.key} href={link.href} fontSize={{ base: 'xl', md: 'lg' }} isExternal>
               {link.name}
             </Link>
           ))}

@@ -41,12 +41,14 @@ function Navbar() {
           About
         </Link>
       </NextLink>
+      <NextLink href="/" passHref>
+        <Link pt={{ base: 8, md: 0 }} fontSize={{ base: 'xl', md: 'lg' }}>
+          Explore Songs
+        </Link>
+      </NextLink>
       <NextLink href="/songadao" passHref>
         <Link fontSize={{ base: 'xl', md: 'lg' }}>SongADAO</Link>
       </NextLink>
-      <Link href="https://twitter.com/songadaymann" fontSize={{ base: 'xl', md: 'lg' }} isExternal>
-        @songadaymann
-      </Link>
     </Stack>
   );
 
