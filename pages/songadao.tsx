@@ -1,5 +1,6 @@
 import { Box, Container, SimpleGrid } from '@chakra-ui/layout';
 import { Button, Center, Heading, Image, Link, Stack, Text } from '@chakra-ui/react';
+import Footer from '../components/Footer';
 
 function FullWidthHeading(props: { heading: string; subHeading: string; anchorId: string }) {
   return (
@@ -111,10 +112,13 @@ export default function SongADAO() {
           SongADAO is a group of humans who support one song a day, forever.
         </Text>
         <Text mt={4}>
-          Most artists are stuck with a very convoluted business model if they want to earn a living
-          making music. Using decentralized technology, I think we can do better. By empowering the
-          people who support music, we can make sure that the people who make, promote, and consume
-          music directly benefit from it.
+          Most artists are stuck with a
+          <Link href="https://songaday.world/songadao" isExternal color="brand.teal">
+            very convoluted business model
+          </Link>
+          if they want to earn a living making music. Using decentralized technology, I think we can
+          do better. By empowering the people who support music, we can make sure that the people
+          who make, promote, and consume music directly benefit from it.
         </Text>
 
         <SimpleGrid mb={16} mt={24} spacing={[20, 18]} columns={[1, null, 3]}>
@@ -157,8 +161,11 @@ export default function SongADAO() {
           </Heading>
           <Text>
             Because I believe that people genuinely love art, and want it to thrive. But the economy
-            around music has been screwed up for hundreds of years. That’s a deeply entrenched
-            system.
+            around music has
+            <Link href="https://songaday.world/songadao" isExternal color="brand.teal">
+              been screwed up
+            </Link>
+            for hundreds of years. That’s a deeply entrenched system.
           </Text>
           <Text mt={6}>
             SongADAO is a new twist; it’s a registered co-op LCA, so legally, it’s a company. But it
@@ -253,18 +260,28 @@ export default function SongADAO() {
           </Heading>
           <Stack fontSize="lg" alignItems="center">
             <Text>
-              You can <Link color="teal.500">join us on Discord</Link> (DAO members get VIP access),
-              or <Link color="teal.500">read the nitty gritty</Link> about how SongADAO works.
+              You can
+              <Link href="https://discord.gg/p3aW7F7J5h" isExternal color="teal.500">
+                join us on Discord
+              </Link>
+              (DAO members get VIP access), or
+              <Link href="https://songaday.world/bylaws" isExternal color="teal.500">
+                read the nitty gritty
+              </Link>
+              about how SongADAO works.
             </Text>
             <Text fontWeight="semibold">
               Or if you learn by doing, just try it! Buy a song and you’re in.
             </Text>
           </Stack>
-          <Button size="lg" w={['full', 52]} mt={8}>
-            Buy an NFT
-          </Button>
+          <Link href="https://songaday.world/available-songs" isExternal>
+            <Button size="lg" w={['full', 52]} mt={8}>
+              Buy an NFT
+            </Button>
+          </Link>
         </Box>
       </Box>
+      <Footer />
     </>
   );
 }

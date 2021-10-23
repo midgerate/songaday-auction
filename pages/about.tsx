@@ -1,17 +1,18 @@
-import { Badge, Box, SimpleGrid } from '@chakra-ui/layout';
+import { ExternalLinkIcon } from '@chakra-ui/icons';
+import { Box, SimpleGrid } from '@chakra-ui/layout';
 import {
-  Heading,
-  Center,
-  UnorderedList,
-  ListItem,
-  Link,
-  Text,
-  Stack,
   AspectRatio,
-  Image,
   Button,
+  Center,
+  Heading,
+  Image,
+  Link,
+  ListItem,
+  Stack,
+  Text,
+  UnorderedList,
 } from '@chakra-ui/react';
-import { LinkIcon, ExternalLinkIcon } from '@chakra-ui/icons';
+import Footer from '../components/Footer';
 interface Illustrator {
   name: string;
   handle: string;
@@ -96,7 +97,7 @@ const IllustratorCardList = () => {
       name: 'Habiba Green',
       handle: 'Habibagreen',
       year: 'eight',
-      imgURL: '',
+      imgURL: 'habibagreen.png',
     },
     {
       name: 'Clifford Elivert',
@@ -128,9 +129,15 @@ const IllustratorCardList = () => {
       year: 'thirteen',
       imgURL: 'kirkwallace.png',
     },
+    {
+      name: 'Dave Homer',
+      handle: 'davehomerdraws',
+      year: '',
+      imgURL: 'davehomer.png',
+    },
   ];
   return (
-    <SimpleGrid columns={[1, 2, 3, 4]} spacing={6} mb={2}>
+    <SimpleGrid columns={[1, 2, 3, 4, 5]} spacing={6} mb={2}>
       {illustrators.map(({ name, handle, year, imgURL }, idx) => {
         return <IllustratorCard key={idx} {...{ name, handle, year, imgURL }} />;
       })}
@@ -141,7 +148,7 @@ const IllustratorCardList = () => {
 const IllustratorCard = ({ name, handle, year, imgURL }: Illustrator) => {
   const illustratorImagePath = '/assets/illustrators/';
   return (
-    <Box size="sm" rounded="lg" borderWidth="1px" overflow="hidden">
+    <Box size="sm" rounded="lg" overflow="hidden">
       {/* <Badge colorScheme="blackAlpha" px={2} ml={2} mt={2} variant="subtle">
         Year {year}
       </Badge> */}
@@ -152,28 +159,29 @@ const IllustratorCard = ({ name, handle, year, imgURL }: Illustrator) => {
           objectFit="cover"
         />
       </AspectRatio>
-      <Box bg="white" p={3}>
-        <Box
-          color="gray.500"
-          fontWeight="semibold"
-          letterSpacing="wider"
-          fontSize="xs"
-          textTransform="uppercase"
-        >
-          Year {year}
-        </Box>
+      <Box bg="brand.lightTeal" p={3}>
         <Text fontSize="lg" fontWeight="semibold" lineHeight="tight">
           {name}
         </Text>
         <Link
           display="block"
-          fontSize="sm"
+          fontSize="lg"
           href={`https://twitter.com/${handle}`}
-          color="teal.500"
+          color="brand.teal"
           isExternal
         >
-          @{handle} <ExternalLinkIcon />
+          @{handle}
         </Link>
+        <Box
+          color="brand.teal"
+          fontWeight="semibold"
+          letterSpacing="wider"
+          mt={8}
+          fontSize="lg"
+          textTransform="capitalize"
+        >
+          Year {year}
+        </Box>
       </Box>
     </Box>
   );
@@ -215,7 +223,7 @@ export default function About() {
         </Center>
       </Box>
 
-      <Box mx={pageSpacing.positive}>
+      <Box mx={pageSpacing.positive} pb={10}>
         <QuickLinks />
 
         <FullWidthHeading
@@ -384,9 +392,9 @@ export default function About() {
         <Heading as="h3" fontSize="2xl" mt={8} mb={4}>
           The illustrators
         </Heading>
-
         <IllustratorCardList />
       </Box>
+      <Footer />
     </>
   );
 }

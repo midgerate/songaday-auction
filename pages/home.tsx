@@ -14,6 +14,7 @@ import {
   Container,
   Link,
 } from '@chakra-ui/react';
+import Footer from '../components/Footer';
 
 interface CountdownProps {
   title: string;
@@ -24,6 +25,7 @@ interface FeatureProps {
   button: string;
   image: ReactElement;
   isPrimaryButton?: boolean;
+  isUrl?: boolean;
 }
 interface TimelineProps {
   title: string;
@@ -126,7 +128,9 @@ const Hero = () => {
               <Text fontSize="xl" fontWeight="medium" pt="6" pb="3">
                 -42 NFTs Remain-
               </Text>
-              <Button size="lg">Claim Your Spot</Button>
+              <Link href="https://songaday.world/available-songs" isExternal>
+                <Button size="lg">Claim Your Spot</Button>
+              </Link>
             </Box>
           </Box>
         </Box>
@@ -156,7 +160,7 @@ const CountDownCard = ({ title, stat }: CountdownProps) => {
     </Stat>
   );
 };
-const Feature = ({ title, button, image, isPrimaryButton }: FeatureProps) => {
+const Feature = ({ title, button, image, isPrimaryButton, isUrl }: FeatureProps) => {
   return (
     <Stack
       alignItems="center"
@@ -170,9 +174,17 @@ const Feature = ({ title, button, image, isPrimaryButton }: FeatureProps) => {
         {title}
       </Text>
       <Box py="4">{image}</Box>
-      <Button variant={isPrimaryButton ? 'solid' : 'outline'} size="lg">
-        {button}
-      </Button>
+      {isUrl ? (
+        <Link href="https://songaday.world/available-songs" isExternal>
+          <Button variant={isPrimaryButton ? 'solid' : 'outline'} size="lg">
+            {button}
+          </Button>
+        </Link>
+      ) : (
+        <Button variant={isPrimaryButton ? 'solid' : 'outline'} size="lg">
+          {button}
+        </Button>
+      )}
     </Stack>
   );
 };
@@ -273,63 +285,6 @@ const Timeline = ({ title, day, month, description, last }: TimelineProps) => {
     </Stack>
   );
 };
-const Footer = () => {
-  const footerNav = [
-    {
-      key: '1',
-      href: 'https://discord.gg/p3aW7F7J5h',
-      name: 'Discord',
-    },
-    {
-      key: '2',
-      href: 'https://twitter.com/songadaymann',
-      name: 'Twitter',
-    },
-    {
-      key: '3',
-      href: 'https://www.youtube.com/c/JonathanMann',
-      name: 'Youtube',
-    },
-    {
-      key: '4',
-      href: 'https://soundcloud.com/jonathanmann',
-      name: 'Soundcloud',
-    },
-    {
-      key: '5',
-      href: 'https://www.jonathanmann.net/',
-      name: 'JonathanMann',
-    },
-  ];
-  return (
-    <Box bg="teal.50" color="gray.700">
-      <Container
-        as={Stack}
-        spacing={6}
-        py={8}
-        direction="column"
-        align={{ base: 'flex-start', md: 'center' }}
-      >
-        <Stack
-          align={{ base: 'flex-start', md: 'center' }}
-          direction={{ base: 'column', md: 'row' }}
-          spacing={6}
-        >
-          {footerNav.map((link) => (
-            // eslint-disable-next-line react/jsx-key
-
-            <Link key={link.key} href={link.href} fontSize={{ base: 'xl', md: 'lg' }} isExternal>
-              {link.name}
-            </Link>
-          ))}
-        </Stack>
-        <Text fontWeight="semibold" align="center">
-          Song A Day World, Song A Day, and SongADAO ©Copyright 2021 Jonathan Mann & SongADAO LLC
-        </Text>
-      </Container>
-    </Box>
-  );
-};
 export default function Home() {
   return (
     <>
@@ -361,6 +316,7 @@ export default function Home() {
               image={<Image h="28" src="/assets/voting.png" alt="Segun Adebayo" />}
               button="Grab an NFT"
               isPrimaryButton
+              isUrl
             />
           </SimpleGrid>
         </Box>
@@ -411,10 +367,10 @@ export default function Home() {
             fontSize={{ base: '2xl', sm: '4xl' }}
             fontWeight="bold"
           >
-            There’s no better time to join this{' '}
-            <span style={{ textDecoration: 'underline', textUnderlineOffset: '7px' }}>
+            There’s no better time to join this
+            <Link href="https://songaday.world/songadao" isExternal color="teal.500">
               grand experiment
-            </span>
+            </Link>
             .
           </Text>
           <Text
@@ -427,7 +383,9 @@ export default function Home() {
           >
             And you can pick it up for a song!
           </Text>
-          <Button size="lg">Get your NFT</Button>
+          <Link href="https://songaday.world/available-songs" isExternal>
+            <Button size="lg">Get your NFT</Button>
+          </Link>
         </Container>
       </Box>
       <Footer />
