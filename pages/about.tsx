@@ -21,8 +21,8 @@ interface Illustrator {
 }
 
 const pageSpacing = {
-  positive: [6, 8, 24, 32, 64, 80],
-  negative: [-6, -8, -24, -32, -64, -80],
+  positive: { base: 8, lg: 40 },
+  negative: { base: -8, lg: -40 },
 };
 
 const QuickLinks = () => {
@@ -34,7 +34,13 @@ const QuickLinks = () => {
 
   return (
     <Center>
-      <Stack direction={['column', 'row']} my={8}>
+      <Stack
+        direction={{ base: 'column', md: 'row' }}
+        alignItems="center"
+        w="full"
+        justifyContent="space-around"
+        my={8}
+      >
         {quickLinks.map((item, idx) => {
           return (
             <Link
@@ -144,7 +150,7 @@ const IllustratorCardList = () => {
     },
   ];
   return (
-    <SimpleGrid columns={[1, 2, 3, 4, 5]} spacing={6} mb={2}>
+    <SimpleGrid columns={{ base: 1, xl: 5, md: 4 }} spacing={6} mb={2}>
       {illustrators.map(({ name, handle, year, imgURL }, idx) => {
         return <IllustratorCard key={idx} {...{ name, handle, year, imgURL }} />;
       })}
@@ -205,10 +211,10 @@ function FullWidthHeading(props: { heading: string; subHeading: string; anchorId
       my={3}
     >
       <Stack spacing={2}>
-        <Heading as="h2" fontSize="4xl" fontWeight="bold">
+        <Heading as="h2" fontSize={{ base: '2xl', md: '4xl' }} fontWeight="bold">
           {props.heading}
         </Heading>
-        <Text fontSize="2xl" fontWeight="medium">
+        <Text fontSize={{ base: 'lg', md: '2xl' }} fontWeight="medium">
           {props.subHeading}
         </Text>
       </Stack>
@@ -241,23 +247,23 @@ export default function About() {
           anchorId="songadao"
         />
 
-        <Stack spacing={6}>
-          <Text pt={2} fontSize="2xl" lineHeight="short" fontWeight="medium">
+        <Stack spacing={6} py={{ base: '6', md: '12' }}>
+          <Text pt={2} fontSize={{ base: 'lg', md: '2xl' }} lineHeight="short" fontWeight="medium">
             Song A Day is different from other NFT projects. It did not grow directly out of the
             blockchain. I had written 2000 songs before Ethereum was even invented. I wrote another
             1500 before I learned about digital scarcity. But from the moment I saw CryptoPunks, I
             knew that Song A Day was a perfect fit.
           </Text>
-          <Text fontSize="2xl" lineHeight="tall" fontWeight="medium">
+          <Text fontSize={{ base: 'lg', md: '2xl' }} lineHeight="tall" fontWeight="medium">
             Song A Day is many things. It's about *time.* I measure the days by songs.
           </Text>
-          <Text fontSize="2xl" lineHeight="tall" fontWeight="medium">
+          <Text fontSize={{ base: 'lg', md: '2xl' }} lineHeight="tall" fontWeight="medium">
             Song A Day is a journal. It is quite literally a record of my creative life.
           </Text>
-          <Text fontSize="2xl" lineHeight="tall" fontWeight="medium">
+          <Text fontSize={{ base: 'lg', md: '2xl' }} lineHeight="tall" fontWeight="medium">
             Song A Day can be a burden, a joy, a challenge, a bore - all at the same time.
           </Text>
-          <Text fontSize="2xl" lineHeight="tall" fontWeight="medium">
+          <Text fontSize={{ base: 'lg', md: '2xl' }} lineHeight="tall" fontWeight="medium">
             Above all, Song A Day is an invitation to make stuff. Sometimes it's good stuff,
             sometimes it's bad stuff, but the making is the most important part.
           </Text>
@@ -267,21 +273,21 @@ export default function About() {
           History
         </Heading>
         <Stack spacing={6} pb="32">
-          <Text fontSize="2xl" lineHeight="tall" fontWeight="medium">
+          <Text fontSize={{ base: 'lg', md: '2xl' }} lineHeight="tall" fontWeight="medium">
             At the height of the 2008 financial crash. I was unemployed. I decided to try to write a
             song every day in January. By the end of the month, I was having so much fun (and I was
             still unemployed), I aimed for a year. At the end of 2009, I made the project
             indefinite. As of now, on the cusp of Year 14, I hold the Guinness World Record for
             “Most Consecutive Days Writing a Song.”
           </Text>
-          <Text fontSize="2xl" lineHeight="tall" fontWeight="medium">
+          <Text fontSize={{ base: 'lg', md: '2xl' }} lineHeight="tall" fontWeight="medium">
             For the first few years of the project, I made my living entering online video contests.
             I'd enter 12 contests in 12 days, win one or two of them, and that would be my income
             for the month. As time went on, I started cobbling together a living from many different
             sources: Patreon, YouTube ads, streaming revenue, commissions, playing at conferences,
             writing themes songs and much more.
           </Text>
-          <Text fontSize="2xl" lineHeight="tall" fontWeight="medium">
+          <Text fontSize={{ base: 'lg', md: '2xl' }} lineHeight="tall" fontWeight="medium">
             It's always been my dream to make Song A Day itself my sole source of income. Now,
             thanks to you, and this DAO, that's finally a possibility.
           </Text>
@@ -293,18 +299,18 @@ export default function About() {
           anchorId="who-is-mann"
         />
 
-        <Stack spacing={6}>
-          <Text pt={2} fontSize="2xl" lineHeight="tall" fontWeight="medium">
+        <Stack spacing={6} py={{ base: '6', md: '12' }}>
+          <Text pt={2} fontSize={{ base: 'lg', md: '2xl' }} lineHeight="tall" fontWeight="medium">
             I started writing songs when I was 12. I wrote my first song on the back of a pizza box.
             It wasn't a very good song.
           </Text>
-          <Text fontSize="2xl" lineHeight="tall" fontWeight="medium">
+          <Text fontSize={{ base: 'lg', md: '2xl' }} lineHeight="tall" fontWeight="medium">
             I feel really lucky though, because from that age onwards, I had a singular focus in my
             life: I wanted to write songs. I couldn't really sing, and I barely played guitar. It
             took me a long time before I made anything good. But none of that mattered: Writings
             songs is the only thing I have ever wanted to do.
           </Text>
-          <Text fontSize="2xl" lineHeight="tall" fontWeight="medium">
+          <Text fontSize={{ base: 'lg', md: '2xl' }} lineHeight="tall" fontWeight="medium">
             I went to college at Bennington where I started learning how to record myself. My friend
             Will and I stayed up all night and wrote and recorded 40 songs, each forty seconds long.
             My friend Thomas and I staged a giant rock opera called The Last Nympho Leprechaun. From
@@ -325,19 +331,24 @@ export default function About() {
             </Link>
             .
           </Text>
-          <Text fontSize="2xl" lineHeight="tall" fontWeight="medium">
+          <Text fontSize={{ base: 'lg', md: '2xl' }} lineHeight="tall" fontWeight="medium">
             In grad school at CalArts I made the world's first rock opera based on Super Mario. It
             was featured on G4, the premiere gaming channel of the aughts (iykyk).
           </Text>
-          <Text fontSize="2xl" lineHeight="tall" fontWeight="medium">
+          <Text fontSize={{ base: 'lg', md: '2xl' }} lineHeight="tall" fontWeight="medium">
             Subsequently, I got an internship at G4, and ended up writing a bunch of songs for
             different shows on the channel, culminating in the musical episode of their flagship
             review show, X-Play.
           </Text>
         </Stack>
 
-        <Stack justifyContent="center" direction={['column', 'row']} spacing={10} mt={8}>
-          <Box w={[80, 96]}>
+        <Stack
+          justifyContent="center"
+          direction={{ base: 'column', md: 'row' }}
+          spacing={10}
+          py={12}
+        >
+          <Box w={{ base: 'full', md: 96 }}>
             <AspectRatio ratio={16 / 9}>
               <iframe
                 width="560"
@@ -354,7 +365,7 @@ export default function About() {
             </Text>
           </Box>
 
-          <Box w={[80, 96]}>
+          <Box w={{ base: 'full', md: 96 }}>
             <AspectRatio ratio={16 / 9}>
               <iframe
                 width="560"
@@ -378,45 +389,45 @@ export default function About() {
           anchorId="who-does-art"
         />
 
-        <Stack spacing={4}>
-          <Text pt={2} fontSize="2xl" lineHeight="tall" fontWeight="medium">
+        <Stack spacing={4} py={{ base: '6', md: '12' }}>
+          <Text pt={2} fontSize={{ base: 'lg', md: '2xl' }} lineHeight="tall" fontWeight="medium">
             Each Song A Day NFT is a 1/1.
           </Text>
-          <Text fontSize="2xl" lineHeight="tall" fontWeight="medium">
+          <Text fontSize={{ base: 'lg', md: '2xl' }} lineHeight="tall" fontWeight="medium">
             Each Song A Day has an accompanying illustration.
           </Text>
 
-          <Text fontSize="2xl" lineHeight="tall" fontWeight="medium">
+          <Text fontSize={{ base: 'lg', md: '2xl' }} lineHeight="tall" fontWeight="medium">
             Each illustration's attributes are derived from the song itself:
           </Text>
           <UnorderedList marginInlineStart="unset" my={8} px={4} py={2}>
-            <ListItem fontSize="2xl" lineHeight="short" fontWeight="medium">
+            <ListItem fontSize={{ base: 'lg', md: '2xl' }} lineHeight="short" fontWeight="medium">
               <strong>Topic</strong> – what the song is <i>about</i>.
             </ListItem>
-            <ListItem fontSize="2xl" lineHeight="short" fontWeight="medium">
+            <ListItem fontSize={{ base: 'lg', md: '2xl' }} lineHeight="short" fontWeight="medium">
               <strong>Mood</strong> – the <i>feeling</i> I had when making it.
             </ListItem>
-            <ListItem fontSize="2xl" lineHeight="short" fontWeight="medium">
+            <ListItem fontSize={{ base: 'lg', md: '2xl' }} lineHeight="short" fontWeight="medium">
               <strong>Instrument</strong> – the main <i>instrument</i> that's played.
             </ListItem>
-            <ListItem fontSize="2xl" lineHeight="short" fontWeight="medium">
+            <ListItem fontSize={{ base: 'lg', md: '2xl' }} lineHeight="short" fontWeight="medium">
               <strong>Location</strong> – <i>where</i> the song was recorded.
             </ListItem>
-            <ListItem fontSize="2xl" lineHeight="short" fontWeight="medium">
+            <ListItem fontSize={{ base: 'lg', md: '2xl' }} lineHeight="short" fontWeight="medium">
               <strong>Genre</strong> – the genre.
             </ListItem>
-            <ListItem fontSize="2xl" lineHeight="short" fontWeight="medium">
+            <ListItem fontSize={{ base: 'lg', md: '2xl' }} lineHeight="short" fontWeight="medium">
               <strong>Style</strong> – what the song sounds like.
             </ListItem>
-            <ListItem fontSize="2xl" lineHeight="short" fontWeight="medium">
+            <ListItem fontSize={{ base: 'lg', md: '2xl' }} lineHeight="short" fontWeight="medium">
               <strong>Noun/Proper noun</strong> – whether there's a specific person, place, thing or
               idea in the song.
             </ListItem>
-            <ListItem fontSize="2xl" lineHeight="tall" fontWeight="medium">
+            <ListItem fontSize={{ base: 'lg', md: '2xl' }} lineHeight="tall" fontWeight="medium">
               <strong>Beard</strong> – the state of my beard in the video for the song.
             </ListItem>
           </UnorderedList>
-          <Text fontSize="2xl" lineHeight="short" fontWeight="medium">
+          <Text fontSize={{ base: 'lg', md: '2xl' }} lineHeight="short" fontWeight="medium">
             These attributes become layers in the illustrations that represent each song.
           </Text>
         </Stack>
