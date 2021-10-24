@@ -24,13 +24,20 @@ function FullWidthHeading(props: { heading: string; subHeading: string; anchorId
 }
 
 const pageSpacing = {
-  positive: [8],
+  positive: { base: 0, md: 8 },
   negative: [-8],
 };
 export default function SongADAO() {
   return (
     <>
-      <Stack direction="row" w="full" pos="relative" h="420px" justifyItems="center">
+      <Stack
+        direction="row"
+        w="full"
+        pos="relative"
+        minH="420px"
+        mb={{ base: 40, md: 0 }}
+        justifyItems="center"
+      >
         <Image
           src="/assets/music-rainbow.png"
           width="520px"
@@ -128,9 +135,11 @@ export default function SongADAO() {
           <Center>
             <Box pos="relative">
               <Text
-                pos="absolute"
+                pos={{ base: 'relative', md: 'absolute' }}
                 mt={6}
-                left={-12}
+                top={{ base: -20, md: 0 }}
+                textAlign={{ base: 'center', md: 'left' }}
+                left={{ base: 0, md: -12 }}
                 fontWeight="bold"
                 textTransform="uppercase"
                 letterSpacing="wider"
@@ -141,11 +150,22 @@ export default function SongADAO() {
             </Box>
           </Center>
         </Box>
-        <Box textAlign="center" px={{ base: 0, lg: 40 }}>
-          <Text as="h1" fontWeight="bold" lineHeight="tall" fontSize="4xl" mt={[24, 16]}>
+        <Box
+          textAlign="center"
+          pt={{ base: '20', md: null }}
+          pb={{ base: '10', md: null }}
+          px={{ base: 8, lg: 40 }}
+        >
+          <Text
+            as="h1"
+            fontWeight="bold"
+            lineHeight="tall"
+            fontSize={{ base: '2xl', md: '4xl' }}
+            mt={[24, 16]}
+          >
             SongADAO is a group of humans who support one song a day, forever.
           </Text>
-          <Text fontSize="2xl" mt={4} lineHeight="shorter">
+          <Text fontSize={{ base: 'lg', md: '2xl' }} mt={4} lineHeight="shorter">
             Most artists are stuck with a
             <Link
               href=""
@@ -166,7 +186,7 @@ export default function SongADAO() {
             people who make, promote, and consume music directly benefit from it.
           </Text>
         </Box>
-        <SimpleGrid mb={16} mt={24} spacing={{ base: 10, xl: 20 }} columns={[1, 1, 1, 3]}>
+        <SimpleGrid mb={16} mt={24} spacing={{ base: 32, md: 20 }} columns={[1, 1, 1, 3]}>
           <Box
             mx="auto"
             maxW={{ lg: 'full', md: 96 }}
@@ -221,11 +241,16 @@ export default function SongADAO() {
           </Box>
         </SimpleGrid>
 
-        <Stack px={{ base: 0, lg: 40 }} alignItems="center" textAlign="center">
-          <Heading as="h1" fontWeight="bold" lineHeight="tall" fontSize="4xl">
+        <Stack px={{ base: 8, lg: 40 }} alignItems="center" textAlign="center">
+          <Heading
+            as="h1"
+            fontWeight="bold"
+            lineHeight="tall"
+            fontSize={{ base: '2xl', md: '4xl' }}
+          >
             Why a DAO?
           </Heading>
-          <Text fontSize="2xl" mt={6} lineHeight="shorter">
+          <Text fontSize={{ base: 'lg', md: '2xl' }} mt={6} lineHeight="shorter">
             Because I believe that people genuinely love art, and want it to thrive. But the economy
             around music has
             <Link
@@ -244,7 +269,12 @@ export default function SongADAO() {
             </Link>
             for hundreds of years. That’s a deeply entrenched system.
           </Text>
-          <Text pt={4} fontSize="2xl" lineHeight="shorter">
+          <Text
+            fontSize={{ base: 'lg', md: '2xl' }}
+            pt={4}
+            pb={{ base: 4, sm: 12 }}
+            lineHeight="shorter"
+          >
             SongADAO is a new twist; it’s a registered co-op LCA, so legally, it’s a company. But it
             runs like a collective, so that everyone who supports Song A Day benefits from its
             success. The goal is equity; everyone gets their fair share.
@@ -263,14 +293,19 @@ export default function SongADAO() {
           mt="16"
           textAlign="center"
         >
-          <Stack py="12" spacing={4}>
-            <Heading as="h1" fontWeight="bold" lineHeight="tall" fontSize="4xl">
+          <Stack py="12" px={{ base: 8, sm: 12 }} spacing={4}>
+            <Heading
+              as="h1"
+              fontWeight="bold"
+              lineHeight="tall"
+              fontSize={{ base: '2xl', md: '4xl' }}
+            >
               How do I join?
             </Heading>
-            <Text fontSize="2xl" lineHeight="shorter">
+            <Text fontSize={{ base: 'lg', md: '2xl' }} lineHeight="shorter">
               Joining is as easy as owning a Song A Day NFT.
             </Text>
-            <Text fontSize="2xl" lineHeight="shorter">
+            <Text fontSize={{ base: 'lg', md: '2xl' }} lineHeight="shorter">
               As long as you own at least one, you’re eligible to be a member.
             </Text>
             <NextLink href="/" passHref>
@@ -291,40 +326,82 @@ export default function SongADAO() {
           pb="20"
         >
           <Stack pb="10" spacing={2} textAlign="center">
-            <Heading pb="8" as="h1" fontWeight="bold" lineHeight="tall" fontSize="4xl">
+            <Heading
+              pb="8"
+              as="h1"
+              fontWeight="bold"
+              lineHeight="tall"
+              fontSize={{ base: '2xl', md: '4xl' }}
+            >
               What do members do?
             </Heading>
             <SimpleGrid spacing={{ base: 10, xl: 20 }} columns={[1, 1, 1, 3]}>
-              <Box p={8} mx="auto" maxW={{ lg: 'full', md: 96 }} rounded="md" bg="brand.lightTeal">
+              <Box
+                p={8}
+                px={{ base: 16, md: 8 }}
+                mx="auto"
+                maxW={{ lg: 'full', md: 96 }}
+                rounded="md"
+                bg="brand.lightTeal"
+              >
                 <Stack spacing={4} textAlign="center">
-                  <Heading as="h2" fontWeight="bold" fontSize="2xl">
+                  <Heading as="h2" fontWeight="bold" fontSize={{ base: 'lg', md: '2xl' }}>
                     Community
                   </Heading>
-                  <Text fontSize="2xl" textAlign="left" lineHeight="short" fontWeight="medium">
+                  <Text
+                    fontSize={{ base: 'lg', md: '2xl' }}
+                    textAlign="left"
+                    lineHeight="short"
+                    fontWeight="medium"
+                  >
                     This project is not about flipping for a quick buck. It’s about hodling and
                     building something, together. We’re dedicated to all acts of creation, big and
                     small.
                   </Text>
                 </Stack>
               </Box>
-              <Box p={8} mx="auto" maxW={{ lg: 'full', md: 96 }} rounded="md" bg="brand.lightTeal">
+              <Box
+                p={8}
+                px={{ base: 16, md: 8 }}
+                mx="auto"
+                maxW={{ lg: 'full', md: 96 }}
+                rounded="md"
+                bg="brand.lightTeal"
+              >
                 <Stack spacing={2} textAlign="center">
-                  <Heading as="h2" fontWeight="bold" fontSize="2xl">
+                  <Heading as="h2" fontWeight="bold" fontSize={{ base: 'lg', md: '2xl' }}>
                     Patronage Activity
                   </Heading>
-                  <Text fontSize="2xl" textAlign="left" lineHeight="short" fontWeight="medium">
+                  <Text
+                    fontSize={{ base: 'lg', md: '2xl' }}
+                    textAlign="left"
+                    lineHeight="short"
+                    fontWeight="medium"
+                  >
                     Just buying an NFT is a big help. But you can also get paid working for the DAO!
                     Members pick what kinds of work gets rewarded, so proactive members can have a
                     big impact.
                   </Text>
                 </Stack>
               </Box>
-              <Box p={8} mx="auto" maxW={{ lg: 'full', md: 96 }} rounded="md" bg="brand.lightTeal">
+              <Box
+                p={8}
+                px={{ base: 16, md: 8 }}
+                mx="auto"
+                maxW={{ lg: 'full', md: 96 }}
+                rounded="md"
+                bg="brand.lightTeal"
+              >
                 <Stack spacing={2}>
-                  <Heading as="h2" fontWeight="bold" fontSize="2xl">
+                  <Heading as="h2" fontWeight="bold" fontSize={{ base: 'lg', md: '2xl' }}>
                     Scalability
                   </Heading>
-                  <Text fontSize="2xl" textAlign="left" lineHeight="short" fontWeight="medium">
+                  <Text
+                    fontSize={{ base: 'lg', md: '2xl' }}
+                    textAlign="left"
+                    lineHeight="short"
+                    fontWeight="medium"
+                  >
                     <Link
                       href=""
                       borderColor="brand.teal"
@@ -351,8 +428,14 @@ export default function SongADAO() {
           </Button>
         </Box>
 
-        <Box my={16} textAlign="center">
-          <Heading as="h2" fontWeight="bold" pb="8" lineHeight="tall" fontSize="4xl">
+        <Box my={16} px={{ base: 8, sm: 8 }} textAlign="center">
+          <Heading
+            as="h2"
+            fontWeight="bold"
+            pb="8"
+            lineHeight="tall"
+            fontSize={{ base: '2xl', md: '4xl' }}
+          >
             How do I learn more?
           </Heading>
           <Stack fontSize="lg" spacing="8" pb="8" alignItems="center">
