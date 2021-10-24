@@ -24,8 +24,8 @@ function FullWidthHeading(props: { heading: string; subHeading: string; anchorId
 }
 
 const pageSpacing = {
-  positive: [6, 8, 20, 32, 12, 80],
-  negative: [-6, -8, -20, -32, -64, -80],
+  positive: [8],
+  negative: [-8],
 };
 export default function SongADAO() {
   return (
@@ -55,22 +55,13 @@ export default function SongADAO() {
           >
             Hi! I’m Jonathan Mann.
           </Heading>
-          <Text
-            flexDirection="row"
-            display="flex"
-            justifyContent="center"
-            lineHeight="short"
-            textAlign="center"
-            fontSize="2xl"
-            fontWeight="medium"
-            pt="6"
-          >
+          <Text lineHeight="short" textAlign="center" fontSize="2xl" fontWeight="medium" pt="6">
             I've been writing a song a day for
-            <Text px="2" fontWeight="bold">
+            <Text as="span" px="2" fontWeight="bold">
               12 years and 267 days.
             </Text>
             That's
-            <Text px="2" fontWeight="bold">
+            <Text as="span" px="2" fontWeight="bold">
               4,647 songs!
             </Text>
           </Text>
@@ -79,20 +70,12 @@ export default function SongADAO() {
             Buy a song
           </Button>
 
-          <Text textAlign="center" fontSize="2xl" fontWeight="medium">
+          <Text lineHeight="short" textAlign="center" fontSize="2xl" fontWeight="medium">
             What do I do with all these songs?
           </Text>
-          <Text
-            textAlign="center"
-            pt="8"
-            fontSize="2xl"
-            fontWeight="medium"
-            flexDirection="row"
-            display="flex"
-            justifyContent="center"
-          >
-            The question is, what will{' '}
-            <Text fontWeight="bold" px="2">
+          <Text lineHeight="short" textAlign="center" fontSize="2xl" fontWeight="medium" pt="6">
+            I've been writing a song a day for
+            <Text as="span" px="2" fontWeight="bold">
               YOU
             </Text>
             do?
@@ -158,7 +141,7 @@ export default function SongADAO() {
             </Box>
           </Center>
         </Box>
-        <Box px="20">
+        <Box textAlign="center" px={{ base: 0, lg: 40 }}>
           <Text as="h1" fontWeight="bold" lineHeight="tall" fontSize="4xl" mt={[24, 16]}>
             SongADAO is a group of humans who support one song a day, forever.
           </Text>
@@ -183,33 +166,54 @@ export default function SongADAO() {
             people who make, promote, and consume music directly benefit from it.
           </Text>
         </Box>
-        <SimpleGrid mb={16} mt={24} spacing={[20, 20]} columns={[1, null, 3]}>
-          <Box bgColor="brand.lightTeal" px={3} pb="12" rounded="md">
+        <SimpleGrid mb={16} mt={24} spacing={{ base: 10, xl: 20 }} columns={[1, 1, 1, 3]}>
+          <Box
+            mx="auto"
+            maxW={{ lg: 'full', md: 96 }}
+            bgColor="brand.lightTeal"
+            px={3}
+            pb="12"
+            rounded="md"
+          >
             <Center>
               <Container mt={-12} centerContent>
                 <Image src="/assets/agreement-hands.png" alt="Agreement Hands" h={24}></Image>
-                <Text fontSize="2xl" fontWeight="medium" mt={3}>
+                <Text textAlign="center" fontSize="2xl" fontWeight="medium" mt={3}>
                   SongADAO owns 100% of the rights to — and revenue from — all Song A Day songs.
                 </Text>
               </Container>
             </Center>
           </Box>
-          <Box bgColor="brand.lightTeal" px={3} rounded="md">
+          <Box
+            mx="auto"
+            maxW={{ lg: 'full', md: 96 }}
+            bgColor="brand.lightTeal"
+            px={3}
+            pb="12"
+            rounded="md"
+          >
             <Center>
               <Container mt={-12} centerContent>
                 <Image src="/assets/bullhorn-hands.png" alt="Agreement Hands" h={24}></Image>
-                <Text fontSize="2xl" fontWeight="medium" mt={3}>
+                <Text textAlign="center" fontSize="2xl" fontWeight="medium" mt={3}>
                   Members decide how to use those rights and revenue to grow the value of Song A
                   Day.
                 </Text>
               </Container>
             </Center>
           </Box>
-          <Box bgColor="brand.lightTeal" px={3} rounded="md">
+          <Box
+            mx="auto"
+            maxW={{ lg: 'full', md: 96 }}
+            bgColor="brand.lightTeal"
+            px={3}
+            pb="12"
+            rounded="md"
+          >
             <Center>
               <Container mt={[-12, -20]} centerContent>
                 <Image src="/assets/smiling-award-cup.png" alt="Agreement Hands" h={32}></Image>
-                <Text fontSize="2xl" fontWeight="medium" mt={3}>
+                <Text textAlign="center" fontSize="2xl" fontWeight="medium" mt={3}>
                   As Song A Day gets more successful, so does the DAO!
                 </Text>
               </Container>
@@ -217,7 +221,7 @@ export default function SongADAO() {
           </Box>
         </SimpleGrid>
 
-        <Stack px="32" alignItems="center" textAlign="left">
+        <Stack px={{ base: 0, lg: 40 }} alignItems="center" textAlign="center">
           <Heading as="h1" fontWeight="bold" lineHeight="tall" fontSize="4xl">
             Why a DAO?
           </Heading>
@@ -290,8 +294,8 @@ export default function SongADAO() {
             <Heading pb="8" as="h1" fontWeight="bold" lineHeight="tall" fontSize="4xl">
               What do members do?
             </Heading>
-            <SimpleGrid px={[52]} columns={[1, null, 3]} spacing={[20, 20]}>
-              <Box p={8} rounded="md" bg="brand.lightTeal">
+            <SimpleGrid spacing={{ base: 10, xl: 20 }} columns={[1, 1, 1, 3]}>
+              <Box p={8} mx="auto" maxW={{ lg: 'full', md: 96 }} rounded="md" bg="brand.lightTeal">
                 <Stack spacing={4} textAlign="center">
                   <Heading as="h2" fontWeight="bold" fontSize="2xl">
                     Community
@@ -303,7 +307,7 @@ export default function SongADAO() {
                   </Text>
                 </Stack>
               </Box>
-              <Box p={8} rounded="md" bg="brand.lightTeal">
+              <Box p={8} mx="auto" maxW={{ lg: 'full', md: 96 }} rounded="md" bg="brand.lightTeal">
                 <Stack spacing={2} textAlign="center">
                   <Heading as="h2" fontWeight="bold" fontSize="2xl">
                     Patronage Activity
@@ -315,7 +319,7 @@ export default function SongADAO() {
                   </Text>
                 </Stack>
               </Box>
-              <Box p={8} rounded="md" bg="brand.lightTeal">
+              <Box p={8} mx="auto" maxW={{ lg: 'full', md: 96 }} rounded="md" bg="brand.lightTeal">
                 <Stack spacing={2}>
                   <Heading as="h2" fontWeight="bold" fontSize="2xl">
                     Scalability
