@@ -1,17 +1,18 @@
-import { Badge, Box, SimpleGrid } from '@chakra-ui/layout';
+import { ExternalLinkIcon } from '@chakra-ui/icons';
+import { Box, SimpleGrid } from '@chakra-ui/layout';
 import {
-  Heading,
-  Center,
-  UnorderedList,
-  ListItem,
-  Link,
-  Text,
-  Stack,
   AspectRatio,
-  Image,
   Button,
+  Center,
+  Heading,
+  Image,
+  Link,
+  ListItem,
+  Stack,
+  Text,
+  UnorderedList,
 } from '@chakra-ui/react';
-import { LinkIcon, ExternalLinkIcon } from '@chakra-ui/icons';
+import Footer from '../components/Footer';
 interface Illustrator {
   name: string;
   handle: string;
@@ -36,7 +37,14 @@ const QuickLinks = () => {
       <Stack direction={['column', 'row']} my={8}>
         {quickLinks.map((item, idx) => {
           return (
-            <Link href={item.link} textDecoration="none" key={idx}>
+            <Link
+              _hover={{
+                textDecoration: 'none',
+              }}
+              href={item.link}
+              textDecoration="none"
+              key={idx}
+            >
               <Button variant="outline" size="lg" w={64}>
                 {item.title}
               </Button>
@@ -96,7 +104,7 @@ const IllustratorCardList = () => {
       name: 'Habiba Green',
       handle: 'Habibagreen',
       year: 'eight',
-      imgURL: '',
+      imgURL: 'habibagreen.png',
     },
     {
       name: 'Clifford Elivert',
@@ -128,9 +136,15 @@ const IllustratorCardList = () => {
       year: 'thirteen',
       imgURL: 'kirkwallace.png',
     },
+    {
+      name: 'Dave Homer',
+      handle: 'davehomerdraws',
+      year: '',
+      imgURL: 'davehomer.png',
+    },
   ];
   return (
-    <SimpleGrid columns={[1, 2, 3, 4]} spacing={6} mb={2}>
+    <SimpleGrid columns={[1, 2, 3, 4, 5]} spacing={6} mb={2}>
       {illustrators.map(({ name, handle, year, imgURL }, idx) => {
         return <IllustratorCard key={idx} {...{ name, handle, year, imgURL }} />;
       })}
@@ -141,7 +155,7 @@ const IllustratorCardList = () => {
 const IllustratorCard = ({ name, handle, year, imgURL }: Illustrator) => {
   const illustratorImagePath = '/assets/illustrators/';
   return (
-    <Box size="sm" rounded="lg" borderWidth="1px" overflow="hidden">
+    <Box size="sm" rounded="lg" overflow="hidden">
       {/* <Badge colorScheme="blackAlpha" px={2} ml={2} mt={2} variant="subtle">
         Year {year}
       </Badge> */}
@@ -152,28 +166,29 @@ const IllustratorCard = ({ name, handle, year, imgURL }: Illustrator) => {
           objectFit="cover"
         />
       </AspectRatio>
-      <Box bg="white" p={3}>
-        <Box
-          color="gray.500"
-          fontWeight="semibold"
-          letterSpacing="wider"
-          fontSize="xs"
-          textTransform="uppercase"
-        >
-          Year {year}
-        </Box>
+      <Box bg="brand.lightTeal" p={3}>
         <Text fontSize="lg" fontWeight="semibold" lineHeight="tight">
           {name}
         </Text>
         <Link
           display="block"
-          fontSize="sm"
+          fontSize="lg"
           href={`https://twitter.com/${handle}`}
-          color="teal.500"
+          color="brand.teal"
           isExternal
         >
-          @{handle} <ExternalLinkIcon />
+          @{handle}
         </Link>
+        <Box
+          color="brand.teal"
+          fontWeight="semibold"
+          letterSpacing="wider"
+          mt={8}
+          fontSize="lg"
+          textTransform="capitalize"
+        >
+          Year {year}
+        </Box>
       </Box>
     </Box>
   );
@@ -190,10 +205,12 @@ function FullWidthHeading(props: { heading: string; subHeading: string; anchorId
       my={3}
     >
       <Stack spacing={2}>
-        <Heading as="h2" fontSize="3xl">
+        <Heading as="h2" fontSize="4xl" fontWeight="bold">
           {props.heading}
         </Heading>
-        <Text fontSize="lg">{props.subHeading}</Text>
+        <Text fontSize="2xl" fontWeight="medium">
+          {props.subHeading}
+        </Text>
       </Stack>
     </Box>
   );
@@ -203,7 +220,7 @@ export default function About() {
   return (
     <>
       <Box
-        bgImage="url('assets/forest-tower.jpg')"
+        bgImage="url('assets/location_misquomicutri.png')"
         bgPosition="center"
         bgRepeat="no-repeat"
         bgSize="cover"
@@ -215,7 +232,7 @@ export default function About() {
         </Center>
       </Box>
 
-      <Box mx={pageSpacing.positive}>
+      <Box mx={pageSpacing.positive} pb={10}>
         <QuickLinks />
 
         <FullWidthHeading
@@ -224,43 +241,47 @@ export default function About() {
           anchorId="songadao"
         />
 
-        <Stack spacing={4}>
-          <Text pt={2}>
+        <Stack spacing={6}>
+          <Text pt={2} fontSize="2xl" lineHeight="short" fontWeight="medium">
             Song A Day is different from other NFT projects. It did not grow directly out of the
             blockchain. I had written 2000 songs before Ethereum was even invented. I wrote another
             1500 before I learned about digital scarcity. But from the moment I saw CryptoPunks, I
             knew that Song A Day was a perfect fit.
           </Text>
-          <Text>Song A Day is many things. It's about *time.* I measure the days by songs.</Text>
-          <Text>Song A Day is a journal. It is quite literally a record of my creative life.</Text>
-          <Text>
+          <Text fontSize="2xl" lineHeight="tall" fontWeight="medium">
+            Song A Day is many things. It's about *time.* I measure the days by songs.
+          </Text>
+          <Text fontSize="2xl" lineHeight="tall" fontWeight="medium">
+            Song A Day is a journal. It is quite literally a record of my creative life.
+          </Text>
+          <Text fontSize="2xl" lineHeight="tall" fontWeight="medium">
             Song A Day can be a burden, a joy, a challenge, a bore - all at the same time.
           </Text>
-          <Text>
+          <Text fontSize="2xl" lineHeight="tall" fontWeight="medium">
             Above all, Song A Day is an invitation to make stuff. Sometimes it's good stuff,
             sometimes it's bad stuff, but the making is the most important part.
           </Text>
         </Stack>
 
-        <Heading as="h3" fontSize="2xl" mt={8} mb={3}>
+        <Heading as="h3" fontSize="2xl" lineHeight="short" fontWeight="bold" mt={8} mb={3}>
           History
         </Heading>
-        <Stack spacing={4}>
-          <Text>
+        <Stack spacing={6} pb="32">
+          <Text fontSize="2xl" lineHeight="tall" fontWeight="medium">
             At the height of the 2008 financial crash. I was unemployed. I decided to try to write a
             song every day in January. By the end of the month, I was having so much fun (and I was
             still unemployed), I aimed for a year. At the end of 2009, I made the project
             indefinite. As of now, on the cusp of Year 14, I hold the Guinness World Record for
             “Most Consecutive Days Writing a Song.”
           </Text>
-          <Text>
+          <Text fontSize="2xl" lineHeight="tall" fontWeight="medium">
             For the first few years of the project, I made my living entering online video contests.
             I'd enter 12 contests in 12 days, win one or two of them, and that would be my income
             for the month. As time went on, I started cobbling together a living from many different
             sources: Patreon, YouTube ads, streaming revenue, commissions, playing at conferences,
             writing themes songs and much more.
           </Text>
-          <Text>
+          <Text fontSize="2xl" lineHeight="tall" fontWeight="medium">
             It's always been my dream to make Song A Day itself my sole source of income. Now,
             thanks to you, and this DAO, that's finally a possibility.
           </Text>
@@ -272,39 +293,50 @@ export default function About() {
           anchorId="who-is-mann"
         />
 
-        <Stack spacing={4}>
-          <Text pt={2}>
+        <Stack spacing={6}>
+          <Text pt={2} fontSize="2xl" lineHeight="tall" fontWeight="medium">
             I started writing songs when I was 12. I wrote my first song on the back of a pizza box.
             It wasn't a very good song.
           </Text>
-          <Text>
+          <Text fontSize="2xl" lineHeight="tall" fontWeight="medium">
             I feel really lucky though, because from that age onwards, I had a singular focus in my
             life: I wanted to write songs. I couldn't really sing, and I barely played guitar. It
             took me a long time before I made anything good. But none of that mattered: Writings
             songs is the only thing I have ever wanted to do.
           </Text>
-          <Text>
+          <Text fontSize="2xl" lineHeight="tall" fontWeight="medium">
             I went to college at Bennington where I started learning how to record myself. My friend
             Will and I stayed up all night and wrote and recorded 40 songs, each forty seconds long.
             My friend Thomas and I staged a giant rock opera called The Last Nympho Leprechaun. From
-            2003-6 I wrote a song almost every week for the online songwriting competition,{' '}
-            <Link to="http://songfight.org/" color="teal.500">
+            2003-6 I wrote a song almost every week for the online songwriting competition,
+            <Link
+              href="http://songfight.org/"
+              borderColor="brand.teal"
+              borderBottom="2px"
+              _hover={{
+                textDecoration: 'none',
+                borderBottom: '0px',
+              }}
+              mx="1"
+              color="brand.teal"
+              isExternal
+            >
               SongFight.org
             </Link>
             .
           </Text>
-          <Text>
+          <Text fontSize="2xl" lineHeight="tall" fontWeight="medium">
             In grad school at CalArts I made the world's first rock opera based on Super Mario. It
             was featured on G4, the premiere gaming channel of the aughts (iykyk).
           </Text>
-          <Text>
+          <Text fontSize="2xl" lineHeight="tall" fontWeight="medium">
             Subsequently, I got an internship at G4, and ended up writing a bunch of songs for
             different shows on the channel, culminating in the musical episode of their flagship
             review show, X-Play.
           </Text>
         </Stack>
 
-        <Stack direction={['column', 'row']} spacing={10} mt={8}>
+        <Stack justifyContent="center" direction={['column', 'row']} spacing={10} mt={8}>
           <Box w={[80, 96]}>
             <AspectRatio ratio={16 / 9}>
               <iframe
@@ -347,46 +379,54 @@ export default function About() {
         />
 
         <Stack spacing={4}>
-          <Text pt={2}>Each Song A Day NFT is a 1/1.</Text>
-          <Text>Each Song A Day has an accompanying illustration.</Text>
+          <Text pt={2} fontSize="2xl" lineHeight="tall" fontWeight="medium">
+            Each Song A Day NFT is a 1/1.
+          </Text>
+          <Text fontSize="2xl" lineHeight="tall" fontWeight="medium">
+            Each Song A Day has an accompanying illustration.
+          </Text>
 
-          <Text>Each illustration's attributes are derived from the song itself:</Text>
+          <Text fontSize="2xl" lineHeight="tall" fontWeight="medium">
+            Each illustration's attributes are derived from the song itself:
+          </Text>
           <UnorderedList marginInlineStart="unset" my={8} px={4} py={2}>
-            <ListItem>
-              <strong>Topic</strong> – what the song is about.
+            <ListItem fontSize="2xl" lineHeight="short" fontWeight="medium">
+              <strong>Topic</strong> – what the song is <i>about</i>.
             </ListItem>
-            <ListItem>
-              <strong>Mood</strong> – the feeling I had when making it.
+            <ListItem fontSize="2xl" lineHeight="short" fontWeight="medium">
+              <strong>Mood</strong> – the <i>feeling</i> I had when making it.
             </ListItem>
-            <ListItem>
-              <strong>Instrument</strong> – the main instrument that's played.
+            <ListItem fontSize="2xl" lineHeight="short" fontWeight="medium">
+              <strong>Instrument</strong> – the main <i>instrument</i> that's played.
             </ListItem>
-            <ListItem>
-              <strong>Location</strong> – where the song was recorded.
+            <ListItem fontSize="2xl" lineHeight="short" fontWeight="medium">
+              <strong>Location</strong> – <i>where</i> the song was recorded.
             </ListItem>
-            <ListItem>
+            <ListItem fontSize="2xl" lineHeight="short" fontWeight="medium">
               <strong>Genre</strong> – the genre.
             </ListItem>
-            <ListItem>
+            <ListItem fontSize="2xl" lineHeight="short" fontWeight="medium">
               <strong>Style</strong> – what the song sounds like.
             </ListItem>
-            <ListItem>
+            <ListItem fontSize="2xl" lineHeight="short" fontWeight="medium">
               <strong>Noun/Proper noun</strong> – whether there's a specific person, place, thing or
               idea in the song.
             </ListItem>
-            <ListItem>
+            <ListItem fontSize="2xl" lineHeight="tall" fontWeight="medium">
               <strong>Beard</strong> – the state of my beard in the video for the song.
             </ListItem>
           </UnorderedList>
-          <Text>These attributes become layers in the illustrations that represent each song.</Text>
+          <Text fontSize="2xl" lineHeight="short" fontWeight="medium">
+            These attributes become layers in the illustrations that represent each song.
+          </Text>
         </Stack>
 
-        <Heading as="h3" fontSize="2xl" mt={8} mb={4}>
+        <Heading as="h3" fontSize="2xl" lineHeight="short" fontWeight="bold" my={12}>
           The illustrators
         </Heading>
-
         <IllustratorCardList />
       </Box>
+      <Footer />
     </>
   );
 }

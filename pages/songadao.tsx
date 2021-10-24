@@ -1,18 +1,7 @@
-import { Badge, Box, SimpleGrid, Container } from '@chakra-ui/layout';
-import {
-  Button,
-  Center,
-  Heading,
-  UnorderedList,
-  ListItem,
-  Link,
-  Text,
-  Stack,
-  AspectRatio,
-  Image,
-} from '@chakra-ui/react';
-
-import { HomeBanner } from '../components/HomeBanner';
+import { Box, Container, SimpleGrid } from '@chakra-ui/layout';
+import { Button, Center, Heading, Image, Link, Stack, Text } from '@chakra-ui/react';
+import Footer from '../components/Footer';
+import NextLink from 'next/link';
 
 function FullWidthHeading(props: { heading: string; subHeading: string; anchorId: string }) {
   return (
@@ -35,16 +24,19 @@ function FullWidthHeading(props: { heading: string; subHeading: string; anchorId
 }
 
 const pageSpacing = {
-  positive: [6, 8, 20, 32, 64, 80],
+  positive: [6, 8, 20, 32, 12, 80],
   negative: [-6, -8, -20, -32, -64, -80],
 };
 export default function SongADAO() {
   return (
     <>
-      <Stack direction="row" justifyItems="center">
+      <Stack direction="row" w="full" pos="relative" h="420px" justifyItems="center">
         <Image
           src="/assets/music-rainbow.png"
-          h={60}
+          width="520px"
+          pos="absolute"
+          top="32"
+          left="0"
           alignSelf="end"
           justifySelf="start"
           display={{
@@ -52,35 +44,66 @@ export default function SongADAO() {
             xl: 'block',
           }}
         />
-        <Box textAlign="center" p={10}>
+        <Box pos="absolute" w="full" textAlign="center" p={4}>
           <Heading
             as="h1"
             fontSize={['3xl', '4xl']}
             textAlign="center"
-            letterSpacing="tight"
+            fontWeight="bold"
+            letterSpacing="wider"
             mt={16}
           >
-            Hi!
-            <br /> I’m Jonathan Mann.
+            Hi! I’m Jonathan Mann.
           </Heading>
-          <Text lineHeight="short" textAlign="center" fontSize="lg">
-            I've been writing a song a day for 12 years and 267 days. That's 4,647 songs!
+          <Text
+            flexDirection="row"
+            display="flex"
+            justifyContent="center"
+            lineHeight="short"
+            textAlign="center"
+            fontSize="2xl"
+            fontWeight="medium"
+            pt="6"
+          >
+            I've been writing a song a day for
+            <Text px="2" fontWeight="bold">
+              12 years and 267 days.
+            </Text>
+            That's
+            <Text px="2" fontWeight="bold">
+              4,647 songs!
+            </Text>
           </Text>
 
-          <Text textAlign="center" fontSize="lg" mt={8} fontWeight="semibold">
-            What do I do with all these songs?
-          </Text>
-          <Text textAlign="center" fontSize="xl">
-            The question is, what will <strong>YOU</strong> do?
-          </Text>
-
-          <Button size="lg" w={['full', 48]} mt={4}>
+          <Button size="lg" w={['full', 48]} my={8}>
             Buy a song
           </Button>
+
+          <Text textAlign="center" fontSize="2xl" fontWeight="medium">
+            What do I do with all these songs?
+          </Text>
+          <Text
+            textAlign="center"
+            pt="8"
+            fontSize="2xl"
+            fontWeight="medium"
+            flexDirection="row"
+            display="flex"
+            justifyContent="center"
+          >
+            The question is, what will{' '}
+            <Text fontWeight="bold" px="2">
+              YOU
+            </Text>
+            do?
+          </Text>
         </Box>
         <Image
           src="/assets/jmann-illustrated.png"
-          h={72}
+          w="360px"
+          bottom="0"
+          right="0"
+          pos="absolute"
           alignSelf="end"
           display={{
             sm: 'none',
@@ -90,15 +113,21 @@ export default function SongADAO() {
       </Stack>
 
       <Box mx={pageSpacing.positive}>
-        <Text
+        {/* <Text
           textAlign="center"
           mt={16}
           fontWeight="semibold"
           textTransform="uppercase"
           letterSpacing="wider"
+          _after={{
+            content: '""',
+            pos: 'absolute',
+            zIndex: '-1',
+            top: '0',
+          }}
         >
           Introducing
-        </Text>
+        </Text> */}
 
         {/* <FullWidthHeading
           heading="What is Song A Day?"
@@ -110,53 +139,77 @@ export default function SongADAO() {
           bgColor="brand.lightTeal"
           mx={pageSpacing.negative}
           px={pageSpacing.positive}
-          h={32}
+          h={52}
           mt={16}
         >
           <Center>
-            <Box>
-              <Image src="/assets/songADAOLogo.png" alt="SongADao Logo" mt={-12} w="sm"></Image>
+            <Box pos="relative">
+              <Text
+                pos="absolute"
+                mt={6}
+                left={-12}
+                fontWeight="bold"
+                textTransform="uppercase"
+                letterSpacing="wider"
+              >
+                Introducing
+              </Text>
+              <Image src="/assets/songADAOLogo.png" alt="SongADao Logo" mt={-8} w="sm"></Image>
             </Box>
           </Center>
         </Box>
-
-        <Text as="h4" fontWeight="bold" fontSize="2xl" mt={[24, 32]}>
-          SongADAO is a group of humans who support one song a day, forever.
-        </Text>
-        <Text mt={4}>
-          Most artists are stuck with a very convoluted business model if they want to earn a living
-          making music. Using decentralized technology, I think we can do better. By empowering the
-          people who support music, we can make sure that the people who make, promote, and consume
-          music directly benefit from it.
-        </Text>
-
-        <SimpleGrid mb={16} mt={24} spacing={[20, 18]} columns={[1, null, 3]}>
-          <Box bgColor="brand.lightTeal" px={3} h={56} rounded="md">
+        <Box px="20">
+          <Text as="h1" fontWeight="bold" lineHeight="tall" fontSize="4xl" mt={[24, 16]}>
+            SongADAO is a group of humans who support one song a day, forever.
+          </Text>
+          <Text fontSize="2xl" mt={4} lineHeight="shorter">
+            Most artists are stuck with a
+            <Link
+              href=""
+              borderColor="brand.teal"
+              borderBottom="2px"
+              _hover={{
+                textDecoration: 'none',
+                borderBottom: '0px',
+              }}
+              mx="1"
+              color="brand.teal"
+              isExternal
+            >
+              very convoluted business model
+            </Link>
+            if they want to earn a living making music. Using decentralized technology, I think we
+            can do better. By empowering the people who support music, we can make sure that the
+            people who make, promote, and consume music directly benefit from it.
+          </Text>
+        </Box>
+        <SimpleGrid mb={16} mt={24} spacing={[20, 20]} columns={[1, null, 3]}>
+          <Box bgColor="brand.lightTeal" px={3} pb="12" rounded="md">
             <Center>
               <Container mt={-12} centerContent>
                 <Image src="/assets/agreement-hands.png" alt="Agreement Hands" h={24}></Image>
-                <Text fontSize="lg" mt={3}>
+                <Text fontSize="2xl" fontWeight="medium" mt={3}>
                   SongADAO owns 100% of the rights to — and revenue from — all Song A Day songs.
                 </Text>
               </Container>
             </Center>
           </Box>
-          <Box bgColor="brand.lightTeal" px={3} h={56} rounded="md">
+          <Box bgColor="brand.lightTeal" px={3} rounded="md">
             <Center>
               <Container mt={-12} centerContent>
                 <Image src="/assets/bullhorn-hands.png" alt="Agreement Hands" h={24}></Image>
-                <Text fontSize="lg" mt={3}>
+                <Text fontSize="2xl" fontWeight="medium" mt={3}>
                   Members decide how to use those rights and revenue to grow the value of Song A
                   Day.
                 </Text>
               </Container>
             </Center>
           </Box>
-          <Box bgColor="brand.lightTeal" px={3} h={56} rounded="md">
+          <Box bgColor="brand.lightTeal" px={3} rounded="md">
             <Center>
               <Container mt={[-12, -20]} centerContent>
                 <Image src="/assets/smiling-award-cup.png" alt="Agreement Hands" h={32}></Image>
-                <Text fontSize="lg" mt={3}>
+                <Text fontSize="2xl" fontWeight="medium" mt={3}>
                   As Song A Day gets more successful, so does the DAO!
                 </Text>
               </Container>
@@ -164,25 +217,37 @@ export default function SongADAO() {
           </Box>
         </SimpleGrid>
 
-        <Stack alignItems="center" textAlign="center">
-          <Heading as="h2" mb={3} fontSize="3xl">
+        <Stack px="32" alignItems="center" textAlign="left">
+          <Heading as="h1" fontWeight="bold" lineHeight="tall" fontSize="4xl">
             Why a DAO?
           </Heading>
-          <Text>
+          <Text fontSize="2xl" mt={6} lineHeight="shorter">
             Because I believe that people genuinely love art, and want it to thrive. But the economy
-            around music has been screwed up for hundreds of years. That’s a deeply entrenched
-            system.
+            around music has
+            <Link
+              href=""
+              borderColor="brand.teal"
+              borderBottom="2px"
+              _hover={{
+                textDecoration: 'none',
+                borderBottom: '0px',
+              }}
+              mx="1"
+              color="brand.teal"
+              isExternal
+            >
+              been screwed up
+            </Link>
+            for hundreds of years. That’s a deeply entrenched system.
           </Text>
-          <Text mt={6}>
+          <Text pt={4} fontSize="2xl" lineHeight="shorter">
             SongADAO is a new twist; it’s a registered co-op LCA, so legally, it’s a company. But it
             runs like a collective, so that everyone who supports Song A Day benefits from its
             success. The goal is equity; everyone gets their fair share.
           </Text>
-          <Link href="#" textDecoration="none">
-            <Button variant="outline" size="lg" w={['full', 52]} mt={4}>
-              The Future of Music
-            </Button>
-          </Link>
+          <Button variant="outline" size="lg" w={['full', 52]} mt={4}>
+            The Future of Music
+          </Button>
         </Stack>
 
         <Box
@@ -191,17 +256,24 @@ export default function SongADAO() {
           mx={pageSpacing.negative}
           px={pageSpacing.positive}
           my={6}
+          mt="16"
           textAlign="center"
         >
-          <Stack spacing={2}>
-            <Heading as="h2" fontSize="2xl">
+          <Stack py="12" spacing={4}>
+            <Heading as="h1" fontWeight="bold" lineHeight="tall" fontSize="4xl">
               How do I join?
             </Heading>
-            <Text>Joining is as easy as owning a Song A Day NFT.</Text>
-            <Text>As long as you own at least one, you’re eligible to be a member.</Text>
-            <Button size="lg" w={['full', 52]} mt={4} alignSelf="center">
-              Get your NFT
-            </Button>
+            <Text fontSize="2xl" lineHeight="shorter">
+              Joining is as easy as owning a Song A Day NFT.
+            </Text>
+            <Text fontSize="2xl" lineHeight="shorter">
+              As long as you own at least one, you’re eligible to be a member.
+            </Text>
+            <NextLink href="/" passHref>
+              <Button size="lg" w={['full', 52]} mt={4} alignSelf="center">
+                Get your NFT
+              </Button>
+            </NextLink>
           </Stack>
         </Box>
 
@@ -212,44 +284,59 @@ export default function SongADAO() {
           px={pageSpacing.positive}
           my={6}
           textAlign="center"
+          pb="20"
         >
-          <Stack spacing={2} textAlign="center">
-            <Heading as="h2" fontSize="2xl" mb={4}>
+          <Stack pb="10" spacing={2} textAlign="center">
+            <Heading pb="8" as="h1" fontWeight="bold" lineHeight="tall" fontSize="4xl">
               What do members do?
             </Heading>
-            <SimpleGrid columns={[1, null, 3]} spacing={[4, 8]}>
-              <Box p={4} rounded="md" bg="brand.lightTeal">
-                <Stack spacing={2} textAlign="center">
-                  <Heading as="h2" fontSize="lg">
+            <SimpleGrid px={[52]} columns={[1, null, 3]} spacing={[20, 20]}>
+              <Box p={8} rounded="md" bg="brand.lightTeal">
+                <Stack spacing={4} textAlign="center">
+                  <Heading as="h2" fontWeight="bold" fontSize="2xl">
                     Community
                   </Heading>
-                  <Text>
+                  <Text fontSize="2xl" textAlign="left" lineHeight="short" fontWeight="medium">
                     This project is not about flipping for a quick buck. It’s about hodling and
                     building something, together. We’re dedicated to all acts of creation, big and
                     small.
                   </Text>
                 </Stack>
               </Box>
-              <Box p={4} rounded="md" bg="brand.lightTeal">
+              <Box p={8} rounded="md" bg="brand.lightTeal">
                 <Stack spacing={2} textAlign="center">
-                  <Heading as="h2" fontSize="lg">
+                  <Heading as="h2" fontWeight="bold" fontSize="2xl">
                     Patronage Activity
                   </Heading>
-                  <Text>
+                  <Text fontSize="2xl" textAlign="left" lineHeight="short" fontWeight="medium">
                     Just buying an NFT is a big help. But you can also get paid working for the DAO!
                     Members pick what kinds of work gets rewarded, so proactive members can have a
                     big impact.
                   </Text>
                 </Stack>
               </Box>
-              <Box p={4} rounded="md" bg="brand.lightTeal">
+              <Box p={8} rounded="md" bg="brand.lightTeal">
                 <Stack spacing={2}>
-                  <Heading as="h2" fontSize="lg">
+                  <Heading as="h2" fontWeight="bold" fontSize="2xl">
                     Scalability
                   </Heading>
-                  <Text>
-                    This is an experiment that’s meant to be replicated. If this model works, other
-                    creators will be able to adopt it too, and they’ll need our help to do it.
+                  <Text fontSize="2xl" textAlign="left" lineHeight="short" fontWeight="medium">
+                    <Link
+                      href=""
+                      borderColor="brand.teal"
+                      borderBottom="2px"
+                      _hover={{
+                        textDecoration: 'none',
+                        borderBottom: '0px',
+                      }}
+                      mx="1"
+                      color="brand.teal"
+                      isExternal
+                    >
+                      This is an experiment that’s meant to be replicated.
+                    </Link>
+                    If this model works, other creators will be able to adopt it too, and they’ll
+                    need our help to do it.
                   </Text>
                 </Stack>
               </Box>
@@ -261,23 +348,53 @@ export default function SongADAO() {
         </Box>
 
         <Box my={16} textAlign="center">
-          <Heading as="h2" fontSize="2xl" my={4}>
+          <Heading as="h2" fontWeight="bold" pb="8" lineHeight="tall" fontSize="4xl">
             How do I learn more?
           </Heading>
-          <Stack fontSize="lg" alignItems="center">
-            <Text>
-              You can <Link color="teal.500">join us on Discord</Link> (DAO members get VIP access),
-              or <Link color="teal.500">read the nitty gritty</Link> about how SongADAO works.
+          <Stack fontSize="lg" spacing="8" pb="8" alignItems="center">
+            <Text fontSize="2xl" textAlign="left" lineHeight="short" fontWeight="medium">
+              You can
+              <Link
+                href="https://discord.gg/p3aW7F7J5h"
+                borderColor="brand.teal"
+                borderBottom="2px"
+                _hover={{
+                  textDecoration: 'none',
+                  borderBottom: '0px',
+                }}
+                mx="1"
+                color="brand.teal"
+                isExternal
+              >
+                join us on Discord
+              </Link>
+              (DAO members get VIP access), or
+              <Link
+                href="https://songaday.world/bylaws"
+                borderColor="brand.teal"
+                borderBottom="2px"
+                _hover={{
+                  textDecoration: 'none',
+                  borderBottom: '0px',
+                }}
+                mx="1"
+                color="brand.teal"
+                isExternal
+              >
+                read the nitty gritty
+              </Link>
+              about how SongADAO works.
             </Text>
-            <Text fontWeight="semibold">
+            <Text fontSize="2xl" textAlign="left" lineHeight="short" fontWeight="medium">
               Or if you learn by doing, just try it! Buy a song and you’re in.
             </Text>
           </Stack>
-          <Button size="lg" w={['full', 52]} mt={8}>
-            Buy an NFT
-          </Button>
+          <NextLink href="/" passHref>
+            <Button size="lg">Buy an NFT</Button>
+          </NextLink>
         </Box>
       </Box>
+      <Footer />
     </>
   );
 }

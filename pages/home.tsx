@@ -14,7 +14,8 @@ import {
   Container,
   Link,
 } from '@chakra-ui/react';
-
+import Footer from '../components/Footer';
+import NextLink from 'next/link';
 interface CountdownProps {
   title: string;
   stat: string;
@@ -24,6 +25,7 @@ interface FeatureProps {
   button: string;
   image: ReactElement;
   isPrimaryButton?: boolean;
+  link: string;
 }
 interface TimelineProps {
   title: string;
@@ -126,7 +128,9 @@ const Hero = () => {
               <Text fontSize="xl" fontWeight="medium" pt="6" pb="3">
                 -42 NFTs Remain-
               </Text>
-              <Button size="lg">Claim Your Spot</Button>
+              <Link href="https://songaday.world/available-songs" isExternal>
+                <Button size="lg">Claim Your Spot</Button>
+              </Link>
             </Box>
           </Box>
         </Box>
@@ -156,7 +160,7 @@ const CountDownCard = ({ title, stat }: CountdownProps) => {
     </Stat>
   );
 };
-const Feature = ({ title, button, image, isPrimaryButton }: FeatureProps) => {
+const Feature = ({ title, button, image, isPrimaryButton, link }: FeatureProps) => {
   return (
     <Stack
       alignItems="center"
@@ -170,9 +174,11 @@ const Feature = ({ title, button, image, isPrimaryButton }: FeatureProps) => {
         {title}
       </Text>
       <Box py="4">{image}</Box>
-      <Button variant={isPrimaryButton ? 'solid' : 'outline'} size="lg">
-        {button}
-      </Button>
+      <NextLink passHref href={link}>
+        <Button variant={isPrimaryButton ? 'solid' : 'outline'} size="lg">
+          {button}
+        </Button>
+      </NextLink>
     </Stack>
   );
 };
@@ -273,57 +279,6 @@ const Timeline = ({ title, day, month, description, last }: TimelineProps) => {
     </Stack>
   );
 };
-const Footer = () => {
-  const footerNav = [
-    {
-      to: 'https://discord.com/',
-      name: 'Discord',
-    },
-    {
-      to: 'https://twitter.com/?lang=en',
-      name: 'Twitter',
-    },
-    {
-      to: 'https://www.youtube.com/',
-      name: 'Youtube',
-    },
-    {
-      to: 'https://soundcloud.com/',
-      name: 'Soundcloud',
-    },
-    {
-      to: 'https://twitter.com/songadaymann?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor',
-      name: 'JonathanMann',
-    },
-  ];
-  return (
-    <Box bg="teal.50" color="gray.700">
-      <Container
-        as={Stack}
-        spacing={6}
-        py={8}
-        direction="column"
-        align={{ base: 'flex-start', md: 'center' }}
-      >
-        <Stack
-          align={{ base: 'flex-start', md: 'center' }}
-          direction={{ base: 'column', md: 'row' }}
-          spacing={6}
-        >
-          {footerNav.map((link) => (
-            // eslint-disable-next-line react/jsx-key
-            <Link textDecoration="underline" textUnderlineOffset="2px" to={link.to}>
-              {link.name}
-            </Link>
-          ))}
-        </Stack>
-        <Text fontWeight="semibold" align="center">
-          Song A Day World, Song A Day, and SongADAO ©Copyright 2021 Jonathan Mann & SongADAO LLC
-        </Text>
-      </Container>
-    </Box>
-  );
-};
 export default function Home() {
   return (
     <>
@@ -344,16 +299,19 @@ export default function Home() {
               title="SongADAO owns the rights and revenue to all Song A Day songs."
               image={<Image h="28" src="/assets/contract.png" alt="Segun Adebayo" />}
               button="Explore the Songs"
+              link="/"
             />
             <Feature
               title="Members vote to govern the DAO’s use of resources"
               image={<Image h="28" src="/assets/judge.png" alt="Segun Adebayo" />}
               button="Find Out More"
+              link="/"
             />
             <Feature
               title="Each Song A Day NFT gets you 1 vote in SongADAO."
               image={<Image h="28" src="/assets/voting.png" alt="Segun Adebayo" />}
               button="Grab an NFT"
+              link="/songadao"
               isPrimaryButton
             />
           </SimpleGrid>
@@ -405,11 +363,20 @@ export default function Home() {
             fontSize={{ base: '2xl', sm: '4xl' }}
             fontWeight="bold"
           >
-            There’s no better time to join this{' '}
-            <span style={{ textDecoration: 'underline', textUnderlineOffset: '7px' }}>
-              grand experiment
-            </span>
-            .
+            There’s no better time to join this
+            <NextLink href="/songadao" passHref>
+              <Link
+                _hover={{
+                  textDecoration: 'none',
+                  borderColor: 'brand.teal',
+                  borderBottom: '4px',
+                }}
+                mx="2"
+                color="brand.teal"
+              >
+                grand experiment.
+              </Link>
+            </NextLink>
           </Text>
           <Text
             lineHeight="taller"
@@ -421,7 +388,9 @@ export default function Home() {
           >
             And you can pick it up for a song!
           </Text>
-          <Button size="lg">Get your NFT</Button>
+          <NextLink href="/" passHref>
+            <Button size="lg">Get your NFT</Button>
+          </NextLink>
         </Container>
       </Box>
       <Footer />
