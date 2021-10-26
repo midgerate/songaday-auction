@@ -41,7 +41,7 @@ function Navbar() {
           About
         </Link>
       </NextLink>
-      <NextLink href="/" passHref>
+      <NextLink href="/explore" passHref>
         <Link pt={{ base: 8, md: 0 }} fontSize={{ base: 'xl', md: 'lg' }}>
           Explore Songs
         </Link>
