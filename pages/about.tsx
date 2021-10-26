@@ -145,7 +145,7 @@ const IllustratorCardList = () => {
     {
       name: 'Dave Homer',
       handle: 'davehomerdraws',
-      year: '',
+      year: 'fourteen',
       imgURL: 'davehomer.png',
     },
   ];
