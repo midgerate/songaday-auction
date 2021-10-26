@@ -81,7 +81,7 @@ export default function SongADAO() {
             What do I do with all these songs?
           </Text>
           <Text lineHeight="short" textAlign="center" fontSize="2xl" fontWeight="medium" pt="6">
-            I've been writing a song a day for
+            The question is, what will
             <Text as="span" px="2" fontWeight="bold">
               YOU
             </Text>
@@ -183,7 +183,7 @@ export default function SongADAO() {
             </Link>
             if they want to earn a living making music. Using decentralized technology, I think we
             can do better. By empowering the people who support music, we can make sure that the
-            people who make, promote, and consume music directly benefit from it.
+            people who make, promote, and appreciate music directly benefit from it.
           </Text>
         </Box>
         <SimpleGrid mb={16} mt={24} spacing={{ base: 32, md: 20 }} columns={[1, 1, 1, 3]}>
