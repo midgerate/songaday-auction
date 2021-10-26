@@ -52,7 +52,7 @@ const Footer = () => {
           ))}
         </Stack>
         <Text fontWeight="semibold" align="center">
-          Song A Day World, Song A Day, and SongADAO ©Copyright 2021 Jonathan Mann & SongADAO LLC
+          Song A Day World, Song A Day, and SongADAO ©Copyright 2021 Jonathan Mann & SongADAO LCA
         </Text>
       </Container>
     </Box>
