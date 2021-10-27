@@ -7,9 +7,22 @@ function Homepage({ progressBarData }: { progressBarData: SongsProgress }) {
   return <Page isHomepage progressBarData={progressBarData} />;
 }
 
+// Get the assets from OpenSea. We set the `owner` to Jonathan's address
+// so that we only fetch songs that have not been sold.
+function fetchAvailableSongs(page: number): string {
+  const offset = page * 50;
+  return `https://api.opensea.io/api/v1/assets?${new URLSearchParams({
+    collection: 'song-a-day',
+    limit: '50', // API is capped to 50
+    // order_by: 'visitor_count',
+    owner: '0x3d9456ad6463a77bd77123cb4836e463030bfab4', // Jonathan's address
+    offset: offset.toString(),
+  })}`;
+}
+
 // Loops through all the collections that Jonathan owns and find `song-a-day`.
 // Get the stats off of it and return for the Progress bar.
-function getSongsProgress(data: OpenSeaCollection[]): SongsProgress {
+function getSongsProgress(data: OpenSeaCollection[], availableSongsCounter: number): SongsProgress {
   if (!data) {
     return {
       totalSupply: 0,
@@ -17,10 +30,13 @@ function getSongsProgress(data: OpenSeaCollection[]): SongsProgress {
       progressPercent: 0,
     };
   }
+
   const songADayCollection = data.find((datum) => datum.slug === 'song-a-day');
+
   if (songADayCollection) {
     const totalSupply = songADayCollection.stats.total_supply;
-    const totalSales = songADayCollection.stats.total_sales;
+
+    const totalSales = totalSupply - availableSongsCounter;
     return {
       totalSupply,
       totalSales,
@@ -41,10 +57,28 @@ export const getStaticProps: GetStaticProps<
     })}`,
   );
 
-  const data = await response.json();
-  const progressBarData = getSongsProgress(data);
+  const updateAvailableSongs = async (availableSongsCounter = 0, page = 0) => {
+    const availableSongsResponse = await fetch(fetchAvailableSongs(page));
+    const availableSongsResponseData = await availableSongsResponse.json();
+    if (availableSongsResponseData.assets.length < 50) {
+      availableSongsCounter += availableSongsResponseData.assets.length;
+      return availableSongsCounter;
+    }
+    if (availableSongsResponseData.assets.length === 50) {
+      availableSongsCounter += await updateAvailableSongs(availableSongsCounter + 50, page + 1);
+      return availableSongsCounter;
+    }
+  };
 
-  return { props: { progressBarData }, revalidate: ONE_HOUR };
+  const data = await response.json();
+  const availableSongsCounter = await updateAvailableSongs();
+
+  const progressBarData = getSongsProgress(data, availableSongsCounter);
+
+  return {
+    props: { progressBarData: { ...progressBarData } },
+    revalidate: ONE_HOUR,
+  };
 };
 
 export default Homepage;
