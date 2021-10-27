@@ -52,7 +52,11 @@ const Footer = () => {
           ))}
         </Stack>
         <Text fontWeight="semibold" align="center">
-          Song A Day World, Song A Day, and SongADAO ©Copyright 2021 Jonathan Mann & SongADAO LCA
+          Song A Day World, Song A Day, and SongADAO © Copyright {new Date().getFullYear()} Jonathan
+          Mann & SongADAO LCA
+        </Text>
+        <Text align="center">
+          Content on this site is licensed under a Creative Commons Attribution license.
         </Text>
       </Container>
     </Box>
