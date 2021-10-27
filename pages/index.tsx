@@ -1,4 +1,4 @@
-import { ReactElement, useEffect, useState } from 'react';
+import { ComponentPropsWithoutRef, ReactElement, useEffect, useState } from 'react';
 import {
   Stack,
   Box,
@@ -16,6 +16,7 @@ import {
 } from '@chakra-ui/react';
 import Footer from '../components/Footer';
 import NextLink from 'next/link';
+import { GetStaticProps } from 'next';
 interface CountdownProps {
   title: string;
   stat: string;
@@ -34,7 +35,8 @@ interface TimelineProps {
   day: number;
   last?: boolean;
 }
-const Hero = () => {
+
+const Hero = ({ availableSongsCounter }: { availableSongsCounter: number }) => {
   const COUNTDOWN_TO = 1635739199000;
 
   const [duration, setDuration] = useState<{ days?: string; hours?: string; minutes?: string }>({});
@@ -126,7 +128,7 @@ const Hero = () => {
             </SimpleGrid>
             <Box>
               <Text fontSize="xl" fontWeight="medium" pt="6" pb="3">
-                -42 NFTs Remain-
+                -{availableSongsCounter} NFTs Remain-
               </Text>
               <Link href="https://songaday.world/available-songs" isExternal>
                 <Button size="lg">Claim Your Spot</Button>
@@ -279,10 +281,10 @@ const Timeline = ({ title, day, month, description, last }: TimelineProps) => {
     </Stack>
   );
 };
-export default function Home() {
+export default function Home({ availableSongsCounter }: { availableSongsCounter: number }) {
   return (
     <>
-      <Hero />
+      <Hero availableSongsCounter={availableSongsCounter} />
       <Box py="16" px={{ base: '0', xl: '8', lg: '8', md: '16', sm: '8' }}>
         <Box>
           <Text
@@ -396,3 +398,36 @@ export default function Home() {
     </>
   );
 }
+
+// Get the assets from OpenSea. We set the `owner` to Jonathan's address
+// so that we only fetch songs that have not been sold.
+function fetchAvailableSongs(page: number): string {
+  const offset = page * 50;
+  return `https://api.opensea.io/api/v1/assets?${new URLSearchParams({
+    collection: 'song-a-day',
+    limit: '50', // API is capped to 50
+    // order_by: 'visitor_count',
+    owner: '0x3d9456ad6463a77bd77123cb4836e463030bfab4', // Jonathan's address
+    offset: offset.toString(),
+  })}`;
+}
+export const getStaticProps: GetStaticProps<ComponentPropsWithoutRef<typeof Home>> = async () => {
+  const updateAvailableSongs = async (availableSongsCounter = 0, page = 0) => {
+    const availableSongsResponse = await fetch(fetchAvailableSongs(page));
+    const availableSongsResponseData = await availableSongsResponse.json();
+    if (availableSongsResponseData.assets.length < 50) {
+      availableSongsCounter += availableSongsResponseData.assets.length;
+      return availableSongsCounter;
+    }
+    if (availableSongsResponseData.assets.length === 50) {
+      availableSongsCounter += await updateAvailableSongs(availableSongsCounter + 50, page + 1);
+      return availableSongsCounter;
+    }
+  };
+
+  const availableSongsCounter = await updateAvailableSongs();
+
+  return {
+    props: { availableSongsCounter },
+  };
+};
