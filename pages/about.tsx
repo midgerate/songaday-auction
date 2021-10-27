@@ -313,8 +313,22 @@ export default function About() {
           <Text fontSize={{ base: 'lg', md: '2xl' }} lineHeight="tall" fontWeight="medium">
             I went to college at Bennington where I started learning how to record myself. My friend
             Will and I stayed up all night and wrote and recorded 40 songs, each forty seconds long.
-            My friend Thomas and I staged a giant rock opera called The Last Nympho Leprechaun. From
-            2003-6 I wrote a song almost every week for the online songwriting competition,
+            My friend Thomas and I staged a giant rock opera called
+            <Link
+              href="https://nympholeprechaun.tumblr.com/"
+              borderColor="brand.teal"
+              borderBottom="2px"
+              _hover={{
+                textDecoration: 'none',
+                borderBottom: '0px',
+              }}
+              mx="1"
+              color="brand.teal"
+              isExternal
+            >
+              The Last Nympho Leprechaun
+            </Link>
+            . From 2003-6 I wrote a song almost every week for the online songwriting competition,
             <Link
               href="http://songfight.org/"
               borderColor="brand.teal"
