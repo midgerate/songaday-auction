@@ -423,9 +423,18 @@ export default function SongADAO() {
               </Box>
             </SimpleGrid>
           </Stack>
-          <Button size="lg" w={['full', 52]} mt={4}>
-            Our Constitution
-          </Button>
+          <Link
+            href="/constitution"
+            _hover={{
+              textDecoration: 'none',
+              borderBottom: '0px',
+            }}
+            passHref
+          >
+            <Button size="lg" w={['full', 52]} mt={4}>
+              Our Constitution
+            </Button>
+          </Link>
         </Box>
 
         <Box my={16} px={{ base: 8, sm: 8 }} textAlign="center">
