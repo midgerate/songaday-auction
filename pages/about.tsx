@@ -145,7 +145,7 @@ const IllustratorCardList = () => {
     {
       name: 'Dave Homer',
       handle: 'davehomerdraws',
-      year: 'fourteen',
+      year: 'PFPs - coming soon!',
       imgURL: 'davehomer.png',
     },
   ];
@@ -291,6 +291,9 @@ export default function About() {
             It's always been my dream to make Song A Day itself my sole source of income. Now,
             thanks to you, and this DAO, that's finally a possibility.
           </Text>
+          <Link href="/history" passHref>
+            <Button size="lg">More History</Button>
+          </Link>
         </Stack>
 
         <FullWidthHeading
