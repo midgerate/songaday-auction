@@ -74,7 +74,7 @@ export default function SongADAO() {
           </Text>
 
           <Button size="lg" w={['full', 48]} my={8}>
-            Buy a song
+            Buy A Song
           </Button>
 
           <Text lineHeight="short" textAlign="center" fontSize="2xl" fontWeight="medium">
@@ -103,28 +103,6 @@ export default function SongADAO() {
       </Stack>
 
       <Box mx={pageSpacing.positive}>
-        {/* <Text
-          textAlign="center"
-          mt={16}
-          fontWeight="semibold"
-          textTransform="uppercase"
-          letterSpacing="wider"
-          _after={{
-            content: '""',
-            pos: 'absolute',
-            zIndex: '-1',
-            top: '0',
-          }}
-        >
-          Introducing
-        </Text> */}
-
-        {/* <FullWidthHeading
-          heading="What is Song A Day?"
-          subHeading="A new song, every day. Forever."
-          anchorId="songadao"
-        /> */}
-
         <Box
           bgColor="brand.lightTeal"
           mx={pageSpacing.negative}
@@ -168,7 +146,7 @@ export default function SongADAO() {
           <Text fontSize={{ base: 'lg', md: '2xl' }} mt={4} lineHeight="shorter">
             Most artists are stuck with a
             <Link
-              href=""
+              href="https://www.vulture.com/2019/04/how-indie-artists-actually-make-money-in-2019.html"
               borderColor="brand.teal"
               borderBottom="2px"
               _hover={{
@@ -254,7 +232,7 @@ export default function SongADAO() {
             Because I believe that people genuinely love art, and want it to thrive. But the economy
             around music has
             <Link
-              href=""
+              href="https://www.grunge.com/227415/insane-times-music-artists-were-screwed-over-by-their-recording-companies/"
               borderColor="brand.teal"
               borderBottom="2px"
               _hover={{
@@ -279,9 +257,18 @@ export default function SongADAO() {
             runs like a collective, so that everyone who supports Song A Day benefits from its
             success. The goal is equity; everyone gets their fair share.
           </Text>
-          <Button variant="outline" size="lg" w={['full', 52]} mt={4}>
-            The Future of Music
-          </Button>
+          <Link
+            href="https://anchor.fm/digitallyrare/episodes/The-Song-That-Owns-Itself-e1558he"
+            passRef
+            _hover={{
+              textDecoration: 'none',
+              borderBottom: '0px',
+            }}
+          >
+            <Button variant="outline" size="lg" w={['full', 52]} mt={4}>
+              The Future Of Music
+            </Button>
+          </Link>
         </Stack>
 
         <Box
@@ -308,9 +295,9 @@ export default function SongADAO() {
             <Text fontSize={{ base: 'lg', md: '2xl' }} lineHeight="shorter">
               As long as you own at least one, you’re eligible to be a member.
             </Text>
-            <NextLink href="/" passHref>
+            <NextLink href="/available-songs" passHref>
               <Button size="lg" w={['full', 52]} mt={4} alignSelf="center">
-                Get your NFT
+                Get Your NFT
               </Button>
             </NextLink>
           </Stack>
@@ -486,7 +473,7 @@ export default function SongADAO() {
             </Text>
           </Stack>
           <NextLink href="/" passHref>
-            <Button size="lg">Buy an NFT</Button>
+            <Button size="lg">Buy An NFT</Button>
           </NextLink>
         </Box>
       </Box>
