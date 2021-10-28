@@ -300,7 +300,7 @@ export default function Home({ availableSongsCounter }: { availableSongsCounter:
             <Feature
               title="SongADAO owns the rights and revenue to all Song A Day songs."
               image={<Image h="28" src="/assets/contract.png" alt="Contract illustration" />}
-              button="Explore the Songs"
+              button="Explore The Songs"
               link="/"
             />
             <Feature
@@ -312,7 +312,7 @@ export default function Home({ availableSongsCounter }: { availableSongsCounter:
             <Feature
               title="Each Song A Day NFT gets you 1 vote in SongADAO."
               image={<Image h="28" src="/assets/voting.png" alt="Voting illustration" />}
-              button="Grab an NFT"
+              button="Grab An NFT"
               link="/available-songs"
             />
           </SimpleGrid>
@@ -338,7 +338,7 @@ export default function Home({ availableSongsCounter }: { availableSongsCounter:
               month="NOV"
               day={1}
               title="DAILY RINKEBY TEST AUCTIONS BEGIN"
-              description="Winners get a special mainnet NFT for the Testnet Album, a collection of community-suggested songs. Max 47 winners!"
+              description="Winners get a special mainnet NFT for the Testnet Album, a collection of community-suggested songs. Max 30 winners!"
             />
             <Timeline
               month="DEC"
@@ -390,7 +390,7 @@ export default function Home({ availableSongsCounter }: { availableSongsCounter:
             And you can pick it up for a song!
           </Text>
           <NextLink href="/" passHref>
-            <Button size="lg">Get your NFT</Button>
+            <Button size="lg">Get Your NFT</Button>
           </NextLink>
         </Container>
       </Box>
