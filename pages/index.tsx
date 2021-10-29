@@ -344,7 +344,7 @@ export default function Home({ availableSongsCounter }: { availableSongsCounter:
               month="DEC"
               day={5}
               title="THE BIG S.A.D. DROP!"
-              description="Years 4-13 will be sold for Ξ0.2 each. Proceeds go to me. Some of my best songs are in this batch, so each NFT will be minted with a unique, randomized song."
+              description="Years 3-13 will be sold for Ξ0.2 each. Proceeds go to me. Some of my best songs are in this batch, so each NFT will be minted with a unique, randomized song."
             />
             <Timeline
               month="DEC"
