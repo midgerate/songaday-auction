@@ -469,7 +469,7 @@ export default function SongADAO() {
               about how SongADAO works.
             </Text>
             <Text fontSize="2xl" textAlign="left" lineHeight="short" fontWeight="medium">
-              Or if you learn by doing, just try it! Buy a song and you’re in.
+              Ok if you learn by doing, just try it! Buy a song and you’re in.
             </Text>
           </Stack>
           <NextLink href="/" passHref>
