@@ -3,25 +3,25 @@ import { Button, Center, Heading, Image, Link, Stack, Text } from '@chakra-ui/re
 import Footer from '../components/Footer';
 import NextLink from 'next/link';
 
-function FullWidthHeading(props: { heading: string; subHeading: string; anchorId: string }) {
-  return (
-    <Box
-      bgColor="brand.lightTeal"
-      p={8}
-      id={props.anchorId}
-      mx={pageSpacing.negative}
-      px={pageSpacing.positive}
-      my={3}
-    >
-      <Stack spacing={2}>
-        <Heading as="h2" fontSize="3xl">
-          {props.heading}
-        </Heading>
-        <Text fontSize="lg">{props.subHeading}</Text>
-      </Stack>
-    </Box>
-  );
-}
+// function FullWidthHeading(props: { heading: string; subHeading: string; anchorId: string }) {
+//   return (
+//     <Box
+//       bgColor="brand.lightTeal"
+//       p={8}
+//       id={props.anchorId}
+//       mx={pageSpacing.negative}
+//       px={pageSpacing.positive}
+//       my={3}
+//     >
+//       <Stack spacing={2}>
+//         <Heading as="h2" fontSize="3xl">
+//           {props.heading}
+//         </Heading>
+//         <Text fontSize="lg">{props.subHeading}</Text>
+//       </Stack>
+//     </Box>
+//   );
+// }
 
 const pageSpacing = {
   positive: { base: 0, md: 8 },
