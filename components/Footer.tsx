@@ -3,11 +3,11 @@ import { Stack, Box, Text, Container, Link } from '@chakra-ui/react';
 
 const Footer = () => {
   const footerNav = [
-    {
-      key: '1',
-      href: 'https://discord.gg/p3aW7F7J5h',
-      name: 'Discord',
-    },
+    // {
+    //   key: '1',
+    //   href: 'https://discord.gg/p3aW7F7J5h',
+    //   name: 'Discord',
+    // },
     {
       key: '2',
       href: 'https://twitter.com/songadaymann',

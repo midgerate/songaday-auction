@@ -438,7 +438,7 @@ export default function SongADAO() {
             <Text fontSize="2xl" textAlign="left" lineHeight="short" fontWeight="medium">
               You can
               <Link
-                href="https://discord.gg/p3aW7F7J5h"
+                href="'https://twitter.com/songadaymann"
                 borderColor="brand.teal"
                 borderBottom="2px"
                 _hover={{
@@ -449,9 +449,9 @@ export default function SongADAO() {
                 color="brand.teal"
                 isExternal
               >
-                join us on Discord
+                reach out on Twitter
               </Link>
-              (DAO members get VIP access), or
+              , or
               <Link
                 href="https://songaday.world/bylaws"
                 borderColor="brand.teal"
