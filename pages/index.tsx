@@ -325,30 +325,30 @@ export default function Home({ availableSongsCounter }: { availableSongsCounter:
             fontSize="4xl"
             fontWeight="bold"
           >
-            SongADAO Timeline:
+            SongADAO Timeline
           </Text>
           <Flex flexDirection="column">
             <Timeline
-              month="OCT"
-              day={30}
-              title="NFT PRESALE ENDS"
-              description="The proto-DAO launches as soon as the presale ends. Pre-sale NFTs are Ξ0.12, the cheapest you’ll find them pre-auction!"
+              month="NOV"
+              day={1}
+              title="SONGADAO CO-OP LCA IS FOUNDED!"
+              description="Remaining Year 2 NFTs are Ξ0.12, the cheapest you’ll find them pre-auction! Once the Big SAD Drop hits, the price will rise to Ξ0.2."
             />
             <Timeline
               month="NOV"
-              day={1}
-              title="DAILY RINKEBY TEST AUCTIONS BEGIN"
-              description="Winners get a special mainnet NFT for the Testnet Album, a collection of community-suggested songs. Max 30 winners!"
+              day={8}
+              title="DAILY RINKEBY AUCTIONS BEGIN"
+              description="Winners get a special mainnet NFT for the Testnet Album, a collection of community-suggested songs. 30 songs, 30 days, 30 winners!"
             />
             <Timeline
               month="DEC"
-              day={5}
+              day={8}
               title="THE BIG S.A.D. DROP!"
               description="Years 3-13 will be sold for Ξ0.2 each. Proceeds go to me. Some of my best songs are in this batch, so each NFT will be minted with a unique, randomized song."
             />
             <Timeline
               month="DEC"
-              day={6}
+              day={9}
               title="DAILY SONG AUCTIONS BEGIN!"
               description="After the Big S.A.D Drop, I’ll be up-to-date on NFTs! Each new song I make will be minted and auctioned THAT VERY SAME DAY! And all the proceeds from the sale will go to SongADAO."
               last
