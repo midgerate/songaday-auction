@@ -453,7 +453,7 @@ export default function SongADAO() {
               </Link>
               , or
               <Link
-                href="https://songaday.world/bylaws"
+                href="/bylaws"
                 borderColor="brand.teal"
                 borderBottom="2px"
                 _hover={{
