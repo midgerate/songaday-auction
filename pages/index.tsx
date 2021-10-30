@@ -301,7 +301,7 @@ export default function Home({ availableSongsCounter }: { availableSongsCounter:
               title="SongADAO owns the rights and revenue to all Song A Day songs."
               image={<Image h="28" src="/assets/contract.png" alt="Contract illustration" />}
               button="Explore The Songs"
-              link="/"
+              link="/explore"
             />
             <Feature
               title="Members vote to govern the DAO’s use of resources"
