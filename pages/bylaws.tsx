@@ -1,5 +1,4 @@
-import { Page } from '../components/Page';
-import { Container, Box, Heading, Text } from '@chakra-ui/layout';
+import { Container, Heading, Text } from '@chakra-ui/layout';
 
 export default function Bylaws() {
   return (
