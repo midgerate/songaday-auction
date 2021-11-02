@@ -24,14 +24,15 @@ const override: ThemeOverride = {
     global: {
       body: {
         fontFamily: 'body',
-        color: 'teal.900',
+        color: 'teal.800',
         bg: 'white',
         overflowX: 'hidden',
         lineHeight: '180%',
         textAlign: 'left',
+        fontSize: '1rem',
       },
       a: {
-        color: 'teal.500',
+        color: '#00CBBC',
         _hover: {
           textDecoration: 'underline',
         },
