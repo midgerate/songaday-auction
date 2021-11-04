@@ -84,7 +84,7 @@ const IllustratorCardList = () => {
     },
     {
       name: 'Lucas Olivari',
-      handle: 'luk.olivari',
+      handle: 'lukolivari',
       year: 'four',
       imgURL: 'lucasolivari.png',
     },
