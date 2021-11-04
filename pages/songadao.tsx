@@ -72,10 +72,11 @@ export default function SongADAO() {
               4,647 songs!
             </Text>
           </Text>
-
-          <Button size="lg" w={['full', 48]} my={8}>
-            Buy A Song
-          </Button>
+          <NextLink href="/available-songs">
+            <Button size="lg" w={['full', 48]} my={8}>
+              Buy Song
+            </Button>
+          </NextLink>
 
           <Text lineHeight="short" textAlign="center" fontSize="2xl" fontWeight="medium">
             What do I do with all these songs?
@@ -260,6 +261,7 @@ export default function SongADAO() {
           <Link
             href="https://anchor.fm/digitallyrare/episodes/The-Song-That-Owns-Itself-e1558he"
             passRef
+            isExternal
             _hover={{
               textDecoration: 'none',
               borderBottom: '0px',
@@ -438,7 +440,7 @@ export default function SongADAO() {
             <Text fontSize="2xl" textAlign="left" lineHeight="short" fontWeight="medium">
               You can
               <Link
-                href="'https://twitter.com/songadaymann"
+                href="https://twitter.com/songadaymann"
                 borderColor="brand.teal"
                 borderBottom="2px"
                 _hover={{
@@ -453,7 +455,7 @@ export default function SongADAO() {
               </Link>
               , or
               <Link
-                href="/bylaws"
+                href="/nitty-gritty"
                 borderColor="brand.teal"
                 borderBottom="2px"
                 _hover={{
@@ -462,7 +464,6 @@ export default function SongADAO() {
                 }}
                 mx="1"
                 color="brand.teal"
-                isExternal
               >
                 read the nitty gritty
               </Link>
