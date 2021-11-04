@@ -14,7 +14,7 @@ import {
   Center,
 } from '@chakra-ui/react';
 import { times } from 'lodash-es';
-import Link from 'next/link';
+import NextLink from 'next/link';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { SongDetail } from '../components/SongDetail';
@@ -129,36 +129,23 @@ export function Page({ isHomepage }: PageProps) {
                 w="full"
                 justifyContent="space-around"
                 my={8}
+                spacing={4}
               >
-                <Link href={`/song/${randomSongNumber}`} passHref>
-                  <Button as="a" size="lg" colorScheme="blue" variant="outline" mx="4">
-                    Hear a Random Song
+                <NextLink href={`/song/${randomSongNumber}`}>
+                  <Button as="a" w="xs" colorScheme="blue" variant="outline">
+                    Hear Random Song
                   </Button>
-                </Link>
-                <Link href="/song-suggestion" passHref>
-                  <Button
-                    as="a"
-                    mt={[4, 4, 0]}
-                    size="lg"
-                    colorScheme="blue"
-                    variant="outline"
-                    mx="4"
-                  >
-                    Suggest a Song
+                </NextLink>
+                <NextLink href="/song-suggestion">
+                  <Button as="a" w="xs" colorScheme="blue" variant="outline">
+                    Suggest Song
                   </Button>
-                </Link>
-                <Link href="/all-songs" passHref>
-                  <Button
-                    as="a"
-                    mt={[4, 4, 0]}
-                    size="lg"
-                    colorScheme="blue"
-                    variant="outline"
-                    mx="4"
-                  >
+                </NextLink>
+                <NextLink href="/all-songs">
+                  <Button as="a" w="xs" colorScheme="blue" variant="outline">
                     View All Songs
                   </Button>
-                </Link>
+                </NextLink>
               </Stack>
             </Center>
           </Box>
@@ -212,7 +199,12 @@ export function Page({ isHomepage }: PageProps) {
                       [focusedTab]: filters[focusedTab] === key ? null : key,
                     });
                     return (
-                      <Link key={key} href={href === '/' ? '/#filterSongs' : href} passHref shallow>
+                      <NextLink
+                        key={key}
+                        href={href === '/' ? '/#filterSongs' : href}
+                        passHref
+                        shallow
+                      >
                         <a
                           onClick={() => {
                             window.scroll(0, 0);
@@ -226,7 +218,7 @@ export function Page({ isHomepage }: PageProps) {
                             {HumanMaps[focusedTab][key]}
                           </FilterTag>
                         </a>
-                      </Link>
+                      </NextLink>
                     );
                   })}
             </SimpleGrid>
