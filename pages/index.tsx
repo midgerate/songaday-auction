@@ -37,7 +37,7 @@ interface TimelineProps {
 }
 
 const Hero = ({ availableSongsCounter }: { availableSongsCounter: number }) => {
-  const COUNTDOWN_TO = 1635739199000;
+  const COUNTDOWN_TO = 1638939600000; // DEC. 8, 2021 in milliseconds
 
   const [duration, setDuration] = useState<{ days?: string; hours?: string; minutes?: string }>({});
   function convertSecondsToDay(seconds: number) {
@@ -58,9 +58,9 @@ const Hero = ({ availableSongsCounter }: { availableSongsCounter: number }) => {
 
   useEffect(() => {
     const calculateDuration = () => {
-      const now = new Date().getTime();
-      const diffMilis = COUNTDOWN_TO - now;
-      const duration = convertSecondsToDay(diffMilis / 1000);
+      const now = new Date().getTime(); // current datetime as milliseconds
+      const msDiff = COUNTDOWN_TO - now;
+      const duration = convertSecondsToDay(msDiff / 1000);
       setDuration(duration);
     };
 
