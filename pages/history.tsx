@@ -27,7 +27,7 @@ export default function History() {
       </Head>
       <Box
         bgImage="url('/assets/location_misquomicutri.png')"
-        bgPosition="center"
+        bgPosition="top"
         bgRepeat="no-repeat"
         bgSize="cover"
         height="xs"
@@ -85,10 +85,10 @@ export default function History() {
             <Heading as="h2">The Rachel Maddow Show</Heading>
             <Box
               bgImage="url('/assets/history/illustrations/2009.png')"
-              bgPosition="center"
+              bgPosition="top"
               bgRepeat="no-repeat"
               bgSize="cover"
-              height="32"
+              height="40"
               rounded="md"
             ></Box>
 
@@ -118,10 +118,10 @@ export default function History() {
             <Heading as="h2">Steve Jobs Danced To My Song</Heading>
             <Box
               bgImage="url('/assets/history/illustrations/2010.png)"
-              bgPosition="center"
+              bgPosition="top"
               bgRepeat="no-repeat"
               bgSize="cover"
-              height="32"
+              height="40"
               rounded="md"
             ></Box>
             <Text>
@@ -231,9 +231,7 @@ export default function History() {
               ends, that you can see him bopping his way on to the stage.
             </Text>
 
-            <Heading color="tomato" autoSave="h2">
-              INSERT BILL DANCING
-            </Heading>
+            <Image src="/assets/history/bill_gates_dancing.gif" alt="Bill gates dancing" />
 
             <Text>Look closely. He’s dancing.</Text>
 
@@ -269,10 +267,10 @@ export default function History() {
             <Heading as="h2">Hitting Song 1000</Heading>
             <Box
               bgImage="url('/assets/history/illustrations/2011.png')"
-              bgPosition="center"
+              bgPosition="top"
               bgRepeat="no-repeat"
               bgSize="cover"
-              height="32"
+              height="40"
               rounded="md"
             ></Box>
             <Text>In the lead up to song number 1,000, I launched a successful Kickstarter:</Text>
@@ -299,10 +297,10 @@ export default function History() {
             <Heading as="h2">The Break Up Song (and Anderson Cooper)</Heading>
             <Box
               bgImage="url('/assets/history/illustrations/2012.png')"
-              bgPosition="center"
+              bgPosition="top"
               bgRepeat="no-repeat"
               bgSize="cover"
-              height="32"
+              height="40"
               rounded="md"
             ></Box>
             <Text>My ex and I had been together for five years.</Text>
@@ -364,10 +362,10 @@ export default function History() {
             <Heading as="h2">My Grandma Died And My Kids Were Born</Heading>
             <Box
               bgImage="url('/assets/history/illustrations/2013.png')"
-              bgPosition="center"
+              bgPosition="top"
               bgRepeat="no-repeat"
               bgSize="cover"
-              height="32"
+              height="40"
               rounded="md"
             ></Box>
             <Text>These milestones speak for themselves...</Text>
@@ -413,10 +411,10 @@ export default function History() {
             <Heading as="h2">Hitting Song 2000</Heading>
             <Box
               bgImage="url('/assets/history/illustrations/2014.png')"
-              bgPosition="center"
+              bgPosition="top"
               bgRepeat="no-repeat"
               bgSize="cover"
-              height="32"
+              height="40"
               rounded="md"
             ></Box>
             <Text>
@@ -452,10 +450,10 @@ export default function History() {
             <Heading as="h2">The Hillary Shimmy Song</Heading>
             <Box
               bgImage="url('/assets/history/illustrations/2016.png')"
-              bgPosition="center"
+              bgPosition="top"
               bgRepeat="no-repeat"
               bgSize="cover"
-              height="32"
+              height="40"
               rounded="md"
             ></Box>
             <Text>
@@ -484,16 +482,16 @@ export default function History() {
 
         <Box pt={16}>
           <Tag size="lg" variant="outline">
-            2016-17
+            2016 - 17
           </Tag>
           <Stack id="hitting-song-1000" spacing={4} pt="2">
             <Heading as="h2">Songonauts!</Heading>
             <Box
               bgImage="url('/assets/history/illustrations/2016-2017.png')"
-              bgPosition="center"
+              bgPosition="top"
               bgRepeat="no-repeat"
               bgSize="cover"
-              height="32"
+              height="40"
               rounded="md"
             ></Box>
             <Text>
@@ -525,16 +523,16 @@ export default function History() {
 
         <Box pt={16}>
           <Tag size="lg" variant="outline">
-            2017-PRESENT
+            2017 – PRESENT
           </Tag>
           <Stack id="hitting-song-1000" spacing={4} pt="2">
             <Heading as="h2">Discovering Digital Scarcity</Heading>
             <Box
               bgImage="url('/assets/history/illustrations/2017.jpg')"
-              bgPosition="center"
+              bgPosition="top"
               bgRepeat="no-repeat"
               bgSize="cover"
-              height="32"
+              height="40"
               rounded="md"
             ></Box>
             <Text>
@@ -653,6 +651,103 @@ export default function History() {
               ) have given me the means to finally bring this project to life, exactly as I
               envisioned it all those years ago.
             </Text>
+          </Stack>
+        </Box>
+
+        <Box pt={16}>
+          <Tag size="lg" variant="outline">
+            2019
+          </Tag>
+          <Stack id="hitting-song-1000" spacing={4} pt="2">
+            <Heading as="h2">Baby Yoda</Heading>
+            <Box
+              bgImage="url('/assets/history/illustrations/2019.png')"
+              bgPosition="top"
+              bgRepeat="no-repeat"
+              bgSize="cover"
+              height="40"
+              rounded="md"
+            ></Box>
+            <Text>
+              My most viewed, most listened to song ever. Went insanely viral on TikTok. 4.7 million
+              streams on Spotify and over 9 million views on YouTube. For a while it was the #1
+              Viral song on Spotify in a bunch of countries. Most incredibly, I get texts from
+              friends and folks from all over, saying that they overhear their kids and other kids
+              singing it constantly. It truly was a phenomenon.
+            </Text>
+
+            <AspectRatio maxW="xl" ratio={16 / 9} justifyContent="center">
+              <iframe
+                src="https://www.youtube.com/embed/gZ93V_igqPQ"
+                title="Baby Yoda Baby Baby Yoda (the original) | Song A Day #3974"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            </AspectRatio>
+          </Stack>
+        </Box>
+
+        <Box pt={16}>
+          <Tag size="lg" variant="outline">
+            2019
+          </Tag>
+          <Stack id="hitting-song-1000" spacing={4} pt="2">
+            <Heading as="h2">I Used to Love My Body</Heading>
+
+            <Box
+              bgImage="url('/assets/history/illustrations/2019 part 2.png')"
+              bgPosition="top"
+              bgRepeat="no-repeat"
+              bgSize="cover"
+              height="40"
+              rounded="md"
+            ></Box>
+
+            <Text>
+              Periodically, I go back through my archive of songs to find the hidden gems. Then I
+              pick them up again, dust them off and work them and rework them until they are as good
+              as I can possibly make them. The last time I did this was in 2019, with this album. I
+              still think it's some of my strongest work.
+            </Text>
+            <Image
+              src="/assets/history/spotify-i-used-to-love-my-body.png"
+              alt="I Used To love my body song featured in a spotify playlist"
+            />
+          </Stack>
+        </Box>
+
+        <Box pt={16}>
+          <Tag size="lg" variant="outline">
+            2020
+          </Tag>
+
+          <Stack id="hitting-song-1000" spacing={4} pt="2">
+            <Heading as="h2">As It Happens</Heading>
+
+            <Box
+              bgImage="url('/assets/history/illustrations/2020.png')"
+              bgPosition="top"
+              bgRepeat="no-repeat"
+              bgSize="cover"
+              height="40"
+              rounded="md"
+            ></Box>
+            <Text>
+              Just as the pandemic hit, I released one season of a podcast that explores the process
+              of making a song from start to finish. I've seen a lot of different approaches to the
+              task of pulling back the curtain on the creative process, and I was determined with
+              this series to make it really dynamic, and fascinating to listen to.
+            </Text>
+
+            <Text>
+              Each episode covers the creation of a song from end to end, but I kept each episode to
+              under 20 minutes. It's another project that I'm really proud of.
+            </Text>
+            <Image
+              src="/assets/history/spotify-news-depressing.png"
+              alt="'Climate News is Depressing' Spotify Episode"
+            />
           </Stack>
         </Box>
       </Container>
