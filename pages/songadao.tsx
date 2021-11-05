@@ -392,7 +392,7 @@ export default function SongADAO() {
                     fontWeight="medium"
                   >
                     <Link
-                      href=""
+                      href="https://songaday.notion.site/some-possible-SongADAO-Use-Cases-94fddd21b23d4bb59d37925a758b06e5"
                       borderColor="brand.teal"
                       borderBottom="2px"
                       _hover={{
