@@ -1,11 +1,11 @@
 import NextLink from 'next/link';
 import Head from 'next/head';
+import NextImage from 'next/image';
 import {
   AspectRatio,
   Box,
+  Center,
   Container,
-  Grid,
-  GridItem,
   Heading,
   Image,
   Link,
@@ -187,7 +187,7 @@ export default function History() {
               </Stack>
             </Box>
 
-            <Box pt={16} id="steve-jobs-danced">
+            <Box pt={24} id="steve-jobs-danced">
               <Tag size="lg" variant="outline">
                 2010
               </Tag>
@@ -338,7 +338,7 @@ export default function History() {
               </Stack>
             </Box>
 
-            <Box pt={16} id="hitting-song-1000">
+            <Box pt={24} id="hitting-song-1000">
               <Tag size="lg" variant="outline">
                 2011
               </Tag>
@@ -370,7 +370,7 @@ export default function History() {
               </Stack>
             </Box>
 
-            <Box pt={16} id="break-up-song">
+            <Box pt={24} id="break-up-song">
               <Tag size="lg" variant="outline">
                 2012
               </Tag>
@@ -435,7 +435,7 @@ export default function History() {
               </Stack>
             </Box>
 
-            <Box pt={16}>
+            <Box pt={24}>
               <Tag size="lg" variant="outline">
                 2013-17
               </Tag>
@@ -483,7 +483,7 @@ export default function History() {
               </Stack>
             </Box>
 
-            <Box pt={16}>
+            <Box pt={24}>
               <Tag size="lg" variant="outline">
                 2014
               </Tag>
@@ -522,7 +522,7 @@ export default function History() {
               </Stack>
             </Box>
 
-            <Box pt={16} id="hillary-shimmy">
+            <Box pt={24} id="hillary-shimmy">
               <Tag size="lg" variant="outline">
                 2016
               </Tag>
@@ -558,11 +558,18 @@ export default function History() {
                   posted a video of himself on Twitter using it. I'm pretty sure I cost her the
                   election.
                 </Text>
-                <Image src="/assets/history/shimmy filter.png" alt="Shimmy filter" />
+                <AspectRatio ratio={4 / 5} maxW="md">
+                  <NextImage
+                    src="/assets/history/shimmy filter.png"
+                    alt="Shimmy filter"
+                    layout="fill"
+                    objectFit="cover"
+                  />
+                </AspectRatio>
               </Stack>
             </Box>
 
-            <Box pt={16} id="songonauts">
+            <Box pt={24} id="songonauts">
               <Tag size="lg" variant="outline">
                 2016 - 17
               </Tag>
@@ -591,19 +598,21 @@ export default function History() {
                   </NextLink>
                 </Text>
 
-                <AspectRatio maxW="xl" ratio={16 / 9} justifyContent="center">
-                  <iframe
-                    src="https://www.youtube.com/embed/l2BjPPeE9f8"
-                    title="Songonauts Animation!"
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  ></iframe>
-                </AspectRatio>
+                <Box>
+                  <AspectRatio maxW="xl" ratio={16 / 9}>
+                    <iframe
+                      src="https://www.youtube.com/embed/l2BjPPeE9f8"
+                      title="Songonauts Animation!"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    ></iframe>
+                  </AspectRatio>
+                </Box>
               </Stack>
             </Box>
 
-            <Box pt={16} id="digital-scarcity">
+            <Box pt={24} id="digital-scarcity">
               <Tag size="lg" variant="outline">
                 2017 – NOW
               </Tag>
@@ -676,8 +685,13 @@ export default function History() {
                   talks all around NYC and beyond about NFTs, pitching this project to different
                   people, with varying degrees of success.
                 </Text>
-                <Box textAlign="center">
-                  <Image src="/assets/history/jmann-talk.png" alt="Jonathan talks about SongADay" />
+                <Box>
+                  <AspectRatio ratio={4 / 3} maxW="lg">
+                    <Image
+                      src="/assets/history/jmann-talk.png"
+                      alt="Jonathan talks about SongADay"
+                    />
+                  </AspectRatio>
                   <Text fontSize="sm" lineHeight="1.25" pt="2" color="gray.500">
                     October 2017, giving my very first talk about Song A Day NFT - showing people
                     CryptoPunks
@@ -738,7 +752,7 @@ export default function History() {
               </Stack>
             </Box>
 
-            <Box pt={16} id="baby-yoda">
+            <Box pt={24} id="baby-yoda">
               <Tag size="lg" variant="outline">
                 2019
               </Tag>
@@ -772,7 +786,7 @@ export default function History() {
               </Stack>
             </Box>
 
-            <Box pt={16} id="love-my-body">
+            <Box pt={24} id="love-my-body">
               <Tag size="lg" variant="outline">
                 2019
               </Tag>
@@ -801,7 +815,7 @@ export default function History() {
               </Stack>
             </Box>
 
-            <Box pt={16}>
+            <Box pt={24}>
               <Tag size="lg" variant="outline">
                 2020
               </Tag>
