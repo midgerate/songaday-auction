@@ -32,7 +32,7 @@ interface TimelineProps {
   title: string;
   description: string;
   month: string;
-  day: number;
+  day: number | '';
   last?: boolean;
 }
 
@@ -341,14 +341,14 @@ export default function Home({ availableSongsCounter }: { availableSongsCounter:
               description="Winners get a special mainnet NFT for the Testnet Album, a collection of community-suggested songs. 30 songs, 30 days, 30 winners!"
             />
             <Timeline
-              month="DEC"
-              day={8}
+              month="TBA"
+              day=""
               title="THE BIG S.A.D. DROP!"
               description="Years 3-13 will be sold for Ξ0.2 each. Proceeds go to me. Some of my best songs are in this batch, so each NFT will be minted with a unique, randomized song."
             />
             <Timeline
-              month="DEC"
-              day={9}
+              month="TBA"
+              day=""
               title="DAILY SONG AUCTIONS BEGIN!"
               description="After the Big S.A.D Drop, I’ll be up-to-date on NFTs! Each new song I make will be minted and auctioned THAT VERY SAME DAY! And all the proceeds from the sale will go to SongADAO."
               last
