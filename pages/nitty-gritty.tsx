@@ -48,7 +48,7 @@ export default function NittyGritty() {
 
           <Text>
             You can read the DAO's bylaws{' '}
-            <NextLink href="/bylaws">
+            <NextLink href="/assets/nitty-gritty/SongDAO LCA bylaws.pdf">
               <Link color="brand.teal">here</Link>
             </NextLink>
             . It's a legal document. It's dense.
