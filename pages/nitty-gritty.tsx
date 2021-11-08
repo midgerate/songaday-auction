@@ -62,23 +62,23 @@ export default function NittyGritty() {
 
           <Text>
             The DAO has 5 founders. There's{' '}
-            <NextLink href="https://twitter.com/songadaymann">
+            <NextLink href="https://twitter.com/songadaymann" passHref>
               <Link color="brand.teal">Jonathan Mann</Link>
             </NextLink>
             ,{' '}
-            <NextLink href="https://twitter.com/juliana_mae">
+            <NextLink href="https://twitter.com/juliana_mae" passHref>
               <Link color="brand.teal">Juliana Mann</Link>
             </NextLink>{' '}
             (Jonathan's wife),{' '}
-            <NextLink href="https://twitter.com/bmann">
+            <NextLink href="https://twitter.com/bmann" passHref>
               <Link color="brand.teal">Boris Mann</Link>
             </NextLink>{' '}
             (no relation), Matt Condon{' '}
-            <NextLink href="https://twitter.com/1ofthemanymatts">
+            <NextLink href="https://twitter.com/1ofthemanymatts" passHref>
               <Link color="brand.teal">(1ofthemanyMatts)</Link>
             </NextLink>{' '}
             and{' '}
-            <NextLink href="https://twitter.com/NFTyHussle">
+            <NextLink href="https://twitter.com/NFTyHussle" passHref>
               <Link color="brand.teal">Sahil Mehta</Link>
             </NextLink>
             . These 5 people also represent the initial board of directors. They will also initially
@@ -114,7 +114,7 @@ export default function NittyGritty() {
           <Text>
             If you want to take the next step and become a full, legal member of the co-op, you'll
             have to get verified through{' '}
-            <NextLink href="https://www.brightid.org/about-us">
+            <NextLink href="https://www.brightid.org/about-us" passHref>
               <Link color="brand.teal">BrightID</Link>
             </NextLink>
             . Once you've done that, you'll be able to mint your very own SongADAO PFP, which is

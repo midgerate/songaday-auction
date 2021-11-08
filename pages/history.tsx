@@ -194,7 +194,7 @@ export default function History() {
               <Stack spacing={4} pt="2">
                 <Heading as="h2">Steve Jobs Danced To My Song</Heading>
                 <Box
-                  bgImage="url('/assets/history/illustrations/2010.png)"
+                  bgImage="url('/assets/history/illustrations/2010.png')"
                   bgPosition="top"
                   bgRepeat="no-repeat"
                   bgSize="cover"
@@ -237,14 +237,14 @@ export default function History() {
                   Now, I’m quite used to being made fun of on the internet. It comes with the
                   territory. The best thing you can do is ignore these types of comments. This was
                   different though. TechCrunch was so high profile and{' '}
-                  <NextLink href="https://www.gv.com/team/mg-siegler/">
+                  <NextLink href="https://www.gv.com/team/mg-siegler/" passHref>
                     <Link color="brand.teal">MG</Link>
                   </NextLink>{' '}
                   was such a well known commentator that I felt like it begged a response.
                 </Text>
 
                 <Text>
-                  <NextLink href="http://www.youtube.com/watch?v=ybsRCQy_3xQ">
+                  <NextLink href="http://www.youtube.com/watch?v=ybsRCQy_3xQ" passHref>
                     <Link color="brand.teal">So I wrote a song about him</Link>
                   </NextLink>
                   , using text from his post as lyrics: “Sure, the song will get stuck in your head/
@@ -254,17 +254,23 @@ export default function History() {
                 <Text>
                   I posted the song and sent it to him, and within minutes, my song-response was up
                   on{' '}
-                  <NextLink href="https://techcrunch.com/2009/08/06/its-on-bing-jingle-guy-proves-he-sucks-less/">
+                  <NextLink
+                    href="https://techcrunch.com/2009/08/06/its-on-bing-jingle-guy-proves-he-sucks-less/"
+                    passHref
+                  >
                     <Link color="brand.teal">TechCrunch</Link>
                   </NextLink>
                   . He loved it even though (or maybe because) it made fun of him. This led to a
                   strange relationship between me and TechCrunch — I was unofficially their{' '}
-                  <NextLink href="http://techcrunch.com/search/jonathan+mann#stq=jonathan%20mann&stp=1">
+                  <NextLink
+                    href="http://techcrunch.com/search/jonathan+mann#stq=jonathan%20mann&stp=1"
+                    passHref
+                  >
                     <Link color="brand.teal">official songwriter</Link>
                   </NextLink>
                   . Anytime I wrote about something tech related, I’d send it to MG and most of the
                   time, he’d post it. I played at their annual{' '}
-                  <NextLink href="http://www.youtube.com/watch?v=IrGI8r-kxDE">
+                  <NextLink href="http://www.youtube.com/watch?v=IrGI8r-kxDE" passHref>
                     <Link color="brand.teal">“Crunchies”</Link>
                   </NextLink>{' '}
                   award show. I even learned that TechCrunch’s founder, the controversial Michael
@@ -273,7 +279,7 @@ export default function History() {
 
                 <Text>
                   So. Fast forward to 2010. I had just learned that{' '}
-                  <NextLink href="http://www.youtube.com/watch?v=50R5qPDSXF0">
+                  <NextLink href="http://www.youtube.com/watch?v=50R5qPDSXF0" passHref>
                     <Link color="brand.teal">I lost a big video contest</Link>
                   </NextLink>
                   , and I was feeling pretty down. It also happened to be the eve of Apple’s
@@ -281,7 +287,7 @@ export default function History() {
                   thought the whole non-story was ridiculous. I decided to write a song defending
                   Apple. I hoped that MG would post it, and maybe I’d get some decent traffic. I
                   wrote the song in about 2 hours and spent another hour on{' '}
-                  <NextLink href="http://www.youtube.com/watch?v=VKIcaejkpD4">
+                  <NextLink href="http://www.youtube.com/watch?v=VKIcaejkpD4" passHref>
                     <Link color="brand.teal">the video</Link>
                   </NextLink>
                   . I posted the song, sent it to MG and went to bed.
@@ -316,16 +322,16 @@ export default function History() {
 
                 <Text>
                   A few days after the keynote, I got commissioned to write a{' '}
-                  <NextLink href="http://www.youtube.com/watch?v=3FzuZdZLt54">
+                  <NextLink href="http://www.youtube.com/watch?v=3FzuZdZLt54" passHref>
                     <Link color="brand.teal">birthday song for Steve Wozniak</Link>
                   </NextLink>
                   . I was invited to his 60th birthday party, where I met the cofounder of TEDMED,
                   who commissioned me to write a birthday song for the founder of TED,{' '}
-                  <NextLink href="http://www.youtube.com/watch?v=tVgLKT242ws">
+                  <NextLink href="http://www.youtube.com/watch?v=tVgLKT242ws" passHref>
                     <Link color="brand.teal">Richard Saul Wurman</Link>
                   </NextLink>
                   . The following year TEDMED had me back — this time performing{' '}
-                  <NextLink href="http://www.youtube.com/watch?v=Z-7lpggyqMA">
+                  <NextLink href="http://www.youtube.com/watch?v=Z-7lpggyqMA" passHref>
                     <Link color="brand.teal">songs written on-the-fly</Link>
                   </NextLink>{' '}
                   about the conference.
@@ -593,7 +599,7 @@ export default function History() {
                   To this day, it's one of the things I'm most proud of having made. It's 8
                   episodes, each about 20 minutes long. If you like 80s cartoons, fictional bands
                   and fun, you should definitely{' '}
-                  <NextLink href="http://www.thetruthpodcast.com/songonauts">
+                  <NextLink href="http://www.thetruthpodcast.com/songonauts" passHref>
                     <Link color="brand.teal">give it a listen!</Link>
                   </NextLink>
                 </Text>
@@ -628,7 +634,7 @@ export default function History() {
                 ></Box>
                 <Text>
                   I was playing at a conference in rural Ontario, when I saw a talk by{' '}
-                  <NextLink href="https://twitter.com/buchmanster">
+                  <NextLink href="https://twitter.com/buchmanster" passHref>
                     <Link color="brand.teal">Ethan Buchman</Link>
                   </NextLink>{' '}
                   that opened my eyes to the possibilities of art and the blockchain.
@@ -678,7 +684,7 @@ export default function History() {
 
                 <Text>
                   In late 2017 I launched something called{' '}
-                  <NextLink href="https://www.jonathanmann.net/iso">
+                  <NextLink href="https://www.jonathanmann.net/iso" passHref>
                     <Link color="brand.teal">The Initial Song Offering</Link>
                   </NextLink>{' '}
                   in an ill fated attempt to raise the funds to hire solidity developers. I gave
@@ -705,7 +711,7 @@ export default function History() {
 
                 <Text>
                   Along with Matt Condon, I started the very first{' '}
-                  <NextLink href="https://anchor.fm/digitallyrare">
+                  <NextLink href="https://anchor.fm/digitallyrare" passHref>
                     <Link color="brand.teal">NFT focused podcast</Link>
                   </NextLink>{' '}
                   in June of 2018. In October of that year, I performed at Devcon in Prague, the
@@ -743,7 +749,7 @@ export default function History() {
 
                 <Text>
                   Year 1 sold out in 30 min. The funds from that sale (as well as my side project{' '}
-                  <NextLink href="https://fuckintrolls.lol/">
+                  <NextLink href="https://fuckintrolls.lol/" passHref>
                     <Link color="brand.teal">The Fuckin Trolls</Link>
                   </NextLink>
                   ) have given me the means to finally bring this project to life, exactly as I
