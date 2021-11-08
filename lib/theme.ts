@@ -14,19 +14,65 @@ const override: ThemeOverride = {
   colors: {
     main: '#2B2E6E',
     selectpurple: '#6D70C5',
+    brand: {
+      teal: '#00CBBC',
+      darkTeal: '#26858B',
+      lightTeal: '#E4F2F1',
+    },
   },
   styles: {
     global: {
       body: {
         fontFamily: 'body',
-        color: 'black',
+        color: 'teal.800',
         bg: 'white',
         overflowX: 'hidden',
-        lineHeight: 'normal',
+        lineHeight: '180%',
+        textAlign: 'left',
+        fontSize: '1rem',
+      },
+      a: {
+        color: '#00CBBC',
+        _hover: {
+          textDecoration: 'underline',
+        },
       },
     },
   },
   components: {
+    Button: {
+      variants: {
+        solid: {
+          bg: 'brand.teal',
+          color: 'Black',
+          _hover: {
+            bg: '#0FBAAD',
+          },
+          _active: {
+            bg: 'brand.teal',
+          },
+          _focus: {
+            boxShadow: 'none',
+          },
+        },
+        outline: {
+          borderColor: 'brand.darkTeal',
+          color: 'brand.darkTeal',
+          borderWidth: '2px',
+          _hover: {
+            borderColor: 'brand.teal',
+            bg: 'brand.teal',
+            color: 'Black',
+          },
+          _active: {
+            bg: '#0FBAAD',
+          },
+          _focus: {
+            boxShadow: 'none',
+          },
+        },
+      },
+    },
     Container: {
       baseStyle: {
         maxWidth: '4xl',

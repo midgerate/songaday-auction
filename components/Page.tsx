@@ -11,12 +11,12 @@ import {
   Stack,
   Text,
   VStack,
+  Center,
 } from '@chakra-ui/react';
 import { times } from 'lodash-es';
-import Link from 'next/link';
+import NextLink from 'next/link';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { HomeBanner } from '../components/HomeBanner';
 import { SongDetail } from '../components/SongDetail';
 import { Filters } from '../containers/Filters';
 import { SongsProgress } from '../lib/types';
@@ -32,7 +32,7 @@ interface PageProps {
   progressBarData?: SongsProgress;
 }
 
-export function Page({ isHomepage, progressBarData }: PageProps) {
+export function Page({ isHomepage }: PageProps) {
   // filter state
   const {
     filters: { id, ...filters },
@@ -78,6 +78,12 @@ export function Page({ isHomepage, progressBarData }: PageProps) {
     setFocusedTab(undefined);
   }, [resetFilters]);
 
+  const [randomSongNumber, setRandomSongNumber] = useState(1);
+
+  useEffect(() => {
+    setRandomSongNumber(Math.floor(Math.random() * 730) + 1);
+  }, []);
+
   const tabButton = (key: string) => {
     const focused = focusedTab === key;
     const selected = !!filters[key];
@@ -101,7 +107,50 @@ export function Page({ isHomepage, progressBarData }: PageProps) {
     <>
       {id && <SongDetail id={id} />}
 
-      {isHomepage && !hasFiltered && <HomeBanner progressBarData={progressBarData} />}
+      {isHomepage && !hasFiltered && (
+        <>
+          <Box
+            bgImage="url('assets/location_misquomicutri.png')"
+            bgPosition="center"
+            bgRepeat="no-repeat"
+            bgSize="cover"
+          >
+            <Center h={64}>
+              <Heading as="h1" maxW="container.md" fontSize="5xl">
+                Explore Songs
+              </Heading>
+            </Center>
+          </Box>
+          <Box mx={{ base: 8, lg: 40 }} pb={10}>
+            <Center>
+              <Stack
+                direction={{ base: 'column', md: 'row' }}
+                alignItems="center"
+                w="full"
+                justifyContent="space-around"
+                my={8}
+                spacing={4}
+              >
+                <NextLink href={`/song/${randomSongNumber}`}>
+                  <Button as="a" w="xs" colorScheme="blue" variant="outline">
+                    Hear Random Song
+                  </Button>
+                </NextLink>
+                <NextLink href="/song-suggestion">
+                  <Button as="a" w="xs" colorScheme="blue" variant="outline">
+                    Suggest Song
+                  </Button>
+                </NextLink>
+                <NextLink href="/all-songs">
+                  <Button as="a" w="xs" colorScheme="blue" variant="outline">
+                    View All Songs
+                  </Button>
+                </NextLink>
+              </Stack>
+            </Center>
+          </Box>
+        </>
+      )}
 
       <Box py="8" px={{ base: '2', xl: '8' }}>
         <Heading id="filterSongs" as="h2" fontSize="3xl" mb="4">
@@ -150,7 +199,12 @@ export function Page({ isHomepage, progressBarData }: PageProps) {
                       [focusedTab]: filters[focusedTab] === key ? null : key,
                     });
                     return (
-                      <Link key={key} href={href === '/' ? '/#filterSongs' : href} passHref shallow>
+                      <NextLink
+                        key={key}
+                        href={href === '/' ? '/#filterSongs' : href}
+                        passHref
+                        shallow
+                      >
                         <a
                           onClick={() => {
                             window.scroll(0, 0);
@@ -164,7 +218,7 @@ export function Page({ isHomepage, progressBarData }: PageProps) {
                             {HumanMaps[focusedTab][key]}
                           </FilterTag>
                         </a>
-                      </Link>
+                      </NextLink>
                     );
                   })}
             </SimpleGrid>
