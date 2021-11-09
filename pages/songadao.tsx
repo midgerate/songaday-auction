@@ -2,32 +2,18 @@ import { Box, Container, SimpleGrid } from '@chakra-ui/layout';
 import { Button, Center, Heading, Image, Link, Stack, Text } from '@chakra-ui/react';
 import Footer from '../components/Footer';
 import NextLink from 'next/link';
-
-// function FullWidthHeading(props: { heading: string; subHeading: string; anchorId: string }) {
-//   return (
-//     <Box
-//       bgColor="brand.lightTeal"
-//       p={8}
-//       id={props.anchorId}
-//       mx={pageSpacing.negative}
-//       px={pageSpacing.positive}
-//       my={3}
-//     >
-//       <Stack spacing={2}>
-//         <Heading as="h2" fontSize="3xl">
-//           {props.heading}
-//         </Heading>
-//         <Text fontSize="lg">{props.subHeading}</Text>
-//       </Stack>
-//     </Box>
-//   );
-// }
+import { convertSecondsToDay } from '../lib/helpers';
 
 const pageSpacing = {
   positive: { base: 0, md: 8 },
   negative: [-8],
 };
 export default function SongADAO() {
+  const START = 1230748200000;
+  const NOW = new Date().getTime();
+  const msDiff = NOW - START;
+  const duration = convertSecondsToDay(msDiff / 1000);
+  const totalNbrSongsWritten = (~~(msDiff / (1000 * 86400))).toLocaleString();
   return (
     <>
       <Stack
@@ -65,11 +51,11 @@ export default function SongADAO() {
           <Text lineHeight="short" textAlign="center" fontSize="2xl" fontWeight="medium" pt="6">
             I've been writing a song a day for
             <Text as="span" px="2" fontWeight="bold">
-              12 years and 267 days.
+              {duration.years} years and 267 days.
             </Text>
             That's
             <Text as="span" px="2" fontWeight="bold">
-              4,647 songs!
+              {totalNbrSongsWritten} songs!
             </Text>
           </Text>
           <NextLink href="/available-songs">
