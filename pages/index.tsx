@@ -17,6 +17,7 @@ import {
 import Footer from '../components/Footer';
 import NextLink from 'next/link';
 import { GetStaticProps } from 'next';
+import { convertSecondsToDay } from '../lib/helpers';
 interface CountdownProps {
   title: string;
   stat: string;
@@ -39,22 +40,13 @@ interface TimelineProps {
 const Hero = ({ availableSongsCounter }: { availableSongsCounter: number }) => {
   const COUNTDOWN_TO = 1638939600000; // DEC. 8, 2021 in milliseconds
 
-  const [duration, setDuration] = useState<{ days?: string; hours?: string; minutes?: string }>({});
-  function convertSecondsToDay(seconds: number) {
-    const days = parseInt((seconds / (24 * 3600)).toString()).toString();
-
-    seconds = seconds % (24 * 3600);
-    const hours = parseInt((seconds / 3600).toString()).toString();
-
-    seconds %= 3600;
-    const minutes = parseInt((seconds / 60).toString()).toString();
-
-    return {
-      days,
-      hours,
-      minutes,
-    };
-  }
+  const [duration, setDuration] = useState<{
+    days?: string;
+    hours?: string;
+    minutes?: string;
+    years?: string;
+    seconds?: string;
+  }>({});
 
   useEffect(() => {
     const calculateDuration = () => {
@@ -83,16 +75,6 @@ const Hero = ({ availableSongsCounter }: { availableSongsCounter: number }) => {
       backgroundSize="cover"
       backgroundPosition="center center"
     >
-      {/* <Center w="sm" display={{ base: 'none', xl: 'block' }} pos="relative">
-        <Image
-          maxW="56"
-          pos="absolute"
-          top="20"
-          left="16"
-          src="/assets/eyeOpen-face.png"
-          alt="Segun Adebayo"
-        />
-      </Center> */}
       <Box
         flex="1"
         display={{ base: 'block', sm: 'flex' }}
@@ -109,7 +91,7 @@ const Hero = ({ availableSongsCounter }: { availableSongsCounter: number }) => {
           textAlign="center"
         >
           <Center mt={{ base: 0, md: -20 }}>
-            <Image w={{ base: 72, md: 56 }} src="/assets/songADAOLogo.png" alt="Segun Adebayo" />
+            <Image w={{ base: 72, md: 56 }} src="/assets/songADAOLogo.png" alt="Song A DAO" />
           </Center>
           <Box px={{ base: 0, md: 16 }}>
             <Text
@@ -137,16 +119,6 @@ const Hero = ({ availableSongsCounter }: { availableSongsCounter: number }) => {
           </Box>
         </Box>
       </Box>
-      {/* <Center display={{ base: 'none', xl: 'block' }} pos="relative" w="sm">
-        <Image
-          maxW="40"
-          pos="absolute"
-          top="10"
-          left="14"
-          src="/assets/eyeClose-face.png"
-          alt="Segun Adebayo"
-        />
-      </Center> */}
     </Flex>
   );
 };
