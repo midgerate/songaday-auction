@@ -193,7 +193,7 @@ const IllustratorCard = ({ name, handle, year, imgURL }: Illustrator) => {
           fontSize="lg"
           textTransform="capitalize"
         >
-          Year {year}
+          {handle === 'davehomerdraws' ? 'Year' : ''} {year}
         </Box>
       </Box>
     </Box>
