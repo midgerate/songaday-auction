@@ -3,10 +3,12 @@ import {
   Box,
   Button,
   Flex,
+  Grid,
   Heading,
   Image,
   Input,
   InputGroup,
+  Link,
   Stack,
   Text,
 } from '@chakra-ui/react';
@@ -17,17 +19,24 @@ import Footer from '../../components/Footer';
 const Auction: React.FC = () => {
   return (
     <>
-      <Flex flexDirection={['column', 'row']} backgroundColor="brand.lightTeal">
-        <Box p={4}>
+      <Grid
+        templateRows={{ base: 'repeat(2, 1fr)', md: '1fr' }}
+        templateColumns={{ base: '1fr', md: 'repeat(2, 1fr)' }}
+        gap={{ base: '4', sm: '8', lg: '32' }}
+        px={{ base: '4', sm: '16', lg: '32', xl: '56' }}
+        py={8}
+        bgColor="brand.lightTeal"
+      >
+        <Box>
           <SongCard song={undefined} card />
         </Box>
 
-        <Box p={4}>
+        <Box>
           <Text fontSize="md" fontWeight="medium">
             December 15, 2021
           </Text>
           <Flex alignItems="center">
-            <Heading as="h1" fontSize="4xl" fontWeight="medium">
+            <Heading as="h1" fontSize="4xl">
               Song 4,051
             </Heading>
             <Flex pl="6">
@@ -38,7 +47,7 @@ const Auction: React.FC = () => {
             </Flex>
           </Flex>
 
-          <Stack spacing="4" pt="6" direction={['column', 'row']}>
+          <Stack spacing={{ base: '8', lg: '12' }} pt="6" direction={['column', 'row']}>
             <Flex flexDir="column">
               <Text>Current Bid</Text>
               <Heading as="h2" fontSize="3xl" fontWeight="bold">
@@ -53,12 +62,12 @@ const Auction: React.FC = () => {
             </Flex>
           </Stack>
 
-          <Flex pt="4">
+          <Flex pt="8">
             <InputGroup>
-              <Input size="md" variant="outline" placeholder="ETH Amount" />
+              <Input size="lg" variant="outline" placeholder="ETH Amount" bgColor="white" />
 
               <NextLink href="/">
-                <Button ml="3" size="md">
+                <Button ml="3" size="lg">
                   Place bid
                 </Button>
               </NextLink>
@@ -74,10 +83,10 @@ const Auction: React.FC = () => {
                   src="https://avatars1.githubusercontent.com/u/99944?s=400&v=4"
                   alt="Segun Adebayo"
                 />
-                <Text pl="2">0x987...3m0k</Text>
+                <Text pl="4">0x987...3m0k</Text>
               </Flex>
               <Flex align="center">
-                <Text pr="2" fontWeight="semibold">
+                <Text pr="3" fontWeight="semibold">
                   Ξ 125.00
                 </Text>
                 <ExternalLinkIcon />
@@ -91,10 +100,10 @@ const Auction: React.FC = () => {
                   src="https://avatars1.githubusercontent.com/u/99944?s=400&v=4"
                   alt="Segun Adebayo"
                 />
-                <Text pl="2">0x987...3m0k</Text>
+                <Text pl="4">0x987...3m0k</Text>
               </Flex>
               <Flex align="center">
-                <Text pr="2" fontWeight="semibold">
+                <Text pr="3" fontWeight="semibold">
                   Ξ 125.00
                 </Text>
                 <ExternalLinkIcon />
@@ -108,23 +117,26 @@ const Auction: React.FC = () => {
                   src="https://avatars1.githubusercontent.com/u/99944?s=400&v=4"
                   alt="Segun Adebayo"
                 />
-                <Text pl="2">0x987...3m0k</Text>
+                <Text pl="4">hazmatsuit.eth</Text>
               </Flex>
               <Flex align="center">
-                <Text pr="2" fontWeight="semibold">
+                <Text pr="3" fontWeight="semibold">
                   Ξ 125.00
                 </Text>
                 <ExternalLinkIcon />
               </Flex>
             </Flex>
           </Stack>
-          <NextLink href="/" passHref>
-            <Text pt="3" fontWeight="medium">
-              See full bid history →
-            </Text>
-          </NextLink>
+
+          <Box pt={4}>
+            <NextLink href="/" passHref>
+              <Link pt="3" fontWeight="medium">
+                See full bid history →
+              </Link>
+            </NextLink>
+          </Box>
         </Box>
-      </Flex>
+      </Grid>
       <Footer />
     </>
   );
