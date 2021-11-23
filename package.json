@@ -42,6 +42,7 @@
     "react-intersection-observer": "^8.31.0",
     "swr": "^0.4.2",
     "unstated-next": "^1.1.0",
+    "walletlink": "^2.2.8",
     "web3modal": "^1.9.3"
   },
   "devDependencies": {

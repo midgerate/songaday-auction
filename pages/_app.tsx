@@ -5,9 +5,10 @@ import Head from 'next/head';
 import React from 'react';
 import { SWRConfig } from 'swr';
 import Navbar from '../components/Navbar';
-import { Account } from '../containers/Account';
+// import { Account } from '../containers/Account';
 import { Filters } from '../containers/Filters';
 import { theme } from '../lib/theme';
+import { WalletProvider } from '../web3/WalletContext';
 
 function App({ Component, pageProps }: AppProps) {
   return (
@@ -38,12 +39,12 @@ function App({ Component, pageProps }: AppProps) {
             errorRetryCount: 2,
           }}
         >
-          <Account.Provider>
+          <WalletProvider>
             <Filters.Provider>
               <Navbar />
               <Component {...pageProps} />
             </Filters.Provider>
-          </Account.Provider>
+          </WalletProvider>
         </SWRConfig>
       </ChakraProvider>
     </>

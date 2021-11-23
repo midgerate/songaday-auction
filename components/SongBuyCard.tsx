@@ -6,6 +6,7 @@ import { OpenSeaPort } from 'opensea-js';
 import React, { useState } from 'react';
 import { Account } from '../containers/Account';
 import { OpenSeaSellTrait, OpenSeaSong } from '../lib/types';
+import { useWallet } from '../web3/WalletContext';
 
 interface SongBuyCardProps {
   song: OpenSeaSong;
@@ -30,7 +31,8 @@ export function SongBuyCard({
 }: SongBuyCardProps): JSX.Element {
   const [isLoading, setIsLoading] = useState(false);
 
-  const { account, provider } = Account.useContainer();
+  // const { account, provider } = Account.useContainer();
+  const { address, provider } = useWallet();
   const toast = useToast();
 
   const buyAsset = async () => {
@@ -43,7 +45,7 @@ export function SongBuyCard({
           token_id: song.token_id,
           asset_contract_address: song.asset_contract.address,
         });
-        await openSeaPort?.fulfillOrder({ order, accountAddress: account });
+        await openSeaPort?.fulfillOrder({ order, accountAddress: address });
         toast({
           title: 'Transaction Successful!',
           description: 'Thank you for your purchase',

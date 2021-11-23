@@ -19,12 +19,13 @@ import { DateTime } from 'luxon';
 import Link from 'next/link';
 import { OpenSeaPort } from 'opensea-js';
 import React, { useEffect, useMemo, useState } from 'react';
-import { Account } from '../containers/Account';
+// import { Account } from '../containers/Account';
 import { Filters } from '../containers/Filters';
 import tokenIds from '../generated/tokenIds';
 import { formatNumber } from '../lib/helpers';
 import { Song } from '../lib/types';
 import { useNifty } from '../lib/useNifty';
+import { useWallet } from '../web3/WalletContext';
 import { FilterTag } from './FilterTag';
 import { OwnershipButton } from './OwnershipButton';
 import YoutubeEmbed from './YoutubeEmbed';
@@ -71,7 +72,8 @@ function SongCard({
 
   const ownedByJonathan = data?.ownerships[0]?.owner?.id === JONATHAN_ID;
 
-  const { account, provider } = Account.useContainer();
+  const { address, provider } = useWallet();
+  // const { account, provider } = Account.useContainer();
   const toast = useToast();
   const [isBuyLoading, setIsBuyLoading] = useState(false);
   const [showBuyButton, setShowBuyButton] = useState(false);
@@ -90,7 +92,7 @@ function SongCard({
           token_id: finalTokenId,
           asset_contract_address: ASSET_CONTRACT_ADDRESS,
         });
-        await openSeaPort?.fulfillOrder({ order, accountAddress: account });
+        await openSeaPort?.fulfillOrder({ order, accountAddress: address });
         toast({
           title: 'Transaction Successful!',
           description: 'Thank you for your purchase',
