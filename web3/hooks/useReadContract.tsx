@@ -1,9 +1,9 @@
-import { Contract } from '@ethersproject/contracts'
-import { useEffect, useState } from 'react'
+import { Contract } from '@ethersproject/contracts';
+import { useEffect, useState } from 'react';
 
-import { Awaited, ContractFunctions, ContractInstance } from './types'
+import { Awaited, ContractFunctions, ContractInstance } from './types';
 
-import { AUTO_UPDATE_BALANCE_INTERVAL } from '@/web3/constants'
+import { AUTO_UPDATE_BALANCE_INTERVAL } from '../constants';
 export const useReadContract = <
   TContract extends ContractInstance = any,
   TFunctionName extends string & keyof ContractFunctions<TContract> = string
@@ -11,19 +11,17 @@ export const useReadContract = <
   contract: TContract | Contract | null,
   functionName: TFunctionName,
   options?: {
-    autoUpdate?: boolean
+    autoUpdate?: boolean;
   },
   ...args: Parameters<ContractFunctions<TContract>[TFunctionName]>
 ): {
-  loading: boolean
-  error: Error | null
-  response:
-    | Awaited<ReturnType<ContractFunctions<TContract>[TFunctionName]>>
-    | undefined
+  loading: boolean;
+  error: Error | null;
+  response: Awaited<ReturnType<ContractFunctions<TContract>[TFunctionName]>> | undefined;
 } => {
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<Error | null>(null)
-  const [response, setResponse] = useState(undefined)
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
+  const [response, setResponse] = useState(undefined);
 
   const fetchResponse = async () => {
     if (!contract) {
@@ -31,21 +29,21 @@ export const useReadContract = <
         loading: false,
         error: new Error('No contract provided'),
         response: undefined,
-      }
+      };
     }
     try {
-      const response = await (contract as Contract)[functionName](...args)
-      setResponse(response)
+      const response = await (contract as Contract)[functionName](...args);
+      setResponse(response);
     } catch (error) {
-      setError(error as Error)
+      setError(error as Error);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
-    if (!options?.autoUpdate) return
-    if (!contract) return
+    if (!options?.autoUpdate) return;
+    if (!contract) return;
     // TODO: Using Provider is better but it seems to be not working
     // if (!provider) {
     //   return
@@ -57,17 +55,17 @@ export const useReadContract = <
     // }
 
     // Using interval is not so better but is more consistent
-    const interval = setInterval(fetchResponse, AUTO_UPDATE_BALANCE_INTERVAL)
-    return () => clearInterval(interval)
-  }, [(contract as Contract)?.address])
+    const interval = setInterval(fetchResponse, AUTO_UPDATE_BALANCE_INTERVAL);
+    return () => clearInterval(interval);
+  }, [(contract as Contract)?.address]);
 
   useEffect(() => {
-    fetchResponse()
-  }, [(contract as Contract)?.address])
+    fetchResponse();
+  }, [(contract as Contract)?.address]);
 
   return {
     loading,
     error,
     response,
-  }
-}
+  };
+};

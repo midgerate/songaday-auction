@@ -11,7 +11,7 @@ import { providerOptions } from './providerOptions';
 let web3Modal: Web3Modal;
 if (typeof window !== 'undefined') {
   web3Modal = new Web3Modal({
-    cacheProvider: true,
+    // cacheProvider: true,
     providerOptions,
     theme: 'dark',
   });
