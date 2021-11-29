@@ -1,12 +1,33 @@
-import { Box, Button, Container, Heading, Text, HStack, Stack, Link } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Container,
+  Flex,
+  Heading,
+  HStack,
+  Link,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Spinner,
+  Stack,
+  Text,
+  useDisclosure,
+} from '@chakra-ui/react';
+import NextLink from 'next/link';
 import { useState } from 'react';
 import Footer from '../components/Footer';
+import { SongADay__factory } from '../types';
 import { useContract, useReadContract, useWriteContract } from '../web3/hooks';
 import { useWallet } from '../web3/WalletContext';
-import { SongADay__factory } from '../types';
-import Modal from '../components/Modal';
 
 export default function Mint() {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   const maxMint = 5;
   const songCost = 0.2;
   const BATCH_TOKEN_IDS = [
@@ -72,9 +93,10 @@ export default function Mint() {
   const contractAddress = '0x5FbDB2315678afecb367f032d93F642f64180aa3';
   const { contract } = useContract(contractAddress, SongADay__factory);
 
-  const { address, provider } = useWallet();
+  const { connectWallet } = useWallet();
   const [mintAmount, setMintAmount] = useState(1);
-  const [showModal, setShowModal] = useState(false);
+  const [mintError, setMintError] = useState(null);
+  // const [showModal, setShowModal] = useState(false);
 
   const { response: priceAmount } = useReadContract(contract, 'priceAmount');
 
@@ -84,14 +106,21 @@ export default function Mint() {
   const handleConfirmation = async () => {
     console.log('Minted');
     setWaiting(false); // create waiting state variable - utilize modal
+    onOpen();
   };
 
   const handleMint = async () => {
+    onOpen();
     console.log('Waiting for transaction to finish');
   };
 
   const handleError = (error: any) => {
-    console.log(error?.data?.message || error.message);
+    if (error) {
+      setWaiting(false);
+      setMintError(error?.data?.message || error.message);
+      onOpen();
+      console.log(error?.data?.message || error.message);
+    }
   };
 
   const [batchMint] = useWriteContract(contract, 'batchMint', {
@@ -129,8 +158,8 @@ export default function Mint() {
     );
   };
 
-  console.log('price Amount', priceAmount?.toString());
-  console.log('mint Amount', mintAmount);
+  // console.log('price Amount', priceAmount?.toString());
+  // console.log('mint Amount', mintAmount);
   return (
     <>
       <Container centerContent p={8}>
@@ -165,8 +194,9 @@ export default function Mint() {
             style={{ color: 'white' }}
             onClick={async () => {
               try {
+                setMintError(null);
+                await connectWallet();
                 setWaiting(true);
-                setShowModal(true);
                 await mint(mintAmount, { value: priceAmount.mul(mintAmount) });
               } catch (e) {
                 console.log(e);
@@ -176,18 +206,59 @@ export default function Mint() {
           >
             Mint {mintAmount} {mintAmount === 1 ? 'song' : 'songs'}
           </Button>
-          {/* <Button size="lg" style={{ color: 'white' }} onClick={() => setShowModal(true)}>
+          <Button size="lg" style={{ color: 'white' }} onClick={onOpen}>
             Open modal
-          </Button> */}
-
+          </Button>
           <Modal
-            onClose={() => setShowModal(false)}
-            show={showModal}
-            title="Minting"
-            loading={waiting}
+            onClose={onClose}
+            isOpen={isOpen}
+            isCentered
+            scrollBehavior="inside"
+            motionPreset="slideInBottom"
+            closeOnOverlayClick={isOpen && waiting ? false : true}
           >
-            <Text>Yo, just like chill man it's minting jeez</Text>
-            <Link>Check it out on etherscan tho lmao</Link>
+            <ModalOverlay />
+            <ModalContent>
+              <ModalHeader></ModalHeader>
+              {isOpen && waiting ? null : <ModalCloseButton />}
+              <ModalBody>
+                <Stack alignItems="center" spacing="8">
+                  <Heading fontSize="2xl">
+                    {isOpen && waiting
+                      ? 'Minting...give us a second!'
+                      : mintError
+                      ? 'Something went wrong!'
+                      : 'Minted!'}
+                  </Heading>
+                  {isOpen && waiting ? <Spinner size="xl" color="teal.500" /> : null}
+                  {/* TODO: Make dynamic */}
+                  {isOpen && waiting ? (
+                    <NextLink
+                      href="https://etherscan.io/tx/0xf59b5ed41d971b07ce3c2bb85ce2d96dcaf230130c25c65cf13573b5fa120223"
+                      passHref
+                    >
+                      <Link isExternal color="teal">
+                        Watch the transaction on Etherscan
+                      </Link>
+                    </NextLink>
+                  ) : mintError ? (
+                    <Text>{mintError}</Text>
+                  ) : (
+                    <NextLink
+                      href="https://etherscan.io/tx/0xf59b5ed41d971b07ce3c2bb85ce2d96dcaf230130c25c65cf13573b5fa120223"
+                      passHref
+                    >
+                      <Link isExternal color="teal">
+                        View your new song in collections
+                      </Link>
+                    </NextLink>
+                  )}
+                </Stack>
+              </ModalBody>
+              <ModalFooter>
+                {isOpen && waiting ? null : <Button onClick={onClose}>Close</Button>}
+              </ModalFooter>
+            </ModalContent>
           </Modal>
 
           <Text>Estimated cost: Ξ{(mintAmount * songCost).toPrecision(1)}</Text>
@@ -199,6 +270,8 @@ export default function Mint() {
             style={{ color: 'white' }}
             onClick={async () => {
               try {
+                setMintError(null);
+                await connectWallet();
                 setWaiting(true);
                 await batchMint(BATCH_TOKEN_IDS, BATCH_OWNERS);
               } catch (e) {
