@@ -120,9 +120,12 @@ function SongCard({
       {...(card && {
         borderWidth: '1px',
         borderColor: 'gray.200',
-        borderRadius: 'sm',
-        _hover: { shadow: 'sm' },
-        transition: 'all 100ms linear',
+        borderRadius: 'md',
+        _hover: {
+          shadow: 'lg',
+          transform: 'scale(1.02)',
+        },
+        transition: 'all 200ms ease-out',
       })}
       spacing="2"
       alignItems="stretch"
