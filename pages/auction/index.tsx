@@ -1,4 +1,4 @@
-import NextLink from 'next/link';
+import { ExternalLinkIcon } from '@chakra-ui/icons';
 import {
   Box,
   Button,
@@ -6,17 +6,33 @@ import {
   Grid,
   Heading,
   Image,
-  Input,
-  InputGroup,
-  Link,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  NumberDecrementStepper,
+  NumberIncrementStepper,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
   Stack,
   Text,
+  useDisclosure,
+  useToast,
 } from '@chakra-ui/react';
-import { ExternalLinkIcon } from '@chakra-ui/icons';
-import SongCard from '../../components/SongCard';
+import { useState } from 'react';
 import Footer from '../../components/Footer';
+import SongCard from '../../components/SongCard';
 
 const Auction: React.FC = () => {
+  const toast = useToast();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const format = (val) => `Ξ` + val;
+  const parse = (val) => val.replace(/^\Ξ/, '');
+  const [bidValue, setBidValue] = useState('0.02');
   return (
     <>
       <Grid
@@ -63,15 +79,40 @@ const Auction: React.FC = () => {
           </Stack>
 
           <Flex pt="8">
-            <InputGroup>
-              <Input size="lg" variant="outline" placeholder="ETH Amount" bgColor="white" />
-
-              <NextLink href="/">
-                <Button ml="3" size="lg">
-                  Place bid
-                </Button>
-              </NextLink>
-            </InputGroup>
+            <NumberInput
+              maxW={32}
+              size="lg"
+              bgColor="white"
+              placeholder="ETH amount"
+              step={0.01}
+              defaultValue={0.02}
+              min={0.02}
+              onChange={(valueString) => setBidValue(parse(valueString))}
+              value={format(bidValue)}
+            >
+              <NumberInputField />
+              <NumberInputStepper>
+                <NumberIncrementStepper />
+                <NumberDecrementStepper />
+              </NumberInputStepper>
+            </NumberInput>
+            {/* TODO: Check what nework the user is on to determine hwn to show toast */}
+            <Button
+              ml="3"
+              size="lg"
+              onClick={() =>
+                toast({
+                  description:
+                    'Make sure your wallet is connected to the Rinkeby Test Network! These auctions are on the testnet.',
+                  status: 'error',
+                  duration: 9000,
+                  isClosable: true,
+                  position: 'top-right',
+                })
+              }
+            >
+              Place bid
+            </Button>
           </Flex>
 
           <Stack spacing={2} pt="6">
@@ -129,11 +170,124 @@ const Auction: React.FC = () => {
           </Stack>
 
           <Box pt={4}>
-            <NextLink href="/" passHref>
-              <Link pt="3" fontWeight="medium">
-                See full bid history →
-              </Link>
-            </NextLink>
+            <Button mt="3" fontWeight="medium" variant="link" onClick={onOpen}>
+              See full bid history →
+            </Button>
+            <Modal
+              onClose={onClose}
+              isOpen={isOpen}
+              isCentered
+              scrollBehavior="inside"
+              motionPreset="slideInBottom"
+            >
+              <ModalOverlay />
+              <ModalContent>
+                <ModalHeader>Bid History</ModalHeader>
+                <ModalCloseButton />
+                <ModalBody>
+                  <Heading as="h1" fontSize="4xl">
+                    Song 4,051
+                  </Heading>
+                  <Stack spacing={2} pt="6">
+                    <Flex
+                      justify="space-between"
+                      px="3"
+                      py="2"
+                      bgColor="brand.lightTeal"
+                      rounded="sm"
+                    >
+                      <Flex align="center">
+                        <Image
+                          borderRadius="full"
+                          boxSize="24px"
+                          src="https://avatars1.githubusercontent.com/u/99944?s=400&v=4"
+                          alt="Segun Adebayo"
+                        />
+                        <Text pl="4">0x987...3m0k</Text>
+                      </Flex>
+                      <Flex align="center">
+                        <Text pr="3" fontWeight="semibold">
+                          Ξ 125.00
+                        </Text>
+                        <ExternalLinkIcon />
+                      </Flex>
+                    </Flex>
+                    <Flex
+                      justify="space-between"
+                      px="3"
+                      py="2"
+                      bgColor="brand.lightTeal"
+                      rounded="sm"
+                    >
+                      <Flex align="center">
+                        <Image
+                          borderRadius="full"
+                          boxSize="24px"
+                          src="https://avatars1.githubusercontent.com/u/99944?s=400&v=4"
+                          alt="Segun Adebayo"
+                        />
+                        <Text pl="4">0x987...3m0k</Text>
+                      </Flex>
+                      <Flex align="center">
+                        <Text pr="3" fontWeight="semibold">
+                          Ξ 125.00
+                        </Text>
+                        <ExternalLinkIcon />
+                      </Flex>
+                    </Flex>
+                    <Flex
+                      justify="space-between"
+                      px="3"
+                      py="2"
+                      bgColor="brand.lightTeal"
+                      rounded="sm"
+                    >
+                      <Flex align="center">
+                        <Image
+                          borderRadius="full"
+                          boxSize="24px"
+                          src="https://avatars1.githubusercontent.com/u/99944?s=400&v=4"
+                          alt="Segun Adebayo"
+                        />
+                        <Text pl="4">hazmatsuit.eth</Text>
+                      </Flex>
+                      <Flex align="center">
+                        <Text pr="3" fontWeight="semibold">
+                          Ξ 125.00
+                        </Text>
+                        <ExternalLinkIcon />
+                      </Flex>
+                    </Flex>
+                    <Flex
+                      justify="space-between"
+                      px="3"
+                      py="2"
+                      bgColor="brand.lightTeal"
+                      rounded="sm"
+                    >
+                      <Flex align="center">
+                        <Image
+                          borderRadius="full"
+                          boxSize="24px"
+                          src="https://avatars1.githubusercontent.com/u/99944?s=400&v=4"
+                          alt="Segun Adebayo"
+                        />
+                        <Text pl="4">hazmatsuit.eth</Text>
+                      </Flex>
+                      <Flex align="center">
+                        <Text pr="3" fontWeight="semibold">
+                          Ξ 125.00
+                        </Text>
+                        <ExternalLinkIcon />
+                      </Flex>
+                    </Flex>
+                  </Stack>
+                </ModalBody>
+                <ModalFooter>
+                  <Button onClick={onClose}>Close</Button>
+                </ModalFooter>
+              </ModalContent>
+            </Modal>
           </Box>
         </Box>
       </Grid>
