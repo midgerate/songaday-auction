@@ -30,8 +30,8 @@ export default function Mint() {
   const maxMint = 5;
   const songCost = 0.2;
 
-  const TOKEN_IDS = process.env.NEXT_PUBLIC_TOKENS;
-  const OWNERS = process.env.NEXT_PUBLIC_OWNERS;
+  const TOKEN_IDS = process.env.NEXT_PUBLIC_TOKENS.split(',');
+  const OWNERS = process.env.NEXT_PUBLIC_OWNERS.split(',');
 
   const contractAddress = process.env.NEXT_PUBLIC_SONGADAY_CONTRACT_ADDRESS;
   const { contract } = useContract(contractAddress, SongADay__factory);
