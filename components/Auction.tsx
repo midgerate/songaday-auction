@@ -25,8 +25,11 @@ import {
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { SongADay__factory } from '../types';
 import { RESERVE_PRICE, SONGADAY_CONTRACT_ADDRESS, SONG_CHAIN_ID } from '../utils/constants';
 import fetchGraph from '../web3/fetchGraph';
+import { parseTokenURI } from '../web3/helpers';
+import { useContract, useReadContract } from '../web3/hooks';
 import Footer from './Footer';
 import SongCard from './SongCard';
 
@@ -75,6 +78,7 @@ query Song($tokenContract: String) {
     orderDirection: desc
   ) {
     id
+    tokenId
     transactionHash
     approved
     duration
@@ -125,6 +129,7 @@ type User = {
 
 type Song = {
   id: string;
+  tokenId: string;
   transactionHash: string;
   approved: boolean;
   duration: number;
@@ -173,6 +178,7 @@ const Auction: React.FC<{ latest?: boolean }> = ({ latest }) => {
   const { songNbr } = router.query;
 
   const [song, setSong] = useState<Song>();
+  const [songMetadata, setSongMetadata] = useState<any>();
 
   const fetchSong = async (songNbr?: string, latest?: boolean) => {
     const song = await fetchSongFromSubgraph(songNbr as string, latest);
@@ -183,7 +189,31 @@ const Auction: React.FC<{ latest?: boolean }> = ({ latest }) => {
     fetchSong((songNbr as string) ?? '', latest);
   }, [songNbr ?? '']);
 
-  console.log({ song });
+  const { contract: songContract } = useContract(SONGADAY_CONTRACT_ADDRESS, SongADay__factory);
+  const { response: tokenURI } = useReadContract(
+    songContract,
+    'tokenURI',
+    undefined,
+    songNbr ?? song?.tokenId ?? '',
+  );
+
+  const fetchMetadata = async (tokenURI: string) => {
+    try {
+      const URI = parseTokenURI(tokenURI);
+      const response = await fetch(URI);
+      const songmeta = await response.json();
+      setSongMetadata(songmeta);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  useEffect(() => {
+    if (tokenURI) {
+      fetchMetadata(tokenURI);
+    }
+  }, [tokenURI]);
+
+  console.log({ song, songMetadata });
 
   return (
     <>
@@ -196,7 +226,7 @@ const Auction: React.FC<{ latest?: boolean }> = ({ latest }) => {
         bgColor="brand.lightTeal"
       >
         <Box>
-          <SongCard song={undefined} card />
+          <SongCard song={songMetadata} card />
         </Box>
 
         <Box>
