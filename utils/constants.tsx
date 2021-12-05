@@ -1,0 +1,3 @@
+export const SONGADAY_CONTRACT_ADDRESS = '0x99e3106fe0ffabf45069582c5153a245146ff405';
+export const SONG_CHAIN_ID = 4;
+export const RESERVE_PRICE = '0.02';

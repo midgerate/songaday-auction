@@ -1,19 +1,16 @@
 import { ApolloClient, InMemoryCache, gql, ApolloQueryResult } from '@apollo/client';
 
 const SUBGRAPH_MAP: { [network: string]: string } = {
-  xdai: 'https://api.thegraph.com/subgraphs/name/odyssy-automaton/daohaus-xdai',
-  matic: 'https://api.thegraph.com/subgraphs/name/odyssy-automaton/daohaus-matic',
-  mainnet: 'https://api.thegraph.com/subgraphs/name/odyssy-automaton/daohaus',
-  rinkeby: 'https://api.thegraph.com/subgraphs/name/ourzora/zora-v1-rinkeby',
+  4: 'https://api.thegraph.com/subgraphs/name/ourzora/zora-v1-rinkeby',
 };
 
 const fetchGraph = async <T, V>(
-  network: string,
+  chainId: number,
   query: string,
   variables?: V,
 ): Promise<ApolloQueryResult<T>> => {
   const client = new ApolloClient({
-    uri: SUBGRAPH_MAP[network],
+    uri: SUBGRAPH_MAP[chainId],
     cache: new InMemoryCache(),
   });
 
