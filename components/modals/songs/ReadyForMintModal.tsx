@@ -54,7 +54,7 @@ const ReadyForMintModal: React.FC<IProps['modalReqs']> = ({
             <Text opacity=".8">
               You have {totalUserVouchers} {totalUserVouchers === 1 ? 'Voucher' : 'Vouchers'} total
             </Text>
-            <NextLink href="/vouchers-explained" passHref>
+            <NextLink href="/voucher-explained" passHref>
               <Link isExternal color="brand.teal" textDecoration="underline">
                 What's this?
               </Link>
