@@ -4,22 +4,14 @@ import {
   Container,
   Heading,
   HStack,
-  Link,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  Spinner,
   Stack,
   Text,
   useDisclosure,
 } from '@chakra-ui/react';
-import NextLink from 'next/link';
 import { useState } from 'react';
 import Footer from '../components/Footer';
+import MintedSongModal from '../components/modals/songs/MintedSongModal';
+// import ReservingSongModal from '../components/modals/songs/ReservingSongModal';
 import { SongADay__factory } from '../types';
 import { useContract, useReadContract, useWriteContract } from '../web3/hooks';
 import { useWallet } from '../web3/WalletContext';
@@ -149,65 +141,66 @@ export default function Mint() {
             Mint {mintAmount} {mintAmount === 1 ? 'song' : 'songs'}
           </Button>
 
-          <Modal
-            onClose={onClose}
+          {/* <ReservingSongModal voucherAmount={mintAmount} isOpen={isOpen} onClose={onClose} /> */}
+          {/* <ReadyForMintModal
+            voucherAmount={mintAmount}
+            totalUserVouchers={12}
             isOpen={isOpen}
-            isCentered
-            scrollBehavior="inside"
-            motionPreset="slideInBottom"
-            closeOnOverlayClick={isOpen && waiting ? false : true}
-          >
-            <ModalOverlay />
-            <ModalContent>
-              <ModalHeader></ModalHeader>
-              {isOpen && waiting ? null : <ModalCloseButton />}
-              <ModalBody>
-                <Stack alignItems="center" spacing="8">
-                  <Heading fontSize="2xl">
-                    {isOpen && waiting
-                      ? 'Minting...give us a second!'
-                      : mintError
-                      ? 'Something went wrong!'
-                      : 'Minted!'}
-                  </Heading>
-                  {isOpen && waiting ? (
-                    <Spinner
-                      thickness="4px"
-                      speed="0.65s"
-                      emptyColor="teal.100"
-                      size="xl"
-                      color="teal.500"
-                    />
-                  ) : null}
-                  {/* TODO: Make dynamic */}
-                  {isOpen && waiting ? (
-                    <NextLink
-                      href="https://etherscan.io/tx/0xf59b5ed41d971b07ce3c2bb85ce2d96dcaf230130c25c65cf13573b5fa120223"
-                      passHref
-                    >
-                      <Link isExternal color="teal">
-                        Watch the transaction on Etherscan
-                      </Link>
-                    </NextLink>
-                  ) : mintError ? (
-                    <Text>{mintError}</Text>
-                  ) : (
-                    <NextLink
-                      href="https://etherscan.io/tx/0xf59b5ed41d971b07ce3c2bb85ce2d96dcaf230130c25c65cf13573b5fa120223"
-                      passHref
-                    >
-                      <Link isExternal color="teal">
-                        View your new song in collections
-                      </Link>
-                    </NextLink>
-                  )}
-                </Stack>
-              </ModalBody>
-              <ModalFooter>
-                {isOpen && waiting ? null : <Button onClick={onClose}>Close</Button>}
-              </ModalFooter>
-            </ModalContent>
-          </Modal>
+            onClose={onClose}
+          /> */}
+          {/* <MintingSongModal
+            totalUserVouchers={6}
+            isOpen={isOpen}
+            onClose={onClose}
+            mintTxnLink="https://etherscan.io"
+          /> */}
+          <MintedSongModal
+            songs={[
+              {
+                number: 702,
+                title: 'The Continuing Adventures of Steve The Hippo',
+              },
+              // {
+              //   number: 4717,
+              //   title: 'Fuck The Hustle & Grind (cuz WAGMI)',
+              // },
+              // {
+              //   number: 1370,
+              //   title: 'IOS Maps Song',
+              // },
+              // {
+              //   number: 4706,
+              //   title: 'I Wanna Play Actraiser',
+              // },
+              // {
+              //   number: 4717,
+              //   title: 'Fuck The Hustle & Grind (cuz WAGMI)',
+              // },
+              // {
+              //   number: 4717,
+              //   title: 'Fuck The Hustle & Grind (cuz WAGMI)',
+              // },
+              // {
+              //   number: 4717,
+              //   title: 'Fuck The Hustle & Grind (cuz WAGMI)',
+              // },
+              // {
+              //   number: 4717,
+              //   title: 'Fuck The Hustle & Grind (cuz WAGMI)',
+              // },
+              // {
+              //   number: 4717,
+              //   title: 'Fuck The Hustle & Grind (cuz WAGMI)',
+              // },
+              // {
+              //   number: 4717,
+              //   title: 'Fuck The Hustle & Grind (cuz WAGMI)',
+              // },
+            ]}
+            isOpen={isOpen}
+            onClose={onClose}
+            collectionLink="https://etherscan.io"
+          />
 
           <Text>Estimated cost: Ξ{(mintAmount * songCost).toPrecision(1)}</Text>
           <Text fontSize="sm" opacity=".75">
