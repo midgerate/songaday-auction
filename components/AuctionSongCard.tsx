@@ -3,7 +3,6 @@ import {
   Box,
   BoxProps,
   Button,
-  SimpleGrid,
   Heading,
   HStack,
   Image,
@@ -15,7 +14,7 @@ import { DateTime } from 'luxon';
 import React, { useMemo } from 'react';
 import { SongMetadata } from '../lib/types';
 import { SONGADAY_CONTRACT_ADDRESS } from '../utils/constants';
-import { youTubeGetID } from '../utils/helpers';
+import { getSongAttributeValue, youTubeGetID } from '../utils/helpers';
 import { parseTokenURI } from '../web3/helpers';
 import YoutubeEmbed from './YoutubeEmbed';
 
@@ -27,16 +26,10 @@ interface SongCardProps {
   song: SongMetadata;
 }
 
-const getAttrValue = (attributes, attrName) => {
-  const attr = attributes.find((a) => a.trait_type === attrName);
-  return attr ? attr.value : null;
-};
-
 function AuctionSongCard({ song }: BoxProps & SongCardProps) {
-  const date = DateTime.fromFormat(getAttrValue(song?.attributes, 'Date'), 'yyyy-MM-dd');
+  const date = DateTime.fromFormat(getSongAttributeValue(song?.attributes, 'Date'), 'yyyy-MM-dd');
 
   const subtitleDateString = useMemo(() => date.toLocaleString(DateTime.DATE_FULL), [date]);
-  const calendarDateString = useMemo(() => date.toFormat('LLL dd'), [date]);
 
   // Get the `tokenId` from the url param if it exists, otherwise try and
   // get it from the generated list of ids.

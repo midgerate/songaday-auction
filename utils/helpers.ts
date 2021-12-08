@@ -6,3 +6,8 @@ export const youTubeGetID = (url: string) => {
     return a;
   }
 };
+
+export const getSongAttributeValue = (attributes, attrName) => {
+  const attr = attributes?.find((a) => a.trait_type === attrName);
+  return attr?.value;
+};
