@@ -18,6 +18,7 @@ import {
   NumberInput,
   NumberInputField,
   NumberInputStepper,
+  Spinner,
   Stack,
   Text,
   useDisclosure,
@@ -31,7 +32,8 @@ import fetchGraph from '../web3/fetchGraph';
 import { parseTokenURI } from '../web3/helpers';
 import { useContract } from '../web3/hooks';
 import Footer from './Footer';
-import SongCard from './SongCard';
+import AuctionSongCard from './AuctionSongCard';
+import { BigNumber } from 'ethers';
 
 const SONG_BY_NUMBER = `
 query SongByNumber($token: String) {
@@ -40,6 +42,7 @@ query SongByNumber($token: String) {
     where: {token: $token}
   ) {
     id
+    tokenId
     transactionHash
     approved
     duration
@@ -184,12 +187,18 @@ const Auction: React.FC<{ latest?: boolean }> = ({ latest }) => {
   });
 
   const fetchSong = async (songNbr?: string, latest?: boolean) => {
-    const song = await fetchSongFromSubgraph(songNbr as string, latest);
-    setSong(song);
-    const tokenURI = await (songContract as SongADay)?.tokenURI(song.tokenId);
-    if (tokenURI) {
-      const songMetadata = await fetchMetadata(tokenURI);
-      setSongMetadata(songMetadata);
+    try {
+      const _song = await fetchSongFromSubgraph(songNbr as string, latest);
+      if (_song.tokenId) {
+        setSong(_song);
+        const tokenURI = await (songContract as SongADay)?.tokenURI(_song.tokenId);
+        if (tokenURI) {
+          const songMetadata = await fetchMetadata(tokenURI);
+          setSongMetadata(songMetadata);
+        }
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -204,14 +213,9 @@ const Auction: React.FC<{ latest?: boolean }> = ({ latest }) => {
       const songmeta = await response.json();
       return songmeta;
     } catch (e) {
-      console.log(e);
+      console.log('metaData fatch error', e);
     }
   };
-
-  console.log({
-    song,
-    songMetadata,
-  });
 
   return (
     <>
@@ -223,7 +227,13 @@ const Auction: React.FC<{ latest?: boolean }> = ({ latest }) => {
         py={8}
         bgColor="brand.lightTeal"
       >
-        <Box>{/* <SongCard song={songMetadata} card /> */}</Box>
+        <Box display="flex" justifyContent="center" alignItems="center">
+          {songMetadata ? (
+            <AuctionSongCard song={songMetadata} />
+          ) : (
+            <Spinner thickness="4px" speed="0.56s" emptyColor="teal.100" size="xl" color="teal" />
+          )}
+        </Box>
 
         <Box>
           <Text fontSize="md" fontWeight="medium">
@@ -274,7 +284,7 @@ const Auction: React.FC<{ latest?: boolean }> = ({ latest }) => {
                 <NumberDecrementStepper />
               </NumberInputStepper>
             </NumberInput>
-            {/* TODO: Check what nework the user is on to determine hwn to show toast */}
+            {/* TODO: Check what nework the user is on to determine when to show toast */}
             <Button
               ml="3"
               size="lg"
