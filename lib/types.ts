@@ -6,6 +6,21 @@ export interface SongsResponse {
   filters: Record<string, string[]>;
 }
 
+export interface SongMetadata {
+  name: string;
+  created_by: string;
+  description: string;
+  external_url: string;
+  token_id: string;
+  image: string;
+  animation_url: string;
+  youtube_url: string;
+  attributes: {
+    trait_type: string;
+    value: string;
+  }[];
+}
+
 export interface Song {
   id: string;
   number: number; // which ordinal number is this song?

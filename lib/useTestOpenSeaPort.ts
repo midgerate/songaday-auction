@@ -1,9 +1,11 @@
 import { EventType, Network, OpenSeaPort } from 'opensea-js';
 import { useEffect, useState } from 'react';
 import { Account } from '../containers/Account';
+import { useWallet } from '../web3/WalletContext';
 
 export function useTestOpenSeaPort() {
-  const { provider } = Account.useContainer();
+  // const { provider } = Account.useContainer();
+  const { provider } = useWallet();
   const [openSeaPort, setOpenSeaPort] = useState<OpenSeaPort>();
   const [transactionStarted, setTransactionStarted] = useState(false);
 

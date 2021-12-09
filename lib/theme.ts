@@ -29,7 +29,7 @@ const override: ThemeOverride = {
         overflowX: 'hidden',
         lineHeight: '180%',
         textAlign: 'left',
-        fontSize: '1rem',
+        fontSize: '1.15rem',
       },
       a: {
         color: '#00CBBC',

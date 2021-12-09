@@ -20,12 +20,14 @@ import {
 } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import React from 'react';
-import { Account } from '../containers/Account';
+// import { Account } from '../containers/Account';
 import { truncateHash } from '../lib/helpers';
 import { useDidHydrate } from '../lib/useDidHydrate';
+import { useWallet } from '../web3/WalletContext';
 
 function Navbar() {
-  const { connect, disconnect, account, loading } = Account.useContainer();
+  // const { connect, disconnect, account, loading } = Account.useContainer();
+  const { connectWallet, disconnect, address, isConnecting } = useWallet();
   const didHydrate = useDidHydrate();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -65,12 +67,12 @@ function Navbar() {
             {links}
           </HStack>
           <Box display={{ base: 'none', md: 'block' }}>
-            {didHydrate && account ? (
+            {didHydrate && address ? (
               <Menu>
-                <MenuButton as={Button}>{truncateHash(account)}</MenuButton>
+                <MenuButton as={Button}>{truncateHash(address)}</MenuButton>
                 <MenuList>
                   <MenuItem as="div" p="0">
-                    <NextLink href={`/a/${account}`} passHref>
+                    <NextLink href={`/a/${address}`} passHref>
                       <Link
                         px="3"
                         py="2"
@@ -88,7 +90,7 @@ function Navbar() {
                 </MenuList>
               </Menu>
             ) : (
-              <Button onClick={connect} isLoading={loading}>
+              <Button onClick={connectWallet} isLoading={isConnecting}>
                 Connect Wallet
               </Button>
             )}
@@ -120,12 +122,12 @@ function Navbar() {
           </DrawerHeader>
           <DrawerBody>
             <Box display={{ md: 'none' }}>
-              {didHydrate && account ? (
+              {didHydrate && address ? (
                 <Menu>
-                  <MenuButton as={Button}>{truncateHash(account)}</MenuButton>
+                  <MenuButton as={Button}>{truncateHash(address)}</MenuButton>
                   <MenuList>
                     <MenuItem as="div" p="0">
-                      <NextLink href={`/a/${account}`} passHref>
+                      <NextLink href={`/a/${address}`} passHref>
                         <Link
                           px="3"
                           py="2"
@@ -143,7 +145,7 @@ function Navbar() {
                   </MenuList>
                 </Menu>
               ) : (
-                <Button onClick={connect} isLoading={loading}>
+                <Button onClick={connectWallet} isLoading={isConnecting}>
                   Connect Wallet
                 </Button>
               )}
