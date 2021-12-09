@@ -6,6 +6,7 @@ import {
   Grid,
   Heading,
   Image,
+  Link,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -24,22 +25,26 @@ import {
   useDisclosure,
   useToast,
 } from '@chakra-ui/react';
+import { AuctionHouse } from '@zoralabs/zdk';
+import makeBlockie from 'ethereum-blockies-base64';
+import { BigNumberish, ethers } from 'ethers';
+import { DateTime } from 'luxon';
+import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { convertSecondsToDay } from '../lib/helpers';
+import { SongMetadata } from '../lib/types';
 import { SongADay, SongADay__factory } from '../types';
 import { RESERVE_PRICE, SONGADAY_CONTRACT_ADDRESS, SONG_CHAIN_ID } from '../utils/constants';
+import { getSongAttributeValue } from '../utils/helpers';
+import { SUPPORTED_NETWORKS } from '../web3/constants';
 import fetchGraph from '../web3/fetchGraph';
 import { formatAddress, formatToken, parseTokenURI } from '../web3/helpers';
 import { useContract } from '../web3/hooks';
-import Footer from './Footer';
-import AuctionSongCard from './AuctionSongCard';
-import { BigNumberish, BigNumber, ethers } from 'ethers';
-import { DateTime } from 'luxon';
-import { getSongAttributeValue } from '../utils/helpers';
-import { SongMetadata } from '../lib/types';
-import { convertSecondsToDay } from '../lib/helpers';
 import { useWallet } from '../web3/WalletContext';
-import { AuctionHouse } from '@zoralabs/zdk';
+import AuctionSongCard from './AuctionSongCard';
+import Footer from './Footer';
+import PlaceBidModal from './modals/bids/PlaceBidModal';
 
 const SONG_BY_NUMBER = `
 query SongByNumber($token: String) {
@@ -179,10 +184,12 @@ const fetchSongFromSubgraph = async (songNbr?: string, latest?: boolean) => {
 
 const Auction: React.FC<{ latest?: boolean }> = ({ latest }) => {
   const toast = useToast();
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen: isTxOpen, onOpen: onTxOpen, onClose: onTxClose } = useDisclosure();
+  const { isOpen: isHistoryOpen, onOpen: onHistoryOpen, onClose: onHistoryClose } = useDisclosure();
+  const [pendingTxHash, setPendingTxHash] = useState<string | undefined>(undefined);
   const format = (val) => `Ξ` + val;
   const parse = (val) => val.replace(/^Ξ/, '');
-  const [bidValue, setBidValue] = useState(RESERVE_PRICE);
+  const [bidValue, setBidValue] = useState<string>(undefined);
   const router = useRouter();
   const { songNbr } = router.query;
 
@@ -202,7 +209,7 @@ const Auction: React.FC<{ latest?: boolean }> = ({ latest }) => {
     useStaticProvider: true,
   });
 
-  const { provider } = useWallet();
+  const { provider, chainId, address } = useWallet();
 
   const [auctionHouseContract, setAuctionHouseContract] = useState<AuctionHouse>();
   useEffect(() => {
@@ -213,28 +220,52 @@ const Auction: React.FC<{ latest?: boolean }> = ({ latest }) => {
   }, [provider]);
 
   const createBid = async (auctionId: string, amount: BigNumberish) => {
-    console.log('bidding');
+    console.log('bidding', amount.toString());
+    // console.log(auctionId, formatToken(amount));
+    if (!address) {
+      toast({
+        status: 'error',
+        title: 'An error occured',
+        description: 'Please connect to the wallet before placing the bid',
+      });
+      return;
+    }
+
+    if (chainId !== SONG_CHAIN_ID) {
+      toast({
+        status: 'error',
+        title: 'An error occured',
+        description: `You are not connected to the ${SUPPORTED_NETWORKS[SONG_CHAIN_ID].name}`,
+      });
+
+      return;
+    }
+
     try {
+      onTxOpen();
       const bidTx = await auctionHouseContract?.createBid(auctionId, amount);
+      setPendingTxHash(bidTx?.hash);
       await bidTx?.wait();
-      console.log('bidding done');
     } catch (error) {
-      console.log(error);
-      console.log('bidding failed');
+      toast({
+        status: 'error',
+        title: 'An error occured',
+        description: 'Could not place the bid - ' + error.error?.message || error.message || '',
+      });
+    } finally {
+      onTxClose();
+      setPendingTxHash(undefined);
     }
   };
 
   const fetchSong = async (songNbr?: string, latest?: boolean) => {
     try {
       const _song = await fetchSongFromSubgraph(songNbr as string, latest);
-      if (_song.tokenId) {
-        setSong(_song);
-        const tokenURI = await (songContract as SongADay)?.tokenURI(_song.tokenId);
-        if (tokenURI) {
-          const songMetadata = await fetchMetadata(tokenURI);
-          setSongMetadata(songMetadata);
-        }
-      }
+      setSong(_song);
+      setBidValue(formatToken(song?.currentBid?.amount.toString() ?? RESERVE_PRICE));
+      const tokenURI = await (songContract as SongADay)?.tokenURI(_song.tokenId);
+      const songMetadata = await fetchMetadata(tokenURI);
+      setSongMetadata(songMetadata);
     } catch (error) {
       return null;
     }
@@ -269,6 +300,7 @@ const Auction: React.FC<{ latest?: boolean }> = ({ latest }) => {
   useEffect(() => {
     const calculateDuration = () => {
       const now = new Date().getTime(); // current datetime as milliseconds
+      console.log({ song });
       const msDiff = (Number(song?.approvedTimestamp) + Number(song?.duration)) * 1000 - now;
       const duration = convertSecondsToDay(msDiff / 1000);
       setDuration(duration);
@@ -312,8 +344,11 @@ const Auction: React.FC<{ latest?: boolean }> = ({ latest }) => {
   // TODO: handle previous bids when its the first bid
   // TODO: handle when the auction has no bids
   // TODO: refresh when the bid is done.
+  // TODO: handle settle
+  // TODO: fix order of the previous bids as they dont seem to be consistent.
 
   const subtitleDateString = date.toLocaleString(DateTime.DATE_FULL);
+  console.log({ songMetadata });
   return (
     <>
       <Grid
@@ -331,6 +366,7 @@ const Auction: React.FC<{ latest?: boolean }> = ({ latest }) => {
             <Spinner thickness="4px" speed="0.56s" emptyColor="teal.100" size="xl" color="teal" />
           )}
         </Box>
+
         {songMetadata ? (
           <Box>
             <Text fontSize="md" fontWeight="medium">
@@ -352,7 +388,7 @@ const Auction: React.FC<{ latest?: boolean }> = ({ latest }) => {
               <Flex flexDir="column">
                 <Text>Current Bid</Text>
                 <Heading as="h2" fontSize="3xl" fontWeight="bold">
-                  Ξ{formatToken(song?.currentBid?.amount.toString()) ?? '0'}
+                  Ξ {formatToken(song?.currentBid?.amount.toString()) ?? '0'}
                 </Heading>
               </Flex>
               <Flex flexDir="column">
@@ -370,7 +406,6 @@ const Auction: React.FC<{ latest?: boolean }> = ({ latest }) => {
                 bgColor="white"
                 placeholder="ETH amount"
                 step={0.01}
-                defaultValue={Number(RESERVE_PRICE)}
                 min={Number(formatToken(song?.currentBid?.amount.toString()) ?? RESERVE_PRICE)}
                 onChange={(valueString) => setBidValue(parse(valueString))}
                 value={format(bidValue)}
@@ -388,6 +423,8 @@ const Auction: React.FC<{ latest?: boolean }> = ({ latest }) => {
               >
                 Place bid
               </Button>
+
+              <PlaceBidModal bidTxnLink={pendingTxHash} isOpen={isTxOpen} onClose={onTxClose} />
             </Flex>
 
             <Stack spacing={2} pt="6">
@@ -397,8 +434,7 @@ const Auction: React.FC<{ latest?: boolean }> = ({ latest }) => {
                     <Image
                       borderRadius="full"
                       boxSize="24px"
-                      src="https://avatars1.githubusercontent.com/u/99944?s=400&v=4"
-                      alt="Segun Adebayo"
+                      src={makeBlockie(song?.currentBid.bidder.id)}
                     />
                     <Text pl="4">{formatAddress(song?.currentBid?.bidder.id)}</Text>
                   </Flex>
@@ -406,53 +442,69 @@ const Auction: React.FC<{ latest?: boolean }> = ({ latest }) => {
                     <Text pr="3" fontWeight="semibold">
                       Ξ {formatToken(song?.currentBid.amount.toString())}
                     </Text>
-                    <ExternalLinkIcon /> {/** TODO: link to transaction hash */}
+                    <NextLink
+                      href={`${SUPPORTED_NETWORKS[SONG_CHAIN_ID].explorer}tx/${song?.currentBid.transactionHash}`}
+                      passHref
+                    >
+                      <Link isExternal color="brand.teal" textDecoration="underline">
+                        <ExternalLinkIcon />
+                      </Link>
+                    </NextLink>
                   </Flex>
                 </Flex>
               )}
               <>
-                {song.previousBids.map((bid) => {
-                  return (
-                    <Flex
-                      key={bid.id}
-                      justify="space-between"
-                      px="3"
-                      py="2"
-                      bgColor="white"
-                      rounded="sm"
-                    >
-                      <Flex align="center">
-                        {/** TODO: get user's icon blokkies / ens if present */}
-                        <Image
-                          borderRadius="full"
-                          boxSize="24px"
-                          src="https://avatars1.githubusercontent.com/u/99944?s=400&v=4"
-                          alt="Segun Adebayo"
-                        />
-                        <Text pl="4">{formatAddress(bid.bidder.id)}</Text>
+                {song.previousBids
+                  .slice()
+                  .reverse()
+                  .slice(0, 2)
+                  .map((bid) => {
+                    return (
+                      <Flex
+                        key={bid.id}
+                        justify="space-between"
+                        px="3"
+                        py="2"
+                        bgColor="white"
+                        rounded="sm"
+                      >
+                        <Flex align="center">
+                          <Image
+                            borderRadius="full"
+                            boxSize="24px"
+                            src={makeBlockie(bid.bidder.id)}
+                          />
+                          <Text pl="4">{formatAddress(bid.bidder.id)}</Text>
+                        </Flex>
+                        <Flex align="center">
+                          <Text pr="3" fontWeight="semibold">
+                            Ξ {formatToken(bid.amount.toString())}
+                          </Text>
+                          <NextLink
+                            href={`${SUPPORTED_NETWORKS[SONG_CHAIN_ID].explorer}tx/${bid.transactionHash}`}
+                            passHref
+                          >
+                            <Link isExternal color="brand.teal" textDecoration="underline">
+                              <ExternalLinkIcon />
+                            </Link>
+                          </NextLink>
+                        </Flex>
                       </Flex>
-                      <Flex align="center">
-                        <Text pr="3" fontWeight="semibold">
-                          Ξ {formatToken(bid.amount.toString())}
-                        </Text>
-                        <ExternalLinkIcon />
-                      </Flex>
-                    </Flex>
-                  );
-                })}
+                    );
+                  })}
               </>
             </Stack>
 
             <Box pt={4}>
-              <Button mt="3" fontWeight="medium" variant="link" onClick={onOpen}>
+              <Button mt="3" fontWeight="medium" variant="link" onClick={onHistoryOpen}>
                 See full bid history →
               </Button>
               <Modal
-                onClose={onClose}
-                isOpen={isOpen}
+                onClose={onHistoryClose}
+                isOpen={isHistoryOpen}
                 isCentered
                 scrollBehavior="inside"
-                motionPreset="slideInBottom"
+                motionPreset="scale"
               >
                 <ModalOverlay />
                 <ModalContent>
@@ -476,8 +528,7 @@ const Auction: React.FC<{ latest?: boolean }> = ({ latest }) => {
                             <Image
                               borderRadius="full"
                               boxSize="24px"
-                              src="https://avatars1.githubusercontent.com/u/99944?s=400&v=4"
-                              alt="Segun Adebayo"
+                              src={makeBlockie(song?.currentBid.bidder.id)}
                             />
                             <Text pl="4">{formatAddress(song?.currentBid?.bidder.id)}</Text>
                           </Flex>
@@ -485,44 +536,60 @@ const Auction: React.FC<{ latest?: boolean }> = ({ latest }) => {
                             <Text pr="3" fontWeight="semibold">
                               Ξ {formatToken(song?.currentBid.amount.toString())}
                             </Text>
-                            <ExternalLinkIcon />
+                            <NextLink
+                              href={`${SUPPORTED_NETWORKS[SONG_CHAIN_ID].explorer}tx/${song?.currentBid.transactionHash}`}
+                              passHref
+                            >
+                              <Link isExternal color="brand.teal" textDecoration="underline">
+                                <ExternalLinkIcon />
+                              </Link>
+                            </NextLink>
                           </Flex>
                         </Flex>
                       )}
                       <>
-                        {song.previousBids.map((bid) => {
-                          return (
-                            <Flex
-                              key={bid.id}
-                              justify="space-between"
-                              px="3"
-                              py="2"
-                              bgColor="brand.lightTeal"
-                              rounded="sm"
-                            >
-                              <Flex align="center">
-                                <Image
-                                  borderRadius="full"
-                                  boxSize="24px"
-                                  src="https://avatars1.githubusercontent.com/u/99944?s=400&v=4"
-                                  alt="Segun Adebayo"
-                                />
-                                <Text pl="4">{formatAddress(bid.bidder.id)}</Text>
+                        {song.previousBids
+                          .slice()
+                          .reverse()
+                          .map((bid) => {
+                            return (
+                              <Flex
+                                key={bid.id}
+                                justify="space-between"
+                                px="3"
+                                py="2"
+                                bgColor="brand.lightTeal"
+                                rounded="sm"
+                              >
+                                <Flex align="center">
+                                  <Image
+                                    borderRadius="full"
+                                    boxSize="24px"
+                                    src={makeBlockie(bid.bidder.id)}
+                                  />
+                                  <Text pl="4">{formatAddress(bid.bidder.id)}</Text>
+                                </Flex>
+                                <Flex align="center">
+                                  <Text pr="3" fontWeight="semibold">
+                                    Ξ {formatToken(bid.amount.toString())}
+                                  </Text>
+                                  <NextLink
+                                    href={`${SUPPORTED_NETWORKS[SONG_CHAIN_ID].explorer}tx/${bid.transactionHash}`}
+                                    passHref
+                                  >
+                                    <Link isExternal color="brand.teal" textDecoration="underline">
+                                      <ExternalLinkIcon />
+                                    </Link>
+                                  </NextLink>
+                                </Flex>
                               </Flex>
-                              <Flex align="center">
-                                <Text pr="3" fontWeight="semibold">
-                                  Ξ {formatToken(bid.amount.toString())}
-                                </Text>
-                                <ExternalLinkIcon />
-                              </Flex>
-                            </Flex>
-                          );
-                        })}
+                            );
+                          })}
                       </>
                     </Stack>
                   </ModalBody>
                   <ModalFooter>
-                    <Button onClick={onClose}>Close</Button>
+                    <Button onClick={onHistoryClose}>Close</Button>
                   </ModalFooter>
                 </ModalContent>
               </Modal>
