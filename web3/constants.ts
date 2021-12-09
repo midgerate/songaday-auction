@@ -7,13 +7,6 @@ export const SUPPORTED_NETWORKS: {
     rpc: string;
   };
 } = {
-  1: {
-    chainId: 1,
-    name: 'Mainnet',
-    symbol: 'ETH',
-    explorer: 'https://etherscan.io/',
-    rpc: 'https://mainnet.infura.io/v3/e039ebf983d0477ca69a543b1c62101a',
-  },
   4: {
     chainId: 4,
     name: 'Rinkeby',

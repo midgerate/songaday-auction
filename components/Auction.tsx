@@ -58,13 +58,17 @@ query SongByNumber($token: String) {
     approved
     duration
     expectedEndTimestamp
-    tokenOwner
+    tokenOwner {
+      id
+    }
     status
     currentBid {
       id
       transactionHash
       amount
-      bidder
+      bidder {
+        id
+      }
       bidType
       createdAtTimestamp
     }
@@ -72,7 +76,9 @@ query SongByNumber($token: String) {
       id
       transactionHash
       amount
-      bidder
+      bidder {
+        id
+      }
       bidType
       createdAtTimestamp
     }
@@ -131,10 +137,10 @@ query Song($tokenContract: String) {
 type Bid = {
   id: string;
   transactionHash: string;
-  amount: number;
+  amount: string;
   bidder: User;
   bidType: string;
-  createdAtTimestamp: number;
+  createdAtTimestamp: string;
 };
 
 type User = {
@@ -146,15 +152,15 @@ type Song = {
   tokenId: string;
   transactionHash: string;
   approved: boolean;
-  duration: number;
-  expectedEndTimestamp: number;
+  duration: string;
+  expectedEndTimestamp: string;
   tokenOwner: User;
   status: string;
   currentBid: Bid;
   previousBids: Bid[];
-  approvedTimestamp: number;
-  createdAtTimestamp: number;
-  finalizedAtTimestamp: number;
+  approvedTimestamp: string;
+  createdAtTimestamp: string;
+  finalizedAtTimestamp: string;
 };
 
 type SongData = {
@@ -197,6 +203,8 @@ const Auction: React.FC<{ latest?: boolean }> = ({ latest }) => {
   const [previousSong, setPreviousSong] = useState<Song>();
   const [nextSong, setNextSong] = useState<Song>();
   const [songMetadata, setSongMetadata] = useState<SongMetadata>();
+  const [expired, setExpired] = useState<boolean>(false);
+  const [finalised, setFinalised] = useState<boolean>(false);
   const [duration, setDuration] = useState<{
     days?: string;
     hours?: string;
@@ -220,12 +228,10 @@ const Auction: React.FC<{ latest?: boolean }> = ({ latest }) => {
   }, [provider]);
 
   const createBid = async (auctionId: string, amount: BigNumberish) => {
-    console.log('bidding', amount.toString());
-    // console.log(auctionId, formatToken(amount));
     if (!address) {
       toast({
         status: 'error',
-        title: 'An error occured',
+        title: 'An error occurred',
         description: 'Please connect to the wallet before placing the bid',
       });
       return;
@@ -234,7 +240,7 @@ const Auction: React.FC<{ latest?: boolean }> = ({ latest }) => {
     if (chainId !== SONG_CHAIN_ID) {
       toast({
         status: 'error',
-        title: 'An error occured',
+        title: 'An error occurred',
         description: `You are not connected to the ${SUPPORTED_NETWORKS[SONG_CHAIN_ID].name}`,
       });
 
@@ -245,12 +251,61 @@ const Auction: React.FC<{ latest?: boolean }> = ({ latest }) => {
       onTxOpen();
       const bidTx = await auctionHouseContract?.createBid(auctionId, amount);
       setPendingTxHash(bidTx?.hash);
-      await bidTx?.wait();
+      await bidTx?.wait(2);
+      toast({
+        status: 'success',
+        title: 'Bid placed',
+        description:
+          'Your bid will show up in the next few minutes. Please refresh the page after some time.',
+      });
     } catch (error) {
       toast({
         status: 'error',
-        title: 'An error occured',
-        description: 'Could not place the bid - ' + error.error?.message || error.message || '',
+        title: 'An error occurred',
+        description: error.error?.message ?? error.message ?? 'Could not place the bid',
+      });
+    } finally {
+      onTxClose();
+      setPendingTxHash(undefined);
+    }
+  };
+
+  const settleAuction = async (auctionId: string) => {
+    if (!address) {
+      toast({
+        status: 'error',
+        title: 'An error occurred',
+        description: 'Please connect to the wallet before settling the bid',
+      });
+      return;
+    }
+
+    if (chainId !== SONG_CHAIN_ID) {
+      toast({
+        status: 'error',
+        title: 'An error occurred',
+        description: `You are not connected to the ${SUPPORTED_NETWORKS[SONG_CHAIN_ID].name}`,
+      });
+
+      return;
+    }
+
+    try {
+      onTxOpen();
+      const bidTx = await auctionHouseContract?.endAuction(auctionId);
+      setPendingTxHash(bidTx?.hash);
+      await bidTx?.wait(2);
+      toast({
+        status: 'success',
+        title: 'Auction Settled',
+        description:
+          'The winner will be transfered the song, and the auction will be closed. Please refresh the page after some time.',
+      });
+    } catch (error) {
+      toast({
+        status: 'error',
+        title: 'An error occurred',
+        description: error.error?.message ?? error.message ?? 'Could not settle the auction',
       });
     } finally {
       onTxClose();
@@ -262,33 +317,45 @@ const Auction: React.FC<{ latest?: boolean }> = ({ latest }) => {
     try {
       const _song = await fetchSongFromSubgraph(songNbr as string, latest);
       setSong(_song);
-      setBidValue(formatToken(song?.currentBid?.amount.toString() ?? RESERVE_PRICE));
+      console.log('song', _song);
+      const currentBid = formatToken(_song?.currentBid?.amount) ?? '0';
+      setBidValue((Number(currentBid) * 1.05).toFixed(2) ?? RESERVE_PRICE);
+
       const tokenURI = await (songContract as SongADay)?.tokenURI(_song.tokenId);
       const songMetadata = await fetchMetadata(tokenURI);
       setSongMetadata(songMetadata);
     } catch (error) {
+      console.log(error);
       return null;
     }
   };
 
   const fetchPreviousSong = async (songNbr) => {
+    // TODO: Get the previous most song instead of just decrementing
     try {
       const _song = await fetchSongFromSubgraph(songNbr as string, false);
       if (_song.tokenId) {
         setPreviousSong(_song);
+      } else {
+        setPreviousSong(undefined);
       }
     } catch (error) {
+      setPreviousSong(undefined);
       return null;
     }
   };
 
   const fetchNextSong = async (songNbr) => {
+    // TODO: Get the next most song instead of just incrementing
     try {
       const _song = await fetchSongFromSubgraph(songNbr as string, false);
       if (_song.tokenId) {
         setNextSong(_song);
+      } else {
+        setNextSong(undefined);
       }
     } catch (error) {
+      setNextSong(undefined);
       return null;
     }
   };
@@ -300,8 +367,18 @@ const Auction: React.FC<{ latest?: boolean }> = ({ latest }) => {
   useEffect(() => {
     const calculateDuration = () => {
       const now = new Date().getTime(); // current datetime as milliseconds
-      console.log({ song });
-      const msDiff = (Number(song?.approvedTimestamp) + Number(song?.duration)) * 1000 - now;
+      // The duration of the auction comes from the first bid
+      const msDiff = song?.expectedEndTimestamp
+        ? Number(song?.expectedEndTimestamp) * 1000 - now
+        : (Number(song?.approvedTimestamp) + Number(song?.duration)) * 1000 - now;
+
+      if (msDiff < 0 && !expired) {
+        setExpired(true);
+      }
+
+      if (song?.finalizedAtTimestamp && !finalised) {
+        setFinalised(true);
+      }
       const duration = convertSecondsToDay(msDiff / 1000);
       setDuration(duration);
     };
@@ -340,15 +417,22 @@ const Auction: React.FC<{ latest?: boolean }> = ({ latest }) => {
     'yyyy-MM-dd',
   );
 
-  // TODO : handle errors coming from zora while bidding
   // TODO: handle previous bids when its the first bid
   // TODO: handle when the auction has no bids
-  // TODO: refresh when the bid is done.
-  // TODO: handle settle
-  // TODO: fix order of the previous bids as they dont seem to be consistent.
 
   const subtitleDateString = date.toLocaleString(DateTime.DATE_FULL);
-  console.log({ songMetadata });
+
+  const sortedPreviousBids = song?.previousBids
+    ?.slice()
+    .sort((a, b) => {
+      return Number(b.createdAtTimestamp) - Number(a.createdAtTimestamp);
+    })
+    .filter((bid) => bid.bidType !== 'Final'); // dont want final bids to be in previous bids as we already use final bid as current bid
+
+  const currentBid = finalised
+    ? song?.previousBids?.find((bid) => bid.bidType === 'Final')
+    : song?.currentBid;
+
   return (
     <>
       <Grid
@@ -377,73 +461,122 @@ const Auction: React.FC<{ latest?: boolean }> = ({ latest }) => {
                 Song {Number(song.tokenId).toLocaleString()}
               </Heading>
               <Flex pl="6">
-                <Text fontSize="4xl">{previousSong ? '←' : ''}</Text>
-                <Text fontSize="4xl" opacity="0.4" pl="2.5">
-                  {nextSong ? '→' : ''}
-                </Text>
+                {previousSong && (
+                  <NextLink href={`/auction/${previousSong.tokenId}`} passHref>
+                    <Link
+                      isExternal
+                      _hover={{
+                        textDecoration: 'none',
+                      }}
+                    >
+                      <Text fontSize="4xl">←</Text>
+                    </Link>
+                  </NextLink>
+                )}
+                {nextSong && (
+                  <NextLink href={`/auction/${nextSong.tokenId}`} passHref>
+                    <Link
+                      isExternal
+                      _hover={{
+                        textDecoration: 'none',
+                      }}
+                    >
+                      <Text fontSize="4xl" pl="2.5">
+                        →
+                      </Text>
+                    </Link>
+                  </NextLink>
+                )}
               </Flex>
             </Flex>
 
             <Stack spacing={{ base: '8', lg: '12' }} pt="6" direction={['column', 'row']}>
               <Flex flexDir="column">
-                <Text>Current Bid</Text>
+                <Text>{finalised ? 'Winning Bid' : 'Current Bid'}</Text>
                 <Heading as="h2" fontSize="3xl" fontWeight="bold">
-                  Ξ {formatToken(song?.currentBid?.amount.toString()) ?? '0'}
+                  Ξ {formatToken(currentBid?.amount) ?? '0'}
                 </Heading>
               </Flex>
               <Flex flexDir="column">
-                <Text>Ends In</Text>
-                <Heading as="h2" fontSize="3xl" fontWeight="bold">
-                  {duration.hours}h {duration.minutes}m {parseInt(duration.seconds)}s
-                </Heading>
+                {expired ? (
+                  <>
+                    <Text>{finalised ? 'Winning Bidder' : 'Current Bidder'}</Text>
+                    <Flex align="center">
+                      <Image
+                        borderRadius="full"
+                        boxSize="24px"
+                        src={makeBlockie(currentBid?.bidder.id ?? '')}
+                      />
+                      <Heading ml="2" as="h2" fontSize="3xl" fontWeight="bold">
+                        {formatAddress(currentBid?.bidder.id)}
+                      </Heading>
+                    </Flex>
+                  </>
+                ) : (
+                  <>
+                    <Text>Ends In</Text>
+                    <Heading as="h2" fontSize="3xl" fontWeight="bold">
+                      {duration.hours}h {duration.minutes}m {parseInt(duration.seconds)}s
+                    </Heading>
+                  </>
+                )}
               </Flex>
             </Stack>
 
-            <Flex pt="8">
-              <NumberInput
-                maxW={32}
-                size="lg"
-                bgColor="white"
-                placeholder="ETH amount"
-                step={0.01}
-                min={Number(formatToken(song?.currentBid?.amount.toString()) ?? RESERVE_PRICE)}
-                onChange={(valueString) => setBidValue(parse(valueString))}
-                value={format(bidValue)}
-              >
-                <NumberInputField />
-                <NumberInputStepper>
-                  <NumberIncrementStepper />
-                  <NumberDecrementStepper />
-                </NumberInputStepper>
-              </NumberInput>
-              <Button
-                ml="3"
-                size="lg"
-                onClick={() => createBid(song.id, ethers.utils.parseEther(bidValue))}
-              >
-                Place bid
-              </Button>
-
-              <PlaceBidModal bidTxnLink={pendingTxHash} isOpen={isTxOpen} onClose={onTxClose} />
-            </Flex>
+            {finalised ? null : expired ? (
+              <Flex pt="8">
+                <Button size="lg" onClick={() => settleAuction(song.id)}>
+                  Settle Auction
+                </Button>
+              </Flex>
+            ) : (
+              <Flex pt="8">
+                <NumberInput
+                  maxW={32}
+                  size="lg"
+                  bgColor="white"
+                  placeholder="ETH amount"
+                  step={0.01}
+                  min={
+                    Number(formatToken(currentBid?.amount) ?? '0') * 1.05 ?? Number(RESERVE_PRICE)
+                  }
+                  onChange={(valueString) => setBidValue(parse(valueString))}
+                  value={format(bidValue)}
+                >
+                  <NumberInputField />
+                  <NumberInputStepper>
+                    <NumberIncrementStepper />
+                    <NumberDecrementStepper />
+                  </NumberInputStepper>
+                </NumberInput>
+                <Button
+                  ml="3"
+                  size="lg"
+                  onClick={() => createBid(song.id, ethers.utils.parseEther(bidValue))}
+                >
+                  Place bid
+                </Button>
+              </Flex>
+            )}
+            <PlaceBidModal bidTxnLink={pendingTxHash} isOpen={isTxOpen} onClose={onTxClose} />
 
             <Stack spacing={2} pt="6">
-              {song?.currentBid && (
+              {currentBid && (
                 <Flex justify="space-between" px="3" py="2" bgColor="white" rounded="sm">
                   <Flex align="center">
                     <Image
                       borderRadius="full"
                       boxSize="24px"
-                      src={makeBlockie(song?.currentBid.bidder.id)}
+                      src={makeBlockie(currentBid?.bidder.id ?? '')}
                     />
-                    <Text pl="4">{formatAddress(song?.currentBid?.bidder.id)}</Text>
+                    <Text pl="4">{formatAddress(currentBid?.bidder.id)}</Text>
                   </Flex>
                   <Flex align="center">
                     <Text pr="3" fontWeight="semibold">
-                      Ξ {formatToken(song?.currentBid.amount.toString())}
+                      Ξ {formatToken(currentBid?.amount)}
                     </Text>
                     <NextLink
-                      href={`${SUPPORTED_NETWORKS[SONG_CHAIN_ID].explorer}tx/${song?.currentBid.transactionHash}`}
+                      href={`${SUPPORTED_NETWORKS[SONG_CHAIN_ID].explorer}tx/${currentBid?.transactionHash}`}
                       passHref
                     >
                       <Link isExternal color="brand.teal" textDecoration="underline">
@@ -454,104 +587,97 @@ const Auction: React.FC<{ latest?: boolean }> = ({ latest }) => {
                 </Flex>
               )}
               <>
-                {song.previousBids
-                  .slice()
-                  .reverse()
-                  .slice(0, 2)
-                  .map((bid) => {
-                    return (
-                      <Flex
-                        key={bid.id}
-                        justify="space-between"
-                        px="3"
-                        py="2"
-                        bgColor="white"
-                        rounded="sm"
-                      >
-                        <Flex align="center">
-                          <Image
-                            borderRadius="full"
-                            boxSize="24px"
-                            src={makeBlockie(bid.bidder.id)}
-                          />
-                          <Text pl="4">{formatAddress(bid.bidder.id)}</Text>
-                        </Flex>
-                        <Flex align="center">
-                          <Text pr="3" fontWeight="semibold">
-                            Ξ {formatToken(bid.amount.toString())}
-                          </Text>
-                          <NextLink
-                            href={`${SUPPORTED_NETWORKS[SONG_CHAIN_ID].explorer}tx/${bid.transactionHash}`}
-                            passHref
-                          >
-                            <Link isExternal color="brand.teal" textDecoration="underline">
-                              <ExternalLinkIcon />
-                            </Link>
-                          </NextLink>
-                        </Flex>
+                {sortedPreviousBids.slice(0, 2).map((bid) => {
+                  return (
+                    <Flex
+                      key={bid.id}
+                      justify="space-between"
+                      px="3"
+                      py="2"
+                      bgColor="white"
+                      rounded="sm"
+                    >
+                      <Flex align="center">
+                        <Image
+                          borderRadius="full"
+                          boxSize="24px"
+                          src={makeBlockie(bid.bidder.id ?? '')}
+                        />
+                        <Text pl="4">{formatAddress(bid.bidder.id)}</Text>
                       </Flex>
-                    );
-                  })}
+                      <Flex align="center">
+                        <Text pr="3" fontWeight="semibold">
+                          Ξ {formatToken(bid.amount)}
+                        </Text>
+                        <NextLink
+                          href={`${SUPPORTED_NETWORKS[SONG_CHAIN_ID].explorer}tx/${bid.transactionHash}`}
+                          passHref
+                        >
+                          <Link isExternal color="brand.teal" textDecoration="underline">
+                            <ExternalLinkIcon />
+                          </Link>
+                        </NextLink>
+                      </Flex>
+                    </Flex>
+                  );
+                })}
               </>
             </Stack>
+            {currentBid && (
+              <Box pt={4}>
+                <Button mt="3" fontWeight="medium" variant="link" onClick={onHistoryOpen}>
+                  See full bid history →
+                </Button>
+                <Modal
+                  onClose={onHistoryClose}
+                  isOpen={isHistoryOpen}
+                  isCentered
+                  scrollBehavior="inside"
+                  motionPreset="scale"
+                >
+                  <ModalOverlay />
+                  <ModalContent>
+                    <ModalHeader>Bid History</ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody>
+                      <Heading as="h1" fontSize="4xl">
+                        Song {Number(song.tokenId).toLocaleString()}
+                      </Heading>
 
-            <Box pt={4}>
-              <Button mt="3" fontWeight="medium" variant="link" onClick={onHistoryOpen}>
-                See full bid history →
-              </Button>
-              <Modal
-                onClose={onHistoryClose}
-                isOpen={isHistoryOpen}
-                isCentered
-                scrollBehavior="inside"
-                motionPreset="scale"
-              >
-                <ModalOverlay />
-                <ModalContent>
-                  <ModalHeader>Bid History</ModalHeader>
-                  <ModalCloseButton />
-                  <ModalBody>
-                    <Heading as="h1" fontSize="4xl">
-                      Song {Number(song.tokenId).toLocaleString()}
-                    </Heading>
-
-                    <Stack spacing={2} pt="6">
-                      {song?.currentBid && (
-                        <Flex
-                          justify="space-between"
-                          px="3"
-                          py="2"
-                          bgColor="brand.lightTeal"
-                          rounded="sm"
-                        >
-                          <Flex align="center">
-                            <Image
-                              borderRadius="full"
-                              boxSize="24px"
-                              src={makeBlockie(song?.currentBid.bidder.id)}
-                            />
-                            <Text pl="4">{formatAddress(song?.currentBid?.bidder.id)}</Text>
+                      <Stack spacing={2} pt="6">
+                        {currentBid && (
+                          <Flex
+                            justify="space-between"
+                            px="3"
+                            py="2"
+                            bgColor="brand.lightTeal"
+                            rounded="sm"
+                          >
+                            <Flex align="center">
+                              <Image
+                                borderRadius="full"
+                                boxSize="24px"
+                                src={makeBlockie(currentBid?.bidder.id ?? '')}
+                              />
+                              <Text pl="4">{formatAddress(currentBid?.bidder.id)}</Text>
+                            </Flex>
+                            <Flex align="center">
+                              <Text pr="3" fontWeight="semibold">
+                                Ξ {formatToken(currentBid?.amount)}
+                              </Text>
+                              <NextLink
+                                href={`${SUPPORTED_NETWORKS[SONG_CHAIN_ID].explorer}tx/${currentBid?.transactionHash}`}
+                                passHref
+                              >
+                                <Link isExternal color="brand.teal" textDecoration="underline">
+                                  <ExternalLinkIcon />
+                                </Link>
+                              </NextLink>
+                            </Flex>
                           </Flex>
-                          <Flex align="center">
-                            <Text pr="3" fontWeight="semibold">
-                              Ξ {formatToken(song?.currentBid.amount.toString())}
-                            </Text>
-                            <NextLink
-                              href={`${SUPPORTED_NETWORKS[SONG_CHAIN_ID].explorer}tx/${song?.currentBid.transactionHash}`}
-                              passHref
-                            >
-                              <Link isExternal color="brand.teal" textDecoration="underline">
-                                <ExternalLinkIcon />
-                              </Link>
-                            </NextLink>
-                          </Flex>
-                        </Flex>
-                      )}
-                      <>
-                        {song.previousBids
-                          .slice()
-                          .reverse()
-                          .map((bid) => {
+                        )}
+                        <>
+                          {sortedPreviousBids.map((bid) => {
                             return (
                               <Flex
                                 key={bid.id}
@@ -565,13 +691,13 @@ const Auction: React.FC<{ latest?: boolean }> = ({ latest }) => {
                                   <Image
                                     borderRadius="full"
                                     boxSize="24px"
-                                    src={makeBlockie(bid.bidder.id)}
+                                    src={makeBlockie(bid?.bidder?.id ?? '')}
                                   />
                                   <Text pl="4">{formatAddress(bid.bidder.id)}</Text>
                                 </Flex>
                                 <Flex align="center">
                                   <Text pr="3" fontWeight="semibold">
-                                    Ξ {formatToken(bid.amount.toString())}
+                                    Ξ {formatToken(bid.amount)}
                                   </Text>
                                   <NextLink
                                     href={`${SUPPORTED_NETWORKS[SONG_CHAIN_ID].explorer}tx/${bid.transactionHash}`}
@@ -585,15 +711,16 @@ const Auction: React.FC<{ latest?: boolean }> = ({ latest }) => {
                               </Flex>
                             );
                           })}
-                      </>
-                    </Stack>
-                  </ModalBody>
-                  <ModalFooter>
-                    <Button onClick={onHistoryClose}>Close</Button>
-                  </ModalFooter>
-                </ModalContent>
-              </Modal>
-            </Box>
+                        </>
+                      </Stack>
+                    </ModalBody>
+                    <ModalFooter>
+                      <Button onClick={onHistoryClose}>Close</Button>
+                    </ModalFooter>
+                  </ModalContent>
+                </Modal>
+              </Box>
+            )}
           </Box>
         ) : (
           <Spinner thickness="4px" speed="0.56s" emptyColor="teal.100" size="xl" color="teal" />
